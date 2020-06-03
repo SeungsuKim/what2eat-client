@@ -11,6 +11,7 @@ import Home from "./routes/Home";
 
 const App = () => {
   let isLoggedIn = false;
+
   return (
     <Router>{isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}</Router>
   );
