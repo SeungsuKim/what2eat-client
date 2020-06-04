@@ -1,14 +1,14 @@
-import React from "react";
-import { Typography } from "antd";
 import {
-  UserOutlined,
-  CalendarOutlined,
   BellOutlined,
-  StarOutlined,
-  StarFilled,
+  CalendarOutlined,
   CaretDownOutlined,
   PlusOutlined,
+  StarFilled,
+  StarOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Typography } from "antd";
+import React from "react";
 
 const { Text } = Typography;
 
@@ -30,6 +30,7 @@ const SidebarPresenter = () => (
         fontWeight: "800",
         fontStyle: "italic",
         marginBottom: 20,
+        fontFamily: "sans-serif",
       }}
     >
       what2eat

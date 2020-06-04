@@ -24,7 +24,7 @@ const LoggedInRoutes = () => (
       <Sidebar />
     </div>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Explore} />
       <Route path="/explore" component={Explore} />
       <Redirect from="*" to="/" />
     </Switch>
