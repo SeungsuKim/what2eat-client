@@ -6,10 +6,10 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Auth from "./routes/Auth";
-import Home from "./routes/Home";
-
 import Sidebar from "./components/Sidebar";
+import Auth from "./routes/Auth";
+import Explore from "./routes/Explore";
+import Home from "./routes/Home";
 
 const App = () => {
   let isLoggedIn = true;
@@ -19,12 +19,13 @@ const App = () => {
 };
 
 const LoggedInRoutes = () => (
-  <div style={{ display: "flex", flexDirection: "row" }}>
+  <div style={{ display: "flex", flexDirection: "row", minHeight: "100vh" }}>
     <div style={{ width: 320 }}>
       <Sidebar />
     </div>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Explore} />
+      <Route path="/explore" component={Explore} />
       <Redirect from="*" to="/" />
     </Switch>
   </div>
