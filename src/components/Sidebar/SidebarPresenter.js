@@ -12,7 +12,7 @@ import React from "react";
 
 const { Text } = Typography;
 
-const SidebarPresenter = () => (
+const SidebarPresenter = ({ groups }) => (
   <div
     style={{
       backgroundColor: "rgba(19, 194, 194, 0.2)",
@@ -119,51 +119,23 @@ const SidebarPresenter = () => (
         marginBottom: 7,
       }}
     >
-      <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
-      <Text style={{ fontSize: 20 }}>Human Resources</Text>
-      <div
-        style={{
-          width: 12,
-          height: 12,
-          borderRadius: "50%",
-          backgroundColor: "#FF6663",
-          marginLeft: "auto",
-          marginRight: 8,
-        }}
-      />
-    </div>
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 7,
-      }}
-    >
-      <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
-      <Text style={{ fontSize: 20 }}>KAIST Class 27</Text>
-    </div>
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 7,
-      }}
-    >
-      <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
-      <Text style={{ fontSize: 20 }}>HCI Project</Text>
-    </div>
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 7,
-      }}
-    >
-      <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
-      <Text style={{ fontSize: 20 }}>2020 Interns</Text>
+      {groups &&
+        groups.map((group) => (
+          <>
+            <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+            <Text style={{ fontSize: 20 }}>{group.group}</Text>
+            <div
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                backgroundColor: "#FF6663",
+                marginLeft: "auto",
+                marginRight: 8,
+              }}
+            />
+          </>
+        ))}
     </div>
   </div>
 );
