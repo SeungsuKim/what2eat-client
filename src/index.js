@@ -1,4 +1,4 @@
-import "antd/dist/antd.css";
+import "./styles/theme.less";
 
 import React from "react";
 import ReactDOM from "react-dom";
