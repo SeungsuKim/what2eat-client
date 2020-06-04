@@ -6,20 +6,21 @@ import styled from "styled-components";
 import MenuCard from "./MenuCard";
 import Tag from "./Tag";
 
-const SearchBar = () => {
+const SearchBar = ({ searchRef, showResult, setShowResult }) => {
   const tabs = ["Recommended", "Menus", "Tags", "Exclude Tags"];
 
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <SearchContainer>
+    <SearchContainer ref={searchRef}>
       <Input
         size="large"
         placeholder="Search menus or tags"
         prefix={<SearchOutlined style={{ fontSize: 20, color: "#13C2C2" }} />}
         style={{ position: "relative" }}
+        onFocus={setShowResult(true)}
       />
-      {true && (
+      {showResult && (
         <SearchResult>
           <Tabs>
             {tabs.map((tab, index) => (

@@ -1,102 +1,67 @@
-import { SearchOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Col, Input, Row, Tabs } from "antd";
-import React from "react";
+import { Checkbox, Col, Row } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
 import SearchBar from "../../components/SearchBar";
 
-const ExplorePresenter = () => {
+const ExplorePresenter = ({ group }) => {
+  const [showResult, setShowResult] = useState(false);
+  const searchRef = useRef(null);
+  const now = new Date();
+  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowResult(false);
+      } else {
+        console.log("click result");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
   return (
-    <Container>
-      <Header>
-        <GroupWrapper>
-          <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
-          <GroupName>Human Resources</GroupName>
-          <UserOutlined style={{ fontSize: 23 }} />
-          <GroupSize>11</GroupSize>
-        </GroupWrapper>
-        <HeaderButtonWrapper>
-          <Button type="default">Edit Members</Button>
-          <Button type="primary" style={{ marginLeft: 10 }}>
-            + Have Another Meal
-          </Button>
-        </HeaderButtonWrapper>
-      </Header>
-      <Body>
-        <TitleContainer>
-          <TitleWrapper>
-            <Title>Lunch Menu on 6/2 Tue</Title>
-            <Description>6 people are joining</Description>
-          </TitleWrapper>
-          <CheckboxButton>I'm not joining today</CheckboxButton>
-        </TitleContainer>
-        <Row gutter={30} style={{ paddingTop: 20 }}>
-          <Col span={15}>
-            <SearchBar />
-          </Col>
-          <Col span={9}>
-            <VoteContainer>
-              <VoteTitle>Menus currently on vote</VoteTitle>
-              <Row gutter={[20, 20]}>
+    <Body>
+      <TitleContainer>
+        <TitleWrapper>
+          <Title>
+            Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
+            {weekdays[now.getDay()]}
+          </Title>
+          <Description>6 people are joining</Description>
+        </TitleWrapper>
+        <CheckboxButton>I'm not joining today</CheckboxButton>
+      </TitleContainer>
+      <Row gutter={30} style={{ paddingTop: 20 }}>
+        <Col span={15}>
+          <SearchBar
+            searchRef={searchRef}
+            showResult={showResult}
+            setShowResult={setShowResult}
+          />
+        </Col>
+        <Col span={9}>
+          <VoteContainer>
+            <VoteTitle>Menus currently on vote</VoteTitle>
+            <Row gutter={[20, 20]}>
+              {group.menus.map((menu) => (
                 <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                   <MenuCard />
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                  <MenuCard />
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                  <MenuCard />
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                  <MenuCard />
-                </Col>
-              </Row>
-            </VoteContainer>
-          </Col>
-        </Row>
-      </Body>
-    </Container>
+              ))}
+            </Row>
+          </VoteContainer>
+        </Col>
+      </Row>
+    </Body>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  height: 80px;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const GroupWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const GroupName = styled.h1`
-  font-size: 30px;
-  font-weight: 300;
-  margin: 0px 20px;
-`;
-
-const GroupSize = styled.p`
-  margin: 0;
-  font-size: 20px;
-`;
-
-const HeaderButtonWrapper = styled.div`
-  flex-direction: row;
-  align-items: center;
-`;
 
 const Body = styled.div`
   width: 100%;

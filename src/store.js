@@ -9,6 +9,7 @@ const initialState = {
   },
   groups: [],
   group: null,
+  loading: true,
 };
 
 const store = createContext(initialState);
