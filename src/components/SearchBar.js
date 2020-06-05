@@ -1,30 +1,46 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Col, Input, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import MenuCard from "./MenuCard";
 import Tag from "./Tag";
 
-const SearchBar = ({ searchRef, showResult, setShowResult }) => {
+const SearchBar = () => {
   const tabs = ["Recommended", "Menus", "Tags", "Exclude Tags"];
 
   const [tabIndex, setTabIndex] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setShowResult(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [ref]);
 
   return (
-    <SearchContainer ref={searchRef}>
+    <SearchContainer ref={ref}>
       <Input
         size="large"
         placeholder="Search menus or tags"
         prefix={<SearchOutlined style={{ fontSize: 20, color: "#13C2C2" }} />}
         style={{ position: "relative" }}
-        onFocus={setShowResult(true)}
+        onClick={() => setShowResult(true)}
       />
       {showResult && (
         <SearchResult>
           <Tabs>
             {tabs.map((tab, index) => (
               <Tab
+                key={index}
                 selected={index === tabIndex}
                 onClick={() => setTabIndex(index)}
               >

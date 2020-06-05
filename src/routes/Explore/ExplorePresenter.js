@@ -1,30 +1,13 @@
 import { Checkbox, Col, Row } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
 import SearchBar from "../../components/SearchBar";
 
 const ExplorePresenter = ({ group }) => {
-  const [showResult, setShowResult] = useState(false);
-  const searchRef = useRef(null);
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
-        setShowResult(false);
-      } else {
-        console.log("click result");
-      }
-    };
-
-    document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, []);
 
   return (
     <Body>
@@ -40,18 +23,14 @@ const ExplorePresenter = ({ group }) => {
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
-          <SearchBar
-            searchRef={searchRef}
-            showResult={showResult}
-            setShowResult={setShowResult}
-          />
+          <SearchBar />
         </Col>
         <Col span={9}>
           <VoteContainer>
             <VoteTitle>Menus currently on vote</VoteTitle>
             <Row gutter={[20, 20]}>
               {group.menus.map((menu) => (
-                <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.id}>
                   <MenuCard />
                 </Col>
               ))}
