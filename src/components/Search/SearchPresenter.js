@@ -3,15 +3,20 @@ import { Col, Input, Row } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-import MenuCard from "./MenuCard";
-import Tag from "./Tag";
+import MenuCard from "../MenuCard";
+import Tag from "../Tag";
 
-const SearchBar = () => {
-  const tabs = ["Recommended", "Menus", "Tags", "Exclude Tags"];
-
-  const [tabIndex, setTabIndex] = useState(0);
+const SearchPresenter = ({
+  tabs,
+  tabIndex,
+  setTabIndex,
+  inputProps,
+  menus,
+  tags,
+}) => {
   const [showResult, setShowResult] = useState(false);
   const ref = useRef(null);
+  console.log(menus);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -34,6 +39,7 @@ const SearchBar = () => {
         prefix={<SearchOutlined style={{ fontSize: 20, color: "#13C2C2" }} />}
         style={{ position: "relative" }}
         onClick={() => setShowResult(true)}
+        {...inputProps}
       />
       {showResult && (
         <SearchResult>
@@ -50,21 +56,11 @@ const SearchBar = () => {
           </Tabs>
           <ResultContainer>
             <Menus gutter={[16, 16]}>
-              <Col span={6}>
-                <MenuCard add />
-              </Col>
-              <Col span={6}>
-                <MenuCard />
-              </Col>
-              <Col span={6}>
-                <MenuCard />
-              </Col>
-              <Col span={6}>
-                <MenuCard />
-              </Col>
-              <Col span={6}>
-                <MenuCard />
-              </Col>
+              {menus.map((menu) => (
+                <Col span={6}>
+                  <MenuCard menu={menu} add />
+                </Col>
+              ))}
             </Menus>
             <Divider />
             <Tags>
@@ -136,4 +132,4 @@ const Tags = styled.div`
   margin: 10px 0px;
 `;
 
-export default SearchBar;
+export default SearchPresenter;

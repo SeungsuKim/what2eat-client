@@ -1,19 +1,30 @@
 import { PlusCircleFilled } from "@ant-design/icons";
-import React from "react";
+import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
 
-const MenuCard = ({ add }) => {
+import { addMenuToVote } from "../db/Menu";
+import { store } from "../store";
+
+const MenuCard = ({ menu, add }) => {
+  const globalState = useContext(store);
+  const { state, dispatch } = globalState;
+
+  const handleAddMenu = () => {
+    addMenuToVote(menu, state.user, state.group.id);
+  };
+
   return (
     <VoteCard>
-      <MenuImage src="https://image.g9.co.kr/g/1486788352/n?ts=1552636379000" />
+      <MenuImage src={menu.image} />
       <MenuTitle>
         <ScaleText>
-          <p style={{ margin: 0 }}>순두부찌개</p>
+          <p style={{ margin: 0 }}>{menu.menu}</p>
         </ScaleText>
       </MenuTitle>
       {add && (
         <PlusCircleFilled
+          onClick={handleAddMenu}
           style={{
             position: "absolute",
             color: "#13C2C2",
@@ -38,6 +49,7 @@ const VoteCard = styled.div`
 const MenuImage = styled.img`
   position: absolute;
   height: 100%;
+  object-fit: contain;
 `;
 
 const MenuTitle = styled.div`

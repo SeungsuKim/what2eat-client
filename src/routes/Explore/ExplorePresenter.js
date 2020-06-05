@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
-import SearchBar from "../../components/SearchBar";
+import Search from "../../components/Search";
 
 const ExplorePresenter = ({ group }) => {
   const now = new Date();
@@ -23,15 +23,15 @@ const ExplorePresenter = ({ group }) => {
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
-          <SearchBar />
+          <Search />
         </Col>
         <Col span={9}>
           <VoteContainer>
             <VoteTitle>Menus currently on vote</VoteTitle>
             <Row gutter={[20, 20]}>
               {group.menus.map((menu) => (
-                <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.id}>
-                  <MenuCard />
+                <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.menu.id}>
+                  <MenuCard menu={menu.menu} />
                 </Col>
               ))}
             </Row>
