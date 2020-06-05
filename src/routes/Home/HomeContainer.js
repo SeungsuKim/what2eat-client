@@ -7,8 +7,9 @@ import HomePresenter from "./HomePresenter";
 const HomeContainer = () => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
+  const { group } = state;
 
-  return <HomePresenter />;
+  return <HomePresenter group={group} />;
 };
 
 export default HomeContainer;
