@@ -73,6 +73,7 @@ const HomePresenter = ({group}) => {
 
     <div>
       <Link to="/explore">Link to Explore</Link>
+      <Link to="/calendar">Link to Calendar</Link>
     </div>
   </Body>
   );

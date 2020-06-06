@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { getGroups } from "./db/Group";
 import Auth from "./routes/Auth";
+import Calendar from './routes/Calendar';
 import Explore from "./routes/Explore";
 import Home from "./routes/Home";
 import { store } from "./store";
@@ -52,6 +53,7 @@ const LoggedInRoutes = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/explore" component={Explore} />
+        <Route path="/calendar" component={Calendar} />
         <Redirect from="*" to="/" />
       </Switch>
     </div>
