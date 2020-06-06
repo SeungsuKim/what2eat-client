@@ -4,6 +4,9 @@ import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
 import Search from "../../components/Search";
+import Tag from "../../components/Tag";
+
+import {PlusCircleFilled} from "@ant-design/icons";
 
 const ExplorePresenter = ({ group }) => {
   const now = new Date();
@@ -24,6 +27,25 @@ const ExplorePresenter = ({ group }) => {
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
           <Search />
+          <TagContainer>
+             <Tags>
+              <Tag name="매콤한" />
+            </Tags>
+            <Tags>
+              <Tag name="차가운" excluded />
+            </Tags>
+          </TagContainer>
+          <Row style={{ paddingTop: 20 }}>
+            <Instruction>Explore by scrolling and click <PlusCircleFilled style={{color: "#13c2c2"}}/> to add to Lunch Menu on  {now.getMonth() + 1}/{now.getDate()}{" "}
+            {weekdays[now.getDay()]}!</Instruction>
+          </Row>
+          <MenulistContainer>
+            {group.menus.map((menu) => (   
+              <MenuCardContainer> 
+                <MenuCard menu={menu.menu}/>
+              </MenuCardContainer>
+            ))}
+          </MenulistContainer>
         </Col>
         <Col span={9}>
           <VoteContainer>
@@ -38,6 +60,7 @@ const ExplorePresenter = ({ group }) => {
           </VoteContainer>
         </Col>
       </Row>
+      
     </Body>
   );
 };
@@ -67,11 +90,39 @@ const Title = styled.h2`
   margin: 0;
 `;
 
+const TagContainer = styled.div`
+
+`;
+
+const Tags = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px;
+`;
+
 const Description = styled.p`
+  display: inline;
+  padding: 30px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.45);
+`;
+
+const Instruction = styled.p`
   display: inline;
   margin: 0 10px;
   font-size: 15px;
   color: rgba(0, 0, 0, 0.45);
+`;
+
+const MenulistContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const MenuCardContainer = styled.div`
+  width: 400px;
+  padding: 20px;
 `;
 
 const CheckboxButton = styled(Checkbox)`
