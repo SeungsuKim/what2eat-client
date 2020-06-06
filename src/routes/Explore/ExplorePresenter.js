@@ -25,6 +25,7 @@ const ExplorePresenter = ({ group }) => {
         <Col span={15}>
           <Search />
         </Col>
+        
         <Col span={9}>
           <VoteContainer>
             <VoteTitle>Menus currently on vote</VoteTitle>
@@ -37,6 +38,9 @@ const ExplorePresenter = ({ group }) => {
             </Row>
           </VoteContainer>
         </Col>
+      </Row>
+      <Row gutter={[9, 20]}>
+        <Instruction>Explore by scrolling</Instruction>
       </Row>
     </Body>
   );
@@ -68,6 +72,13 @@ const Title = styled.h2`
 `;
 
 const Description = styled.p`
+  display: inline;
+  margin: 0 10px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.45);
+`;
+
+const Instruction = styled.p`
   display: inline;
   margin: 0 10px;
   font-size: 15px;
