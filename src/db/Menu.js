@@ -22,7 +22,113 @@ export const addMenuToVote = async (menu, user, groupId) => {
       owner: user,
       likedBy: [user],
       rejectedBy: [],
+      viewedBy: [user],
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     }),
+  });
+};
+
+export const toggleMenuLike = async (menu, user, groupId, like) => {
+  const groupRef = db.collection("groups").doc(groupId);
+  const groupData = (await groupRef.get()).data();
+  const menus = groupData.menus;
+
+  for (let i = 0; i < menus.length; i++) {
+    if (menus[i].menu.id === menu.id) {
+      if (!like) {
+        for (let j = 0; j < menus[i].likedBy.length; j++) {
+          if (menus[i].likedBy[j].id === user.id) {
+            menus[i].likedBy.splice(j, 1);
+          }
+        }
+      } else {
+        let seen = false;
+        for (let j = 0; j < menus[i].likedBy.length; j++) {
+          if (menus[i].likedBy[j].id === user.id) {
+            seen = true;
+          }
+        }
+
+        if (!seen) {
+          menus[i].likedBy.push(user);
+        }
+      }
+
+      break;
+    }
+  }
+
+  groupRef.update({
+    menus: menus,
+  });
+};
+
+export const toggleMenuReject = async (menu, user, groupId, reject) => {
+  const groupRef = db.collection("groups").doc(groupId);
+  const groupData = (await groupRef.get()).data();
+  const menus = groupData.menus;
+
+  for (let i = 0; i < menus.length; i++) {
+    if (menus[i].menu.id === menu.id) {
+      if (!reject) {
+        for (let j = 0; j < menus[i].rejectedBy.length; j++) {
+          if (menus[i].rejectedBy[j].id === user.id) {
+            menus[i].rejectedBy.splice(j, 1);
+          }
+        }
+      } else {
+        let seen = false;
+        for (let j = 0; j < menus[i].rejectedBy.length; j++) {
+          if (menus[i].rejectedBy[j].id === user.id) {
+            seen = true;
+          }
+        }
+
+        if (!seen) {
+          menus[i].rejectedBy.push(user);
+        }
+      }
+
+      break;
+    }
+  }
+
+  groupRef.update({
+    menus: menus,
+  });
+};
+
+export const toggleMenuView = async (menu, user, groupId, view) => {
+  const groupRef = db.collection("groups").doc(groupId);
+  const groupData = (await groupRef.get()).data();
+  const menus = groupData.menus;
+
+  for (let i = 0; i < menus.length; i++) {
+    if (menus[i].menu.id === menu.id) {
+      if (!view) {
+        for (let j = 0; j < menus[i].viewedBy.length; j++) {
+          if (menus[i].viewedBy[j].id === user.id) {
+            menus[i].viewedBy.splice(j, 1);
+          }
+        }
+      } else {
+        let seen = false;
+        for (let j = 0; j < menus[i].viewedBy.length; j++) {
+          if (menus[i].viewedBy[j].id === user.id) {
+            seen = true;
+          }
+        }
+
+        if (!seen) {
+          menus[i].viewedBy.push(user);
+        }
+      }
+
+      break;
+    }
+  }
+
+  await groupRef.update({
+    menus: menus,
   });
 };
