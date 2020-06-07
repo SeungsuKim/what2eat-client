@@ -1,13 +1,11 @@
+import { PlusOutlined, StopOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Col, Row } from "antd";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
-import { Checkbox, Col, Row, Button } from "antd";
 import styled from "styled-components";
-import { PlusOutlined, StopOutlined } from "@ant-design/icons";
 
 import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
-
 import { store } from "../../store";
 
 const HomePresenter = ({ group }) => {
@@ -84,16 +82,18 @@ const HomePresenter = ({ group }) => {
       <NewMenuContainer>
         <Row gutter={[20, 20]}>
           <Col>
-            <AddNewMenu type="primary">
-              <PlusOutlined
-                style={{ marginTop: "30%", fontSize: 70, color: "white" }}
-              />
-              <p style={{ fontSize: 20, color: "white" }}>
-                Explore & Add
-                <br />
-                New Menu
-              </p>
-            </AddNewMenu>
+            <Link to="/explore">
+              <AddNewMenu type="primary">
+                <PlusOutlined
+                  style={{ marginTop: "30%", fontSize: 70, color: "white" }}
+                />
+                <p style={{ fontSize: 20, color: "white" }}>
+                  Explore & Add
+                  <br />
+                  New Menu
+                </p>
+              </AddNewMenu>
+            </Link>
           </Col>
           {newMenus.map((menu) => (
             <Col key={menu.menu.id}>
