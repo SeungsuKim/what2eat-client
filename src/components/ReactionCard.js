@@ -1,134 +1,105 @@
-
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
 import { Button } from "antd";
+import { StopOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 
-import {StopOutlined, HeartFilled , HeartOutlined   } from "@ant-design/icons";
+import { toggleMenuLike, toggleMenuReject } from "../db/Menu";
 
+import { store } from "../store";
 
+const ReactionCard = ({ liked, rejected, menu }) => {
+  const globalState = useContext(store);
+  const { state } = globalState;
 
-const NotReactedCard = ({ menu }) => {
+  const [isLike, setIsLike] = useState(liked);
+  const [isReject, setIsReject] = useState(rejected);
+
+  const toggleLike = async () => {
+    if (isLike) {
+      await toggleMenuLike(menu, state.user, state.group.id, false);
+      setIsLike(false);
+    } else {
+      await toggleMenuLike(menu, state.user, state.group.id, true);
+      await toggleMenuReject(menu, state.user, state.group.id, false);
+      setIsLike(true);
+      setIsReject(false);
+    }
+  };
+
+  const toggleReject = async () => {
+    if (isReject) {
+      await toggleMenuReject(menu, state.user, state.group.id, false);
+      setIsReject(false);
+    } else {
+      await toggleMenuReject(menu, state.user, state.group.id, true);
+      await toggleMenuLike(menu, state.user, state.group.id, false);
+      setIsReject(true);
+      setIsLike(false);
+    }
+  };
 
   return (
-    <ReactionCard>
-      <MenuCard >
+    <ReactionCardContainer>
+      <MenuCard>
         <MenuImage src={menu.image} />
+
+        {isLike ? (
+          <Ovelay>
+            <HeartFilled
+              style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
+            />
+          </Ovelay>
+        ) : null}
+        {isReject ? (
+          <Ovelay>
+            <StopOutlined
+              style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
+            />
+          </Ovelay>
+        ) : null}
+
         <MenuTitle>
           <ScaleText>
             <p style={{ margin: 0 }}>{menu.menu}</p>
           </ScaleText>
         </MenuTitle>
-      </MenuCard>  
-      <br/>
+      </MenuCard>
+      <br />
       <ReactionButton type="defalt">
-        <RejectButton >
-            <StopOutlined style={{  color:"#FF6663" }}/> Reject
-
+        <RejectButton onClick={toggleReject}>
+          <StopOutlined style={{ color: "#FF6663" }} /> Reject
         </RejectButton>
-        
-        <LikeButton type="primary">
+
+        <LikeButton onClick={toggleLike} type="primary">
           <HeartOutlined style={{ color: "white" }} /> Like
         </LikeButton>
       </ReactionButton>
-
-    </ReactionCard>
+    </ReactionCardContainer>
   );
 };
 
-
-const LikedCard = ({ menu }) => {
-
-  return (
-    <ReactionCard>
-      <MenuCard >
-        <MenuImage src={menu.image} />
-        <Ovelay>
-          <HeartFilled style={{ margin: "30%", fontSize: 70, color:"#FF6663" }}/>
-        </Ovelay>
-
-        <MenuTitle>
-          <ScaleText>
-            <p style={{ margin: 0 }}>{menu.menu}</p>
-          </ScaleText>
-        </MenuTitle>
-      </MenuCard>  
-      <br/>
-      <ReactionButton type="defalt">
-        <RejectButton >
-            <StopOutlined style={{  color:"#FF6663" }}/> Reject
-
-        </RejectButton>
-        
-        <LikeButton type="primary">
-          <HeartFilled style={{ color: "white" }} /> Like
-        </LikeButton>
-      </ReactionButton>
-
-    </ReactionCard>
-  );
-};
-
-
-
-const RejectedCard = ({ menu }) => {
-
-  return (
-    <ReactionCard>
-      <MenuCard >
-        <MenuImage src={menu.image} />
-        <Ovelay>
-          <StopOutlined style={{ margin: "30%", fontSize: 70, color:"#FF6663" }}/>
-        </Ovelay>
-
-        <MenuTitle>
-          <ScaleText>
-            <p style={{ margin: 0 }}>{menu.menu}</p>
-          </ScaleText>
-        </MenuTitle>
-      </MenuCard>  
-      <br/>
-      <ReactionButton type="defalt">
-        <RejectButton >
-            <StopOutlined style={{  color:"#FF6663" }}/> Reject
-
-        </RejectButton>
-        
-        <LikeButton type="primary">
-          <HeartOutlined style={{ color: "white" }} /> Like
-        </LikeButton>
-      </ReactionButton>
-
-    </ReactionCard>
-  );
-};
-
-const Ovelay= styled.div`
+const Ovelay = styled.div`
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
-
 `;
-
 
 const RejectButton = styled(Button)`
   width: 49%;
-  border-color : #FF6663;
+  border-color: #ff6663;
   border-radius: 10px;
-  text-color: #FF6663;
-
+  text-color: #ff6663;
 `;
 const LikeButton = styled(Button)`
   width: 49%;
-  background-color: #FF6663;
-  border-color : #FF6663;
+  background-color: #ff6663;
+  border-color: #ff6663;
   border-radius: 10px;
-
 `;
 
-const ReactionButton =styled.div`
-
+const ReactionButton = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -136,14 +107,13 @@ const ReactionButton =styled.div`
   align-items: center;
 `;
 
-const ReactionCard =styled.div`
+const ReactionCardContainer = styled.div`
   position: relative;
   overflow: hidden;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 const MenuCard = styled.div`
@@ -152,7 +122,6 @@ const MenuCard = styled.div`
   padding-bottom: 100%;
   position: relative;
   overflow: hidden;
-
 `;
 
 const MenuImage = styled.img`
@@ -172,4 +141,4 @@ const MenuTitle = styled.div`
   text-align: center;
 `;
 
-export {NotReactedCard, LikedCard, RejectedCard};
+export default ReactionCard;

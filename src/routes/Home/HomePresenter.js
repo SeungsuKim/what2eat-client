@@ -1,16 +1,72 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Checkbox, Col, Row, Button } from "antd";
 import styled from "styled-components";
-import {NotReactedCard, LikedCard,RejectedCard} from "../../components/ReactionCard";
-import {PlusOutlined, StopOutlined} from "@ant-design/icons";
+import { PlusOutlined, StopOutlined } from "@ant-design/icons";
 
+import ReactionCard from "../../components/ReactionCard";
+import { toggleMenuView } from "../../db/Menu";
 
-const HomePresenter = ({group}) => {
-  const num_rejection_left = 1
+import { store } from "../../store";
+
+const HomePresenter = ({ group }) => {
+  const globalState = useContext(store);
+  const { state } = globalState;
+
+  const num_rejection_left = 1;
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  const newMenus = [];
+  const viewedMenus = [];
+  group.menus.forEach((menu) => {
+    const viewedBy = menu.viewedBy;
+    let viewed = false;
+
+    for (let i = 0; i < viewedBy.length; i++) {
+      if (viewedBy[i].id === state.user.id) {
+        viewedMenus.push(menu);
+        viewed = true;
+      }
+    }
+
+    if (!viewed) {
+      newMenus.push(menu);
+    }
+  });
+
+  const toggleView = async () => {
+    for (let i = 0; i < group.menus.length; i++) {
+      await toggleMenuView(
+        group.menus[i].menu,
+        state.user,
+        state.group.id,
+        true
+      );
+    }
+  };
+  toggleView();
+
+  const isLikedMenu = (menu) => {
+    for (let i = 0; i < menu.likedBy.length; i++) {
+      if (menu.likedBy[i].id === state.user.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const isRejectedMenu = (menu) => {
+    for (let i = 0; i < menu.rejectedBy.length; i++) {
+      if (menu.rejectedBy[i].id === state.user.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <Body>
@@ -24,57 +80,63 @@ const HomePresenter = ({group}) => {
         </TitleWrapper>
         <CheckboxButton>I'm not joining today</CheckboxButton>
       </TitleContainer>
-      
+
       <NewMenuContainer>
         <Row gutter={[20, 20]}>
           <Col>
             <AddNewMenu type="primary">
-              <PlusOutlined style={{ marginTop:"30%", fontSize: 70, color:"white" }}/>
-              <p style={{ fontSize: 20, color:"white" }}>Explore & Add<br/>New Menu</p>
+              <PlusOutlined
+                style={{ marginTop: "30%", fontSize: 70, color: "white" }}
+              />
+              <p style={{ fontSize: 20, color: "white" }}>
+                Explore & Add
+                <br />
+                New Menu
+              </p>
             </AddNewMenu>
           </Col>
-          {group.menus.map((menu) => (
+          {newMenus.map((menu) => (
             <Col key={menu.menu.id}>
-              <NotReactedCard menu={menu.menu} />
+              <ReactionCard
+                liked={isLikedMenu(menu)}
+                rejected={isRejectedMenu(menu)}
+                menu={menu.menu}
+              />
             </Col>
           ))}
         </Row>
       </NewMenuContainer>
 
-
-
       <ViewedCardContainer>
         <ViewedMenuWrapper>
           Viewed Menu
           <RejectionLeft>
-            Remaining Number of Rejections 
-            <StopOutlined style={{  fontSize: 20, color:"#FF6663" }}/>
-            <p style={{color:"#FF6663"}}>{num_rejection_left} / 2 </p>
-            
+            Remaining Number of Rejections
+            <StopOutlined style={{ fontSize: 20, color: "#FF6663" }} />
+            <p style={{ color: "#FF6663" }}>{num_rejection_left} / 2 </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
 
-        <ReactedCardContainer>  
+        <ReactedCardContainer>
           <Row gutter={[20, 20]}>
-            {group.menus.map((menu) => (
+            {viewedMenus.map((menu) => (
               <Col key={menu.menu.id}>
-                <RejectedCard menu={menu.menu} />
-              </Col>
-            ))}
-            {group.menus.map((menu) => (
-              <Col key={menu.menu.id}>
-                <LikedCard menu={menu.menu} />
+                <ReactionCard
+                  liked={isLikedMenu(menu)}
+                  rejected={isRejectedMenu(menu)}
+                  menu={menu.menu}
+                />
               </Col>
             ))}
           </Row>
-         </ReactedCardContainer>
+        </ReactedCardContainer>
       </ViewedCardContainer>
 
-
-    <div>
-      <Link to="/explore">Link to Explore</Link>
-    </div>
-  </Body>
+      <div>
+        <Link to="/explore">Link to Explore</Link>
+        <Link to="/calendar">Link to Calendar</Link>
+      </div>
+    </Body>
   );
 };
 
@@ -88,7 +150,6 @@ const ViewedMenuWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-content: flex-end;
-  
 `;
 
 const RejectionLeft = styled.div`
@@ -99,16 +160,12 @@ const RejectionLeft = styled.div`
 `;
 
 const AddNewMenu = styled(Button)`
-
   height: 100%;
   text-align: center;
   border-radius: 10px;
-  background-color: #13C2C2;
+  background-color: #13c2c2;
   padding: 15px;
-  
 `;
-
-
 
 const Body = styled.div`
   width: 100%;
@@ -177,7 +234,5 @@ const NewMenuContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-
 
 export default HomePresenter;
