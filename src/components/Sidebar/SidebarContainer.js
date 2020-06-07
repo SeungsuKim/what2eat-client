@@ -5,7 +5,7 @@ import SidebarPresenter from "./SidebarPresenter";
 
 const SidebarContainer = () => {
   const globalState = useContext(store);
-  const { state, dispatch } = globalState;
+  const { state } = globalState;
   const { groups } = state;
 
   return <SidebarPresenter groups={groups} />;
