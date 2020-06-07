@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
 import { Button } from "antd";
@@ -8,22 +8,57 @@ import { toggleMenuLike, toggleMenuReject } from "../db/Menu";
 
 import { store } from "../store";
 
-const NotReactedCard = ({ menu }) => {
+const ReactionCard = ({ liked, rejected, menu }) => {
   const globalState = useContext(store);
-  const { state, dispatch } = globalState;
+  const { state } = globalState;
 
-  const toggleLike = () => {
-    toggleMenuLike(menu, state.user, state.group.id, true);
+  const [isLike, setIsLike] = useState(liked);
+  const [isReject, setIsReject] = useState(rejected);
+
+  const toggleLike = async () => {
+    if (isLike) {
+      await toggleMenuLike(menu, state.user, state.group.id, false);
+      setIsLike(false);
+    } else {
+      await toggleMenuLike(menu, state.user, state.group.id, true);
+      await toggleMenuReject(menu, state.user, state.group.id, false);
+      setIsLike(true);
+      setIsReject(false);
+    }
   };
 
-  const toggleReject = () => {
-    toggleMenuLike(menu, state.user, state.group.id, false);
+  const toggleReject = async () => {
+    if (isReject) {
+      await toggleMenuReject(menu, state.user, state.group.id, false);
+      setIsReject(false);
+    } else {
+      await toggleMenuReject(menu, state.user, state.group.id, true);
+      await toggleMenuLike(menu, state.user, state.group.id, false);
+      setIsReject(true);
+      setIsLike(false);
+    }
   };
 
   return (
-    <ReactionCard>
+    <ReactionCardContainer>
       <MenuCard>
         <MenuImage src={menu.image} />
+
+        {isLike ? (
+          <Ovelay>
+            <HeartFilled
+              style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
+            />
+          </Ovelay>
+        ) : null}
+        {isReject ? (
+          <Ovelay>
+            <StopOutlined
+              style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
+            />
+          </Ovelay>
+        ) : null}
+
         <MenuTitle>
           <ScaleText>
             <p style={{ margin: 0 }}>{menu.menu}</p>
@@ -40,69 +75,7 @@ const NotReactedCard = ({ menu }) => {
           <HeartOutlined style={{ color: "white" }} /> Like
         </LikeButton>
       </ReactionButton>
-    </ReactionCard>
-  );
-};
-
-const LikedCard = ({ menu }) => {
-  return (
-    <ReactionCard>
-      <MenuCard>
-        <MenuImage src={menu.image} />
-        <Ovelay>
-          <HeartFilled
-            style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
-          />
-        </Ovelay>
-
-        <MenuTitle>
-          <ScaleText>
-            <p style={{ margin: 0 }}>{menu.menu}</p>
-          </ScaleText>
-        </MenuTitle>
-      </MenuCard>
-      <br />
-      <ReactionButton type="defalt">
-        <RejectButton>
-          <StopOutlined style={{ color: "#FF6663" }} /> Reject
-        </RejectButton>
-
-        <LikeButton type="primary">
-          <HeartFilled style={{ color: "white" }} /> Like
-        </LikeButton>
-      </ReactionButton>
-    </ReactionCard>
-  );
-};
-
-const RejectedCard = ({ menu }) => {
-  return (
-    <ReactionCard>
-      <MenuCard>
-        <MenuImage src={menu.image} />
-        <Ovelay>
-          <StopOutlined
-            style={{ margin: "30%", fontSize: 70, color: "#FF6663" }}
-          />
-        </Ovelay>
-
-        <MenuTitle>
-          <ScaleText>
-            <p style={{ margin: 0 }}>{menu.menu}</p>
-          </ScaleText>
-        </MenuTitle>
-      </MenuCard>
-      <br />
-      <ReactionButton type="defalt">
-        <RejectButton>
-          <StopOutlined style={{ color: "#FF6663" }} /> Reject
-        </RejectButton>
-
-        <LikeButton type="primary">
-          <HeartOutlined style={{ color: "white" }} /> Like
-        </LikeButton>
-      </ReactionButton>
-    </ReactionCard>
+    </ReactionCardContainer>
   );
 };
 
@@ -134,7 +107,7 @@ const ReactionButton = styled.div`
   align-items: center;
 `;
 
-const ReactionCard = styled.div`
+const ReactionCardContainer = styled.div`
   position: relative;
   overflow: hidden;
 
@@ -168,4 +141,4 @@ const MenuTitle = styled.div`
   text-align: center;
 `;
 
-export { NotReactedCard, LikedCard, RejectedCard };
+export default ReactionCard;

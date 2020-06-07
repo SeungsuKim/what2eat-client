@@ -3,24 +3,38 @@ import { Link } from "react-router-dom";
 
 import { Checkbox, Col, Row, Button } from "antd";
 import styled from "styled-components";
-import {
-  NotReactedCard,
-  LikedCard,
-  RejectedCard,
-} from "../../components/ReactionCard";
 import { PlusOutlined, StopOutlined } from "@ant-design/icons";
 
+import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 
 import { store } from "../../store";
 
 const HomePresenter = ({ group }) => {
   const globalState = useContext(store);
-  const { state, dispatch } = globalState;
+  const { state } = globalState;
 
   const num_rejection_left = 1;
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  const newMenus = [];
+  const viewedMenus = [];
+  group.menus.forEach((menu) => {
+    const viewedBy = menu.viewedBy;
+    let viewed = false;
+
+    for (let i = 0; i < viewedBy.length; i++) {
+      if (viewedBy[i].id === state.user.id) {
+        viewedMenus.push(menu);
+        viewed = true;
+      }
+    }
+
+    if (!viewed) {
+      newMenus.push(menu);
+    }
+  });
 
   const toggleView = async () => {
     for (let i = 0; i < group.menus.length; i++) {
@@ -30,10 +44,29 @@ const HomePresenter = ({ group }) => {
         state.group.id,
         true
       );
-      console.log(i, group.menus[i]);
     }
   };
   toggleView();
+
+  const isLikedMenu = (menu) => {
+    for (let i = 0; i < menu.likedBy.length; i++) {
+      if (menu.likedBy[i].id === state.user.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const isRejectedMenu = (menu) => {
+    for (let i = 0; i < menu.rejectedBy.length; i++) {
+      if (menu.rejectedBy[i].id === state.user.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <Body>
@@ -62,9 +95,13 @@ const HomePresenter = ({ group }) => {
               </p>
             </AddNewMenu>
           </Col>
-          {group.menus.map((menu) => (
+          {newMenus.map((menu) => (
             <Col key={menu.menu.id}>
-              <NotReactedCard menu={menu.menu} />
+              <ReactionCard
+                liked={isLikedMenu(menu)}
+                rejected={isRejectedMenu(menu)}
+                menu={menu.menu}
+              />
             </Col>
           ))}
         </Row>
@@ -82,14 +119,13 @@ const HomePresenter = ({ group }) => {
 
         <ReactedCardContainer>
           <Row gutter={[20, 20]}>
-            {group.menus.map((menu) => (
+            {viewedMenus.map((menu) => (
               <Col key={menu.menu.id}>
-                <RejectedCard menu={menu.menu} />
-              </Col>
-            ))}
-            {group.menus.map((menu) => (
-              <Col key={menu.menu.id}>
-                <LikedCard menu={menu.menu} />
+                <ReactionCard
+                  liked={isLikedMenu(menu)}
+                  rejected={isRejectedMenu(menu)}
+                  menu={menu.menu}
+                />
               </Col>
             ))}
           </Row>
