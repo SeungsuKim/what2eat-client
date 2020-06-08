@@ -33,12 +33,21 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
           <TagContainer>
             <Tags>
               {tagProps.tags.map((tag) => (
-                <Tag tag={tag} />
+                <Tag
+                  tag={tag}
+                  remove
+                  onRemove={() => tagProps.removeTag(tag)}
+                />
               ))}
             </Tags>
             <Tags>
               {tagProps.excludedTags.map((tag) => (
-                <Tag tag={tag} excluded />
+                <Tag
+                  tag={tag}
+                  excluded
+                  remove
+                  onRemove={() => tagProps.removeExcludedTag(tag)}
+                />
               ))}
             </Tags>
           </TagContainer>

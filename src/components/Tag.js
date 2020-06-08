@@ -7,22 +7,22 @@ const Tag = ({ tag, excluded, onClick, remove, onRemove }) =>
     <ExcludedTag onClick={onClick}>
       <StopOutlined style={{ color: "#ff6663", marginRight: 8 }} />
       {tag.tag}
-      {/* {remove && (
+      {remove && (
         <CloseOutlined
           onClick={onRemove}
           style={{ marginLeft: 7, fontSize: 15, color: "#ff6663" }}
         />
-      )} */}
+      )}
     </ExcludedTag>
   ) : (
     <NormalTag onClick={onClick}>
       # {tag.tag}{" "}
-      {/* {remove && (
+      {remove && (
         <CloseOutlined
           onClick={onRemove}
           style={{ marginLeft: 7, fontSize: 15 }}
         />
-      )} */}
+      )}
     </NormalTag>
   );
 

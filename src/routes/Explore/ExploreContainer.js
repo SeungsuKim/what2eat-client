@@ -34,9 +34,6 @@ const ExploreContainer = () => {
       if (!tags.map(({ id }) => id).includes(tag.id)) {
         const newTags = [...tags, tag];
         setTags(newTags);
-
-        const fetchedMenus = await fetchMenuByTags(newTags, excludedTags);
-        setMenus(fetchedMenus);
       }
     },
     removeTag: (tag) => setTags(tags.filter((t) => t.id !== tag.id)),
@@ -45,7 +42,8 @@ const ExploreContainer = () => {
         setExcludedTags([...excludedTags, tag]);
       }
     },
-    removeExcludedTag: (tag) => setExcludedTags((t) => t.id !== tag.id),
+    removeExcludedTag: (tag) =>
+      setExcludedTags(excludedTags.filter((t) => t.id !== tag.id)),
   };
 
   return (
