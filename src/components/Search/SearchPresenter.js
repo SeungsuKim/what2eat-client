@@ -44,7 +44,7 @@ const SearchPresenter = ({
       />
       {showResult && (
         <SearchResult>
-          <Tabs>
+          {/* <Tabs>
             {tabs.map((tab, index) => (
               <Tab
                 key={index}
@@ -54,7 +54,7 @@ const SearchPresenter = ({
                 {tab}
               </Tab>
             ))}
-          </Tabs>
+          </Tabs> */}
           <ResultContainer>
             <Menus gutter={[16, 16]}>
               {menus.map((menu) => (
