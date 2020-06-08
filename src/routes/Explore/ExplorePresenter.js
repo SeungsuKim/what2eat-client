@@ -1,12 +1,12 @@
 import { PlusCircleFilled } from "@ant-design/icons";
 import { Checkbox, Col, Row } from "antd";
-import React, { useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
 import Search from "../../components/Search";
 import Tag from "../../components/Tag";
-import { store } from "../../store";
 
 const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
   const now = new Date();
@@ -69,7 +69,9 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
         </Col>
         <Col span={9}>
           <VoteContainer>
-            <VoteTitle>Menus currently on vote</VoteTitle>
+            <Link to="/">
+              <VoteTitle>Menus currently on vote</VoteTitle>
+            </Link>
             <Row gutter={[20, 20]}>
               {menusOnVote.map((menu) => (
                 <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.menu.id}>
