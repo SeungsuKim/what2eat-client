@@ -1,25 +1,55 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { Calendar, Badge } from 'antd';
+import { Calendar, Button } from "antd";
 import MenuCard from "../../components/MenuCard";
+import { addMenuToVote } from "../../db/Menu";
 
+import { store } from "../../store";
 
 const CalendarPresenter = ({ group }) => {
+  const globalState = useContext(store);
+  const { state } = globalState;
+
+  const historyData = {
+    2020: {
+      5: {
+        8: [group.menus[0]],
+        9: [group.menus[0]],
+        12: [group.menus[0], group.menus[0]],
+      },
+    },
+  };
 
   function dateCellRender(value) {
-    if (value.date() == 8 || value.date() == 18)
-    return (
-      <Row>  
-        {group.menus.map((menu) => (
-          <Col xs={24} sm={24} md={24} lg={24} xl={24} key={menu.menu.id} >
-            <MenuContainer>
-              <MenuCard menu={menu.menu} />
-            </MenuContainer>
-          </Col>
-        ))}
-      </Row>
-    );
+    if (
+      !(
+        value.year() in historyData &&
+        value.month() in historyData[value.year()]
+      )
+    ) {
+      return <Row />;
+    }
+
+    if (value.date() in historyData[value.year()][value.month()]) {
+      return (
+        <Row>
+          {historyData[value.year()][value.month()][value.date()].map(
+            (menu) => (
+              <Col key={menu.menu.id}>
+                <MenuContainer>
+                  <MenuCard
+                    menu={menu.menu}
+                    add={true}
+                    style={{ fontSize: 20, right: 4, bottom: 6 }}
+                  />
+                </MenuContainer>
+              </Col>
+            )
+          )}
+        </Row>
+      );
+    }
   }
 
   function getMonthData(value) {
@@ -37,7 +67,7 @@ const CalendarPresenter = ({ group }) => {
       </div>
     ) : null;
   }
-  
+
   return (
     <Body>
       <TitleContainer>
@@ -47,7 +77,10 @@ const CalendarPresenter = ({ group }) => {
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <CalendarContainer>
-          <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>        
+          <Calendar
+            dateCellRender={dateCellRender}
+            monthCellRender={monthCellRender}
+          />
         </CalendarContainer>
         <Col span={7}>
           <RecomContainer>
@@ -56,7 +89,7 @@ const CalendarPresenter = ({ group }) => {
             <Row gutter={[20, 20]}>
               {group.menus.map((menu) => (
                 <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.menu.id}>
-                  <MenuCard menu={menu.menu} />
+                  <MenuCard menu={menu.menu} add={true} />
                 </Col>
               ))}
             </Row>
@@ -119,10 +152,9 @@ const Description = styled.p`
 `;
 
 const MenuContainer = styled.div`
-  width: 50px;
+  width: 60px;
   align-items: center;
   padding-bottom: 7px;
-
 `;
 
 export default CalendarPresenter;
