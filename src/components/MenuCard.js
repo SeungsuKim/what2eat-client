@@ -1,4 +1,4 @@
-import { PlusCircleFilled } from "@ant-design/icons";
+import { DeleteOutlined, PlusCircleFilled } from "@ant-design/icons";
 import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
@@ -6,13 +6,31 @@ import styled from "styled-components";
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
 
-const MenuCard = ({ menu, add }) => {
+const MenuCard = ({ menu, add, remove }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
+  const { user, group, menus } = state;
+
+  const isMenuInVote = menus.map(({ menu }) => menu.id).includes(menu.id);
+  // const userOwnsMenu =
+  //   isMenuInVote &&
+  //   menus.filter(({ m }) => m.id === menu.id)[0].owner.id === user.id;
 
   const handleAddMenu = () => {
-    addMenuToVote(menu, state.user, state.group.id);
+    dispatch({
+      type: "ADD_MENU_TO_VOTE",
+      payload: {
+        menu,
+        owner: user,
+        viewedBy: [user],
+        likedBy: [user],
+        rejectedBy: [],
+      },
+    });
+    addMenuToVote(menu, user, group.id);
   };
+
+  const handleRemoveMenu = () => {};
 
   return (
     <VoteCard>
@@ -22,7 +40,7 @@ const MenuCard = ({ menu, add }) => {
           <p style={{ margin: 0 }}>{menu.menu}</p>
         </ScaleText>
       </MenuTitle>
-      {add && (
+      {add && !isMenuInVote && (
         <PlusCircleFilled
           onClick={handleAddMenu}
           style={{
@@ -34,6 +52,18 @@ const MenuCard = ({ menu, add }) => {
           }}
         />
       )}
+      {/* {remove && userOwnsMenu && (
+        <DeleteOutlined
+          onClick={handleRemoveMenu}
+          style={{
+            position: "absolute",
+            color: "#FF6663",
+            fontSize: 35,
+            right: 10,
+            bottom: 10,
+          }}
+        />
+      )} */}
     </VoteCard>
   );
 };

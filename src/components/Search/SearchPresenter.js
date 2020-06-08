@@ -13,10 +13,11 @@ const SearchPresenter = ({
   inputProps,
   menus,
   tags,
+  addTag,
+  addExcludedTag,
 }) => {
   const [showResult, setShowResult] = useState(false);
   const ref = useRef(null);
-  console.log(menus);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -57,17 +58,26 @@ const SearchPresenter = ({
           <ResultContainer>
             <Menus gutter={[16, 16]}>
               {menus.map((menu) => (
-                <Col span={6}>
+                <Col key={menu.id} span={6}>
                   <MenuCard menu={menu} add />
                 </Col>
               ))}
             </Menus>
             <Divider />
             <Tags>
-              <Tag name="매콤한" />
+              {tags.map((tag) => (
+                <Tag key={tag.id} tag={tag} onClick={() => addTag(tag)} />
+              ))}
             </Tags>
             <Tags>
-              <Tag name="차가운" excluded />
+              {tags.map((tag) => (
+                <Tag
+                  key={tag.id}
+                  tag={tag}
+                  excluded
+                  onClick={() => addExcludedTag(tag)}
+                />
+              ))}
             </Tags>
           </ResultContainer>
         </SearchResult>

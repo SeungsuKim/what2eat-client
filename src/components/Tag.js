@@ -1,15 +1,29 @@
-import { StopOutlined } from "@ant-design/icons";
+import { CloseOutlined, StopOutlined } from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
 
-const Tag = ({ name, excluded }) =>
+const Tag = ({ tag, excluded, onClick, remove, onRemove }) =>
   excluded ? (
-    <ExcludedTag>
+    <ExcludedTag onClick={onClick}>
       <StopOutlined style={{ color: "#ff6663", marginRight: 8 }} />
-      {name}
+      {tag.tag}
+      {/* {remove && (
+        <CloseOutlined
+          onClick={onRemove}
+          style={{ marginLeft: 7, fontSize: 15, color: "#ff6663" }}
+        />
+      )} */}
     </ExcludedTag>
   ) : (
-    <NormalTag># {name}</NormalTag>
+    <NormalTag onClick={onClick}>
+      # {tag.tag}{" "}
+      {/* {remove && (
+        <CloseOutlined
+          onClick={onRemove}
+          style={{ marginLeft: 7, fontSize: 15 }}
+        />
+      )} */}
+    </NormalTag>
   );
 
 const NormalTag = styled.div`

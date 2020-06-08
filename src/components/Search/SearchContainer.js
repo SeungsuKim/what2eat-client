@@ -4,7 +4,7 @@ import { searchMenu } from "../../db/Menu";
 import { searchTag } from "../../db/Tag";
 import SearchPresenter from "./SearchPresenter";
 
-const SearchContainer = () => {
+const SearchContainer = ({ tagActions }) => {
   const tabs = ["Recommended", "Menus", "Tags", "Exclude Tags"];
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -33,6 +33,7 @@ const SearchContainer = () => {
       inputProps={inputProps}
       menus={menus}
       tags={tags}
+      {...tagActions}
     />
   );
 };

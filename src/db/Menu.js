@@ -14,6 +14,30 @@ export const searchMenu = async (term) => {
   }
 };
 
+export const fetchMenuByTags = async (tags, excludedTags) => {
+  const query = await db.collection("menus").get();
+  let menus = [];
+  query.forEach((doc) => menus.push({ id: doc.id, ...doc.data() }));
+
+  menus = menus.map((menu) => {
+    const negativeTags = menu.tags.filter((tag) =>
+      excludedTags.map(({ tag }) => tag).includes(tag)
+    );
+    const positiveTags = menu.tags.filter((tag) =>
+      tags.map(({ tag }) => tag).includes(tag)
+    );
+
+    return {
+      ...menu,
+      priority: positiveTags.length - negativeTags.length,
+    };
+  });
+
+  menus.sort((f, s) => s.priority - f.priority);
+
+  return menus;
+};
+
 export const addMenuToVote = async (menu, user, groupId) => {
   const groupRef = db.collection("groups").doc(groupId);
   groupRef.update({

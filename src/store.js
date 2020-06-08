@@ -9,6 +9,7 @@ const initialState = {
   },
   groups: [],
   group: null,
+  menus: [],
   loading: true,
 };
 
@@ -38,6 +39,20 @@ const StateProvider = ({ children }) => {
           ...state,
           group: action.payload,
         };
+      case "SET_MENUS":
+        return {
+          ...state,
+          menus: action.payload,
+        };
+      case "ADD_MENU_TO_VOTE":
+        const menu = action.payload;
+        if (!state.menus.map(({ id }) => id).includes(menu.menu.id)) {
+          return {
+            ...state,
+            menus: [...state.menus, action.payload],
+          };
+        }
+        return state;
       default:
         throw new Error("Unkown action has dispatched.");
     }

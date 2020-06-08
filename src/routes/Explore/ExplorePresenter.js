@@ -1,16 +1,29 @@
+import { PlusCircleFilled } from "@ant-design/icons";
 import { Checkbox, Col, Row } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
 import Search from "../../components/Search";
 import Tag from "../../components/Tag";
+import { store } from "../../store";
 
-import {PlusCircleFilled} from "@ant-design/icons";
+const ExplorePresenter = ({ menuProps, tagProps }) => {
+  const globalState = useContext(store);
+  const { state } = globalState;
+  const { menus: menusOnVote } = state;
 
-const ExplorePresenter = ({ group }) => {
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  const { menus } = menuProps;
+  const {
+    tags,
+    excludedTags,
+    removeTag,
+    removeExcludedTag,
+    ...tagActions
+  } = tagProps;
 
   return (
     <Body>
@@ -26,23 +39,36 @@ const ExplorePresenter = ({ group }) => {
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
-          <Search />
+          <Search tagActions={tagActions} />
           <TagContainer>
-             <Tags>
-              <Tag name="매콤한" />
+            <Tags>
+              {tags.map((tag) => (
+                <Tag tag={tag} remove onRemove={removeTag(tag)} />
+              ))}
             </Tags>
             <Tags>
-              <Tag name="차가운" excluded />
+              {excludedTags.map((tag) => (
+                <Tag
+                  tag={tag}
+                  excluded
+                  remove
+                  onRemove={removeExcludedTag(tag)}
+                />
+              ))}
             </Tags>
           </TagContainer>
           <Row style={{ paddingTop: 20 }}>
-            <Instruction>Explore by scrolling and click <PlusCircleFilled style={{color: "#13c2c2"}}/> to add to Lunch Menu on  {now.getMonth() + 1}/{now.getDate()}{" "}
-            {weekdays[now.getDay()]}!</Instruction>
+            <Instruction>
+              Explore by scrolling and click{" "}
+              <PlusCircleFilled style={{ color: "#13c2c2" }} /> to add to Lunch
+              Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
+              {weekdays[now.getDay()]}!
+            </Instruction>
           </Row>
           <MenulistContainer>
-            {group.menus.map((menu) => (   
-              <MenuCardContainer> 
-                <MenuCard menu={menu.menu}/>
+            {menus.map((menu) => (
+              <MenuCardContainer>
+                <MenuCard menu={menu} add />
               </MenuCardContainer>
             ))}
           </MenulistContainer>
@@ -51,16 +77,15 @@ const ExplorePresenter = ({ group }) => {
           <VoteContainer>
             <VoteTitle>Menus currently on vote</VoteTitle>
             <Row gutter={[20, 20]}>
-              {group.menus.map((menu) => (
+              {menusOnVote.map((menu) => (
                 <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.menu.id}>
-                  <MenuCard menu={menu.menu} />
+                  <MenuCard menu={menu.menu} remove />
                 </Col>
               ))}
             </Row>
           </VoteContainer>
         </Col>
       </Row>
-      
     </Body>
   );
 };
@@ -90,9 +115,7 @@ const Title = styled.h2`
   margin: 0;
 `;
 
-const TagContainer = styled.div`
-
-`;
+const TagContainer = styled.div``;
 
 const Tags = styled.div`
   display: flex;

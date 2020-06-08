@@ -10,7 +10,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { getGroups } from "./db/Group";
 import Auth from "./routes/Auth";
-import Calendar from './routes/Calendar';
+import Calendar from "./routes/Calendar";
 import Explore from "./routes/Explore";
 import Home from "./routes/Home";
 import { store } from "./store";
@@ -28,6 +28,7 @@ const App = () => {
         const groups = await getGroups(state.user.groups.map(({ id }) => id));
         dispatch({ type: "SET_GROUPS", payload: groups });
         dispatch({ type: "SET_GROUP", payload: groups[0] });
+        dispatch({ type: "SET_MENUS", payload: groups[0].menus });
         dispatch({ type: "END_LOADING" });
       };
       loadData();
