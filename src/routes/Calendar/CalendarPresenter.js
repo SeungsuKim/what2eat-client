@@ -132,7 +132,7 @@ const CalendarContainer = styled.div`
 
 const RecomContainer = styled.div`
   width: 100%;
-  background-color: white;
+  background-color: rgba(19, 194, 194, 0.2);
   border-radius: 10px;
   padding: 20px 25px;
 `;
