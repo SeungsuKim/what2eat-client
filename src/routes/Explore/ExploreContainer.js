@@ -7,19 +7,20 @@ import ExplorePresenter from "./ExplorePresenter";
 const ExploreContainer = () => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
+  const { menus: menusOnVote } = state;
 
   const [menus, setMenus] = useState([]);
   const [tags, setTags] = useState([]);
   const [excludedTags, setExcludedTags] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchMenus = async () => {
-  //     const fetchedMenus = await fetchMenuByTags(tags, excludedTags);
-  //     setMenus(fetchedMenus);
-  //   };
+  useEffect(() => {
+    const fetchMenus = async () => {
+      const fetchedMenus = await fetchMenuByTags(tags, excludedTags);
+      setMenus(fetchedMenus);
+    };
 
-  //   fetchMenus();
-  // }, [tags, excludedTags]);
+    fetchMenus();
+  }, [tags, excludedTags]);
 
   const menuProps = {
     menus,
@@ -29,9 +30,13 @@ const ExploreContainer = () => {
   const tagProps = {
     tags,
     excludedTags,
-    addTag: (tag) => {
+    addTag: async (tag) => {
       if (!tags.map(({ id }) => id).includes(tag.id)) {
-        setTags([...tags, tag]);
+        const newTags = [...tags, tag];
+        setTags(newTags);
+
+        const fetchedMenus = await fetchMenuByTags(newTags, excludedTags);
+        setMenus(fetchedMenus);
       }
     },
     removeTag: (tag) => setTags(tags.filter((t) => t.id !== tag.id)),
@@ -43,7 +48,13 @@ const ExploreContainer = () => {
     removeExcludedTag: (tag) => setExcludedTags((t) => t.id !== tag.id),
   };
 
-  return <ExplorePresenter menuProps={menuProps} tagProps={tagProps} />;
+  return (
+    <ExplorePresenter
+      menuProps={menuProps}
+      tagProps={tagProps}
+      menusOnVote={menusOnVote}
+    />
+  );
 };
 
 export default ExploreContainer;

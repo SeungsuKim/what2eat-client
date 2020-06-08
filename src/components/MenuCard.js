@@ -1,4 +1,4 @@
-import { DeleteOutlined, PlusCircleFilled } from "@ant-design/icons";
+import { PlusCircleFilled } from "@ant-design/icons";
 import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
@@ -12,9 +12,6 @@ const MenuCard = ({ menu, add, remove, style }) => {
   const { user, group, menus } = state;
 
   const isMenuInVote = menus.map(({ menu }) => menu.id).includes(menu.id);
-  // const userOwnsMenu =
-  //   isMenuInVote &&
-  //   menus.filter(({ m }) => m.id === menu.id)[0].owner.id === user.id;
 
   const handleAddMenu = () => {
     dispatch({
@@ -29,8 +26,6 @@ const MenuCard = ({ menu, add, remove, style }) => {
     });
     addMenuToVote(menu, user, group.id);
   };
-
-  const handleRemoveMenu = () => {};
 
   return (
     <VoteCard>
@@ -53,18 +48,6 @@ const MenuCard = ({ menu, add, remove, style }) => {
           }}
         />
       )}
-      {/* {remove && userOwnsMenu && (
-        <DeleteOutlined
-          onClick={handleRemoveMenu}
-          style={{
-            position: "absolute",
-            color: "#FF6663",
-            fontSize: 35,
-            right: 10,
-            bottom: 10,
-          }}
-        />
-      )} */}
     </VoteCard>
   );
 };
