@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
 
-const MenuCard = ({ menu, add, remove }) => {
+const MenuCard = ({ menu, add, remove, style }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
   const { user, group, menus } = state;
@@ -49,6 +49,7 @@ const MenuCard = ({ menu, add, remove }) => {
             fontSize: 35,
             right: 10,
             bottom: 10,
+            ...style,
           }}
         />
       )}
