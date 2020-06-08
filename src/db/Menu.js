@@ -1,5 +1,17 @@
 import firebase, { db } from "../firebase";
 
+export const getResult = async (groupId) => {
+  const group = await db.collection("groups").doc(groupId).get();
+  const result = group.data().menus;
+
+  const rejectedResult = result.filter((r) => r.rejectedBy.length !== 0);
+  const nonRejectedResult = result.filter((r) => r.rejectedBy.length === 0);
+
+  const sortBy = (f, s) => f.likedBy.length - s.likedBy.length;
+
+  return [...nonRejectedResult.sort(sortBy), ...rejectedResult.sort(sortBy)];
+};
+
 export const searchMenu = async (term) => {
   try {
     const query = await db

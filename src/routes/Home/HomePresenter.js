@@ -4,11 +4,12 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import MenuCard from "../../components/MenuCard";
 import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ group }) => {
+const HomePresenter = ({ showResult, group, result }) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -66,19 +67,8 @@ const HomePresenter = ({ group }) => {
     return false;
   };
 
-  return (
-    <Body>
-      <TitleContainer>
-        <TitleWrapper>
-          <Title>
-            Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
-            {weekdays[now.getDay()]}
-          </Title>
-          <Description>6 people are joining</Description>
-        </TitleWrapper>
-        <CheckboxButton>I'm not joining today</CheckboxButton>
-      </TitleContainer>
-
+  const renderVote = () => (
+    <>
       <NewMenuContainer>
         <Row gutter={[20, 20]}>
           <Col>
@@ -131,9 +121,35 @@ const HomePresenter = ({ group }) => {
           </Row>
         </ReactedCardContainer>
       </ViewedCardContainer>
+    </>
+  );
+
+  const renderResult = () => (
+    <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
+      {result.map((menu, index) => (
+        <Col key={menu.menu.id} span={6}>
+          <MenuCard menu={menu.menu} rank={index + 1} />
+        </Col>
+      ))}
+    </Row>
+  );
+
+  return (
+    <Body>
+      <TitleContainer>
+        <TitleWrapper>
+          <Title>
+            Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
+            {weekdays[now.getDay()]}
+          </Title>
+          <Description>6 people are joining</Description>
+        </TitleWrapper>
+        <CheckboxButton>I'm not joining today</CheckboxButton>
+      </TitleContainer>
+
+      {showResult ? renderResult() : renderVote()}
 
       <div>
-        <Link to="/explore">Link to Explore</Link>
         <Link to="/calendar">Link to Calendar</Link>
       </div>
     </Body>

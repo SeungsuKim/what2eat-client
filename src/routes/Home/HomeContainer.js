@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { getGroups } from "../../db/Group";
+import { getResult } from "../../db/Menu";
 import { store } from "../../store";
 import HomePresenter from "./HomePresenter";
 
@@ -9,7 +9,24 @@ const HomeContainer = () => {
   const { state, dispatch } = globalState;
   const { group } = state;
 
-  return <HomePresenter group={group} />;
+  const [result, setResult] = useState([]);
+  const [showResult, setShowResult] = useState(true);
+
+  useEffect(() => {
+    const fetchResult = async () => {
+      if (showResult) {
+        const fetchedResult = await getResult(group.id);
+        setResult(fetchedResult);
+        console.log(fetchedResult);
+      }
+    };
+
+    fetchResult();
+  }, [showResult]);
+
+  return (
+    <HomePresenter showResult={showResult} group={group} result={result} />
+  );
 };
 
 export default HomeContainer;

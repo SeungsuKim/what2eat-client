@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
 
-const MenuCard = ({ menu, add, remove, style }) => {
+const MenuCard = ({ menu, add, rank, style }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
   const { user, group, menus } = state;
@@ -28,27 +28,30 @@ const MenuCard = ({ menu, add, remove, style }) => {
   };
 
   return (
-    <VoteCard>
-      <MenuImage src={menu.image} />
-      <MenuTitle>
-        <ScaleText>
-          <p style={{ margin: 0 }}>{menu.menu}</p>
-        </ScaleText>
-      </MenuTitle>
-      {add && !isMenuInVote && (
-        <PlusCircleFilled
-          onClick={handleAddMenu}
-          style={{
-            position: "absolute",
-            color: "#13C2C2",
-            fontSize: 35,
-            right: 10,
-            bottom: 10,
-            ...style,
-          }}
-        />
-      )}
-    </VoteCard>
+    <>
+      <VoteCard>
+        <MenuImage src={menu.image} />
+        <MenuTitle>
+          <ScaleText>
+            <p style={{ margin: 0 }}>{menu.menu}</p>
+          </ScaleText>
+        </MenuTitle>
+        {add && !isMenuInVote && (
+          <PlusCircleFilled
+            onClick={handleAddMenu}
+            style={{
+              position: "absolute",
+              color: "#13C2C2",
+              fontSize: 35,
+              right: 10,
+              bottom: 10,
+              ...style,
+            }}
+          />
+        )}
+        {rank && <Ribbon>{rank}</Ribbon>}
+      </VoteCard>
+    </>
   );
 };
 
@@ -58,6 +61,19 @@ const VoteCard = styled.div`
   padding-bottom: 100%;
   position: relative;
   overflow: hidden;
+`;
+
+const Ribbon = styled.div`
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 30px;
+  height: 50px;
+  background-color: #13c2c2;
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
 `;
 
 const MenuImage = styled.img`
