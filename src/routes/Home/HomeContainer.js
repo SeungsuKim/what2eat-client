@@ -10,7 +10,7 @@ const HomeContainer = () => {
   const { group } = state;
 
   const [result, setResult] = useState([]);
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     const fetchResult = async () => {
@@ -22,7 +22,7 @@ const HomeContainer = () => {
     };
 
     fetchResult();
-  }, [showResult]);
+  }, [showResult, group.id]);
 
   return (
     <HomePresenter showResult={showResult} group={group} result={result} />

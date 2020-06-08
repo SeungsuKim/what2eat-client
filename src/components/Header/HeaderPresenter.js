@@ -1,13 +1,16 @@
 import { StarFilled, UserOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderPresenter = () => (
   <Header>
     <GroupWrapper>
       <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
-      <GroupName>Human Resources</GroupName>
+      <Link to="/">
+        <GroupName>Human Resources</GroupName>
+      </Link>
       <UserOutlined style={{ fontSize: 23 }} />
       <GroupSize>11</GroupSize>
     </GroupWrapper>

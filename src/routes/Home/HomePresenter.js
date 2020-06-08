@@ -148,10 +148,6 @@ const HomePresenter = ({ showResult, group, result }) => {
       </TitleContainer>
 
       {showResult ? renderResult() : renderVote()}
-
-      <div>
-        <Link to="/calendar">Link to Calendar</Link>
-      </div>
     </Body>
   );
 };

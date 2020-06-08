@@ -2,14 +2,15 @@ import {
   BellOutlined,
   CalendarOutlined,
   CaretDownOutlined,
+  CloseOutlined,
   PlusOutlined,
   StarFilled,
   StarOutlined,
   UserOutlined,
-  CloseOutlined,
 } from "@ant-design/icons";
-import { Avatar, Modal, Button, Input, Typography } from "antd";
+import { Avatar, Button, Input, Modal, Typography } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -156,18 +157,20 @@ const SidebarPresenter = ({ groups }) => {
       </Modal>
 
       {/* Logo */}
-      <span
-        style={{
-          color: "#13C2C2",
-          fontSize: 44,
-          fontWeight: "800",
-          fontStyle: "italic",
-          marginBottom: 20,
-          fontFamily: "sans-serif",
-        }}
-      >
-        what2eat
-      </span>
+      <Link to="/">
+        <span
+          style={{
+            color: "#13C2C2",
+            fontSize: 44,
+            fontWeight: "800",
+            fontStyle: "italic",
+            marginBottom: 20,
+            fontFamily: "sans-serif",
+          }}
+        >
+          what2eat
+        </span>
+      </Link>
 
       {/* Icons */}
       <div
@@ -181,17 +184,19 @@ const SidebarPresenter = ({ groups }) => {
         <UserOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>My Profile</Text>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 7,
-        }}
-      >
-        <CalendarOutlined style={{ fontSize: 20, marginRight: 10 }} />
-        <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
-      </div>
+      <Link to="/calendar">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 7,
+          }}
+        >
+          <CalendarOutlined style={{ fontSize: 20, marginRight: 10 }} />
+          <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
+        </div>
+      </Link>
       <div
         style={{
           display: "flex",
