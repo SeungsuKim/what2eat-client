@@ -4,6 +4,7 @@ import {
   Route,
   HashRouter as Router,
   Switch,
+  useLocation,
 } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -44,22 +45,26 @@ const App = () => {
   );
 };
 
-const LoggedInRoutes = () => (
-  <div style={{ display: "flex", flexDirection: "row", minHeight: "100vh" }}>
-    <div style={{ width: 320 }}>
-      <Sidebar />
+const LoggedInRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <div style={{ display: "flex", flexDirection: "row", minHeight: "100vh" }}>
+      <div style={{ width: 320 }}>
+        <Sidebar />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        {location.pathname !== "/calendar" && <Header />}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/explore" component={Explore} />
+          <Route path="/calendar" component={Calendar} />
+          <Redirect from="*" to="/" />
+        </Switch>
+      </div>
     </div>
-    <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/explore" component={Explore} />
-        <Route path="/calendar" component={Calendar} />
-        <Redirect from="*" to="/" />
-      </Switch>
-    </div>
-  </div>
-);
+  );
+};
 
 const LoggedOutRoutes = () => (
   <Switch>
