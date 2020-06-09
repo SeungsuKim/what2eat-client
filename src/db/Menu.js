@@ -4,10 +4,10 @@ export const getResult = async (groupId) => {
   const group = await db.collection("groups").doc(groupId).get();
   const result = group.data().menus;
 
-  const rejectedResult = result.filter((r) => r.rejectedBy.length !== 0);
+  const rejectedResult = result.filter((r) => r.rejectedBy.length > 0);
   const nonRejectedResult = result.filter((r) => r.rejectedBy.length === 0);
 
-  const sortBy = (f, s) => f.likedBy.length - s.likedBy.length;
+  const sortBy = (f, s) => s.likedBy.length - f.likedBy.length;
 
   return [...nonRejectedResult.sort(sortBy), ...rejectedResult.sort(sortBy)];
 };
@@ -32,6 +32,7 @@ export const fetchMenuByTags = async (tags, excludedTags) => {
   query.forEach((doc) => menus.push({ id: doc.id, ...doc.data() }));
 
   menus = menus.map((menu) => {
+    console.log(menu);
     const negativeTags = menu.tags.filter((tag) =>
       excludedTags.map(({ tag }) => tag).includes(tag)
     );

@@ -1,4 +1,4 @@
-import { PlusOutlined, StopOutlined } from "@ant-design/icons";
+import { HeartFilled, PlusOutlined, StopOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Col, Row } from "antd";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ showResult, group, result }) => {
+const HomePresenter = ({ showResult, setShowResult, group, result }) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -133,6 +133,26 @@ const HomePresenter = ({ showResult, group, result }) => {
       {result.map((menu, index) => (
         <Col key={menu.menu.id} span={6}>
           <MenuCard menu={menu.menu} rank={index + 1} />
+          <div
+            style={{
+              width: "100%",
+              color: "#FF6663",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 20,
+            }}
+          >
+            {menu.rejectedBy.length !== 0 && (
+              <>
+                <StopOutlined style={{ marginRight: 10 }} />{" "}
+                {menu.rejectedBy.length}
+              </>
+            )}
+            <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+            {menu.likedBy.length}
+          </div>
         </Col>
       ))}
     </Row>
@@ -152,6 +172,7 @@ const HomePresenter = ({ showResult, group, result }) => {
       </TitleContainer>
 
       {showResult ? renderResult() : renderVote()}
+      <Button onClick={() => setShowResult(!showResult)}>Toggle Result</Button>
     </Body>
   );
 };

@@ -27,6 +27,7 @@ const HomeContainer = () => {
   return (
     <HomePresenter
       showResult={showResult}
+      setShowResult={setShowResult}
       group={group}
       result={result}
     />
