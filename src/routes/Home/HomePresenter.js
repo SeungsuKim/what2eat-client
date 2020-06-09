@@ -9,7 +9,7 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ showResult, group, result }) => {
+const HomePresenter = ({ showResult, setShowResult, group, result }) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -148,6 +148,7 @@ const HomePresenter = ({ showResult, group, result }) => {
       </TitleContainer>
 
       {showResult ? renderResult() : renderVote()}
+      <Button onClick={() => setShowResult(!showResult)}>Toggle Result</Button>
     </Body>
   );
 };

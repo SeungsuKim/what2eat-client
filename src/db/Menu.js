@@ -32,6 +32,7 @@ export const fetchMenuByTags = async (tags, excludedTags) => {
   query.forEach((doc) => menus.push({ id: doc.id, ...doc.data() }));
 
   menus = menus.map((menu) => {
+    console.log(menu);
     const negativeTags = menu.tags.filter((tag) =>
       excludedTags.map(({ tag }) => tag).includes(tag)
     );

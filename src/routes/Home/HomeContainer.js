@@ -25,7 +25,12 @@ const HomeContainer = () => {
   }, [showResult, group.id]);
 
   return (
-    <HomePresenter showResult={showResult} group={group} result={result} />
+    <HomePresenter
+      showResult={showResult}
+      setShowResult={setShowResult}
+      group={group}
+      result={result}
+    />
   );
 };
 
