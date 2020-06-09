@@ -55,7 +55,7 @@ const ReactionCard = ({ liked, rejected, menu }) => {
         setIsReject(true);
         setIsLike(false);
       } else {
-        alert("You have no more rejection count...");
+        alert("Only 2 rejections are available on a meal.\nPlease cancel other rejections to reject this menu.");
         return;
       }
     }

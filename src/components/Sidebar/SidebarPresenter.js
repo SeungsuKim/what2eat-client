@@ -207,6 +207,7 @@ const SidebarPresenter = ({ groups }) => {
       >
         <BellOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>Notifications</Text>
+        {/*
         <div
           style={{
             width: 28,
@@ -223,6 +224,7 @@ const SidebarPresenter = ({ groups }) => {
             1
           </span>
         </div>
+        */}
       </div>
       {/* border */}
       <div
@@ -273,6 +275,7 @@ const SidebarPresenter = ({ groups }) => {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
                 <Text style={{ fontSize: 20 }}>{group.group}</Text>
+                {/*
                 <div
                   style={{
                     width: 12,
@@ -283,6 +286,7 @@ const SidebarPresenter = ({ groups }) => {
                     marginRight: 8,
                   }}
                 />
+                */}
               </div>
             </Link>
           ))}

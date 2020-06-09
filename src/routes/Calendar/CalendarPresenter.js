@@ -30,7 +30,7 @@ const CalendarPresenter = ({ group }) => {
             },
           },
         ],
-        12: [
+        3: [
           {
             menu: {
               menu: "짜장면",
