@@ -7,7 +7,7 @@ import HomePresenter from "./HomePresenter";
 const HomeContainer = () => {
   const globalState = useContext(store);
   const { state } = globalState;
-  const { group } = state;
+  const { group, menus } = state;
 
   const [result, setResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
@@ -29,6 +29,7 @@ const HomeContainer = () => {
       showResult={showResult}
       setShowResult={setShowResult}
       group={group}
+      menus={menus}
       result={result}
     />
   );

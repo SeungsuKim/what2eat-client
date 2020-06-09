@@ -13,9 +13,32 @@ const CalendarPresenter = ({ group }) => {
         8: [
           {
             menu: {
+              id: "Ptdy0I4sLmxZBxXB3jPH",
               menu: "순대국밥",
               image:
                 "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EC%88%9C%EB%8C%80%EA%B5%AD%EB%B0%A5.jpg?alt=media&token=16e961a2-278f-4616-9df2-b50babb09413",
+              keywords: [
+                "ㅅ",
+                "수",
+                "순",
+                "순ㄷ",
+                "순대",
+                "순댁",
+                "순대구",
+                "순대국",
+                "순대국ㅂ",
+                "순대국바",
+                "순대국밥",
+              ],
+              tags: [
+                "한식",
+                "하얀",
+                "국물",
+                "밥",
+                "뜨거운",
+                "돼지고기",
+                "~1만원",
+              ],
             },
           },
         ],

@@ -9,7 +9,7 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ showResult, setShowResult, group, result }) => {
+const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -19,8 +19,8 @@ const HomePresenter = ({ showResult, setShowResult, group, result }) => {
   const newMenus = [];
   const viewedMenus = [];
 
-  if (group.menus) {
-    group.menus.forEach((menu) => {
+  if (menus) {
+    menus.forEach((menu) => {
       const viewedBy = menu.viewedBy;
       let viewed = false;
 
@@ -38,16 +38,11 @@ const HomePresenter = ({ showResult, setShowResult, group, result }) => {
   }
 
   const toggleView = async () => {
-    for (let i = 0; i < group.menus.length; i++) {
-      await toggleMenuView(
-        group.menus[i].menu,
-        state.user,
-        state.group.id,
-        true
-      );
+    for (let i = 0; i < menus.length; i++) {
+      await toggleMenuView(menus[i].menu, state.user, state.group.id, true);
     }
   };
-  if (group.menus) {
+  if (menus) {
     toggleView();
   }
 
