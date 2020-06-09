@@ -13,27 +13,29 @@ const HomePresenter = ({ showResult, group, result }) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
-  const num_rejection_left = 1;
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const newMenus = [];
   const viewedMenus = [];
-  group.menus.forEach((menu) => {
-    const viewedBy = menu.viewedBy;
-    let viewed = false;
 
-    for (let i = 0; i < viewedBy.length; i++) {
-      if (viewedBy[i].id === state.user.id) {
-        viewedMenus.push(menu);
-        viewed = true;
+  if (group.menus) {
+    group.menus.forEach((menu) => {
+      const viewedBy = menu.viewedBy;
+      let viewed = false;
+
+      for (let i = 0; i < viewedBy.length; i++) {
+        if (viewedBy[i].id === state.user.id) {
+          viewedMenus.push(menu);
+          viewed = true;
+        }
       }
-    }
 
-    if (!viewed) {
-      newMenus.push(menu);
-    }
-  });
+      if (!viewed) {
+        newMenus.push(menu);
+      }
+    });
+  }
 
   const toggleView = async () => {
     for (let i = 0; i < group.menus.length; i++) {
@@ -45,7 +47,9 @@ const HomePresenter = ({ showResult, group, result }) => {
       );
     }
   };
-  toggleView();
+  if (group.menus) {
+    toggleView();
+  }
 
   const isLikedMenu = (menu) => {
     for (let i = 0; i < menu.likedBy.length; i++) {
@@ -103,7 +107,7 @@ const HomePresenter = ({ showResult, group, result }) => {
           <RejectionLeft>
             Remaining Number of Rejections
             <StopOutlined style={{ fontSize: 20, color: "#FF6663" }} />
-            <p style={{ color: "#FF6663" }}>{num_rejection_left} / 2 </p>
+            <p style={{ color: "#FF6663" }}>{state.rejectionCount} / 2 </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
 

@@ -6,7 +6,7 @@ import HomePresenter from "./HomePresenter";
 
 const HomeContainer = () => {
   const globalState = useContext(store);
-  const { state, dispatch } = globalState;
+  const { state } = globalState;
   const { group } = state;
 
   const [result, setResult] = useState([]);
@@ -25,7 +25,11 @@ const HomeContainer = () => {
   }, [showResult, group.id]);
 
   return (
-    <HomePresenter showResult={showResult} group={group} result={result} />
+    <HomePresenter
+      showResult={showResult}
+      group={group}
+      result={result}
+    />
   );
 };
 

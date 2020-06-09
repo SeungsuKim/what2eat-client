@@ -27,8 +27,30 @@ const App = () => {
         dispatch({ type: "START_LOADING" });
         const groups = await getGroups(state.user.groups.map(({ id }) => id));
         dispatch({ type: "SET_GROUPS", payload: groups });
-        dispatch({ type: "SET_GROUP", payload: groups[0] });
-        dispatch({ type: "SET_MENUS", payload: groups[0].menus });
+
+        let groupIndex = 0;
+
+        dispatch({ type: "SET_GROUP", payload: groups[groupIndex] });
+        dispatch({ type: "SET_MENUS", payload: groups[groupIndex].menus });
+
+        // Get rejection count
+        let rejectionCount = 2;
+        for (let i = 0; i < groups[groupIndex].menus.length; i++) {
+          for (
+            let j = 0;
+            j < groups[groupIndex].menus[i].rejectedBy.length;
+            j++
+          ) {
+            if (
+              groups[groupIndex].menus[i].rejectedBy[j].id === state.user.id
+            ) {
+              rejectionCount = Math.max(0, rejectionCount - 1);
+              console.log(groups[groupIndex].menus[i], rejectionCount);
+            }
+          }
+        }
+        dispatch({ type: "SET_REJECTION_COUNT", payload: rejectionCount });
+
         dispatch({ type: "END_LOADING" });
       };
       loadData();
