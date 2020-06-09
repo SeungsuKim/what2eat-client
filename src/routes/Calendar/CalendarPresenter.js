@@ -1,22 +1,51 @@
 import { Col, Row } from "antd";
+import { Button, Calendar } from "antd";
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Calendar, Button } from "antd";
+
 import MenuCard from "../../components/MenuCard";
 import { addMenuToVote } from "../../db/Menu";
-
 import { store } from "../../store";
 
 const CalendarPresenter = ({ group }) => {
-  const globalState = useContext(store);
-  const { state } = globalState;
-
+  console.log(group.menus[0]);
   const historyData = {
     2020: {
       5: {
-        8: [group.menus[0]],
-        9: [group.menus[0]],
-        12: [group.menus[0], group.menus[0]],
+        8: [
+          {
+            menu: {
+              menu: "순대국밥",
+              image:
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EC%88%9C%EB%8C%80%EA%B5%AD%EB%B0%A5.jpg?alt=media&token=16e961a2-278f-4616-9df2-b50babb09413",
+            },
+          },
+        ],
+        9: [
+          {
+            menu: {
+              menu: "곱창",
+              image:
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EA%B3%B1%EC%B0%BD.jpg?alt=media&token=c31a684c-fd4b-4723-9304-91ebb7bc92d1",
+            },
+          },
+        ],
+        12: [
+          {
+            menu: {
+              menu: "짜장면",
+              image:
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EC%A7%9C%EC%9E%A5%EB%A9%B4.jpg?alt=media&token=e9695271-e628-447a-8ce4-a67e0df31e1c",
+            },
+          },
+          {
+            menu: {
+              menu: "김밥",
+              image:
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EA%B9%80%EB%B0%A5.jpg?alt=media&token=90cced9e-bc3a-42ae-a20f-a131e36e4500",
+            },
+          },
+        ],
       },
     },
   };
