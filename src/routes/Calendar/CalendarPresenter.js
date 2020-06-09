@@ -1,11 +1,9 @@
 import { Col, Row } from "antd";
-import { Button, Calendar } from "antd";
-import React, { useContext } from "react";
+import { Calendar } from "antd";
+import React from "react";
 import styled from "styled-components";
 
 import MenuCard from "../../components/MenuCard";
-import { addMenuToVote } from "../../db/Menu";
-import { store } from "../../store";
 
 const CalendarPresenter = ({ group }) => {
   console.log(group.menus[0]);
