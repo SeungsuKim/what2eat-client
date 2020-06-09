@@ -11,6 +11,7 @@ const initialState = {
   group: null,
   menus: [],
   loading: true,
+  rejectionCount: 2,
 };
 
 const store = createContext(initialState);
@@ -53,6 +54,11 @@ const StateProvider = ({ children }) => {
           };
         }
         return state;
+      case "SET_REJECTION_COUNT":
+        return {
+          ...state,
+          rejectionCount: action.payload,
+        };
       default:
         throw new Error("Unkown action has dispatched.");
     }

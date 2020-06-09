@@ -269,20 +269,22 @@ const SidebarPresenter = ({ groups }) => {
       >
         {groups &&
           groups.map((group) => (
-            <>
-              <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
-              <Text style={{ fontSize: 20 }}>{group.group}</Text>
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: "50%",
-                  backgroundColor: "#FF6663",
-                  marginLeft: "auto",
-                  marginRight: 8,
-                }}
-              />
-            </>
+            <Link to="/" style={{ width: "100%" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+                <Text style={{ fontSize: 20 }}>{group.group}</Text>
+                <div
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    backgroundColor: "#FF6663",
+                    marginLeft: "auto",
+                    marginRight: 8,
+                  }}
+                />
+              </div>
+            </Link>
           ))}
       </div>
     </div>

@@ -6,7 +6,7 @@ import HomePresenter from "./HomePresenter";
 
 const HomeContainer = () => {
   const globalState = useContext(store);
-  const { state, dispatch } = globalState;
+  const { state } = globalState;
   const { group } = state;
 
   const [result, setResult] = useState([]);

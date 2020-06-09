@@ -10,33 +10,57 @@ import { store } from "../store";
 
 const ReactionCard = ({ liked, rejected, menu }) => {
   const globalState = useContext(store);
-  const { state } = globalState;
+  const { state, dispatch } = globalState;
+  const { rejectionCount } = state;
 
   const [isLike, setIsLike] = useState(liked);
   const [isReject, setIsReject] = useState(rejected);
 
+  console.log(isLike, isReject);
+
   const toggleLike = async () => {
+    const tmpGroup = state.group;
+    let menus;
     if (isLike) {
-      await toggleMenuLike(menu, state.user, state.group.id, false);
+      menus = await toggleMenuLike(menu, state.user, state.group.id, false);
       setIsLike(false);
     } else {
-      await toggleMenuLike(menu, state.user, state.group.id, true);
-      await toggleMenuReject(menu, state.user, state.group.id, false);
+      menus = await toggleMenuLike(menu, state.user, state.group.id, true);
+      menus = await toggleMenuReject(menu, state.user, state.group.id, false);
       setIsLike(true);
       setIsReject(false);
     }
+    tmpGroup.menus = menus;
+    dispatch({ type: "SET_GROUP", payload: tmpGroup });
   };
 
   const toggleReject = async () => {
+    const tmpGroup = state.group;
+    let menus;
     if (isReject) {
-      await toggleMenuReject(menu, state.user, state.group.id, false);
+      menus = await toggleMenuReject(menu, state.user, state.group.id, false);
       setIsReject(false);
+      dispatch({
+        type: "SET_REJECTION_COUNT",
+        payload: Math.min(2, rejectionCount + 1),
+      });
     } else {
-      await toggleMenuReject(menu, state.user, state.group.id, true);
-      await toggleMenuLike(menu, state.user, state.group.id, false);
-      setIsReject(true);
-      setIsLike(false);
+      if (rejectionCount > 0) {
+        menus = await toggleMenuReject(menu, state.user, state.group.id, true);
+        menus = await toggleMenuLike(menu, state.user, state.group.id, false);
+        dispatch({
+          type: "SET_REJECTION_COUNT",
+          payload: Math.max(0, rejectionCount - 1),
+        });
+        setIsReject(true);
+        setIsLike(false);
+      } else {
+        alert("You have no more rejection count...");
+        return;
+      }
     }
+    tmpGroup.menus = menus;
+    dispatch({ type: "SET_GROUP", payload: tmpGroup });
   };
 
   return (
