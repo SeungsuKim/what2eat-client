@@ -202,7 +202,10 @@ const HomePresenter = ({
           </Title>
           <Description>6 people are joining</Description>
         </TitleWrapper>
-        <CheckboxButton checked={!isJoining}>
+        <CheckboxButton
+          checked={!isJoining}
+          onClick={() => handleJoin(!isJoining)}
+        >
           I'm not joining today
         </CheckboxButton>
       </TitleContainer>

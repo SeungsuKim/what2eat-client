@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
+import { setIsJoining } from "../../db/Group";
 import { getResult } from "../../db/Menu";
 import { store } from "../../store";
 import HomePresenter from "./HomePresenter";
@@ -34,11 +35,10 @@ const HomeContainer = () => {
     group.users.filter((u) => u.id === user.id)[0].isJoining === true;
 
   const handleJoin = (join) => {
+    setIsJoining(group.id, user.id, join);
     dispatch({ type: "SET_IS_JOINING", payload: join });
     setAskJoin(false);
   };
-  console.log(group);
-  console.log(isJoining);
 
   return (
     <HomePresenter
