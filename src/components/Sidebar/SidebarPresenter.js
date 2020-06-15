@@ -197,7 +197,7 @@ const SidebarPresenter = ({ groups }) => {
           <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
         </div>
       </Link>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -207,7 +207,7 @@ const SidebarPresenter = ({ groups }) => {
       >
         <BellOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>Notifications</Text>
-        {/*
+
         <div
           style={{
             width: 28,
@@ -224,8 +224,7 @@ const SidebarPresenter = ({ groups }) => {
             1
           </span>
         </div>
-        */}
-      </div>
+      </div> */}
       {/* border */}
       <div
         style={{
@@ -247,7 +246,7 @@ const SidebarPresenter = ({ groups }) => {
       >
         <CaretDownOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>Groups</Text>
-        <Button
+        {/* <Button
           style={{
             backgroundColor: "rgba(0, 0, 0, 0)",
             border: 0,
@@ -259,7 +258,7 @@ const SidebarPresenter = ({ groups }) => {
           onClick={toggleModal}
         >
           <PlusOutlined style={{ fontSize: 20 }} />
-        </Button>
+        </Button> */}
       </div>
       <div
         style={{

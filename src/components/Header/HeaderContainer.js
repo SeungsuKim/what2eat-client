@@ -9,6 +9,8 @@ const HeaderContainer = () => {
   const { state, dispatch } = globalState;
   const { user, group } = state;
 
+  const numUser = group.users.length;
+
   const isJoining =
     group.users.filter((u) => u.id === user.id)[0].isJoining === true;
 
@@ -17,7 +19,13 @@ const HeaderContainer = () => {
     dispatch({ type: "SET_IS_JOINING", payload: join });
   };
 
-  return <HeaderPresenter isJoining={isJoining} handleJoin={handleJoin} />;
+  return (
+    <HeaderPresenter
+      numUser={numUser}
+      isJoining={isJoining}
+      handleJoin={handleJoin}
+    />
+  );
 };
 
 export default HeaderContainer;

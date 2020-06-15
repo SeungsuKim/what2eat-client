@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const HeaderPresenter = ({ isJoining, handleJoin }) => (
+const HeaderPresenter = ({ numUser, isJoining, handleJoin }) => (
   <Header>
     <GroupWrapper>
       <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
@@ -12,7 +12,7 @@ const HeaderPresenter = ({ isJoining, handleJoin }) => (
         <GroupName>Human Resources</GroupName>
       </Link>
       <UserOutlined style={{ fontSize: 23 }} />
-      <GroupSize>11</GroupSize>
+      <GroupSize>{numUser}</GroupSize>
     </GroupWrapper>
     <HeaderButtonWrapper>
       <CheckboxButton
