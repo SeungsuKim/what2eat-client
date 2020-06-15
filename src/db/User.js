@@ -1,4 +1,4 @@
-import { db } from "../firebase";
+import firebase, { db } from "../firebase";
 
 export const signUp = async (user) => {
   const usersDoc = await db
@@ -13,11 +13,19 @@ export const signUp = async (user) => {
     ...user,
     groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false }],
   });
+
+  const groupRef = db.collection("groups").doc("kKiGhamqyqlbeVR6LiOW");
+  groupRef.update({
+    users: firebase.firestore.FieldValue.arrayUnion({
+      id: userRef.id,
+      ...user,
+    }),
+  });
+
   return userRef.id;
 };
 
 export const signIn = async (email, password) => {
-  console.log("shit");
   const usersDoc = await db
     .collection("users")
     .where("email", "==", email)
@@ -36,4 +44,10 @@ export const signIn = async (email, password) => {
   }
 
   return user.id;
+};
+
+export const getUser = async (userId) => {
+  const userRef = await db.collection("users").doc(userId).get();
+
+  return { id: userRef.id, ...userRef.data() };
 };

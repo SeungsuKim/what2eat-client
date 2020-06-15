@@ -1,12 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 const initialState = {
-  user: {
-    id: "cR7kujH7yuwYTlfxbD3B",
-    name: "김승수",
-    email: "seungsu0407@gmail.com",
-    groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: true }],
-  },
+  user: null,
   groups: [],
   group: null,
   menus: [],
@@ -30,6 +25,8 @@ const StateProvider = ({ children }) => {
           ...state,
           loading: false,
         };
+      case "SET_USER":
+        return { ...state, user: action.payload };
       case "SET_GROUPS":
         return {
           ...state,
