@@ -2,7 +2,20 @@ import firebase, { db } from "../firebase";
 
 export const getResult = async (groupId) => {
   const group = await db.collection("groups").doc(groupId).get();
-  const result = group.data().menus;
+  const { users, menus } = group.data();
+
+  const joiningUserIds = users
+    .filter((user) => user.isJoining === true)
+    .map((user) => user.id);
+  const result = menus.map((menu) => {
+    const validLikedBy = menu.likedBy.filter((user) =>
+      joiningUserIds.includes(user.id)
+    );
+    const validRejectedBy = menu.rejectedBy.filter((user) =>
+      joiningUserIds.includes(user.id)
+    );
+    return { ...menu, likedBy: validLikedBy, rejectedBy: validRejectedBy };
+  });
 
   const rejectedResult = result.filter((r) => r.rejectedBy.length > 0);
   const nonRejectedResult = result.filter((r) => r.rejectedBy.length === 0);
@@ -107,7 +120,7 @@ export const toggleMenuReject = async (menu, user, groupId, reject) => {
   const groupData = (await groupRef.get()).data();
   const menus = groupData.menus;
 
-  console.log('toggle reject')
+  console.log("toggle reject");
 
   for (let i = 0; i < menus.length; i++) {
     if (menus[i].menu.id === menu.id) {
@@ -147,7 +160,7 @@ export const toggleMenuView = async (menu, user, groupId, view) => {
   const groupData = (await groupRef.get()).data();
   const menus = groupData.menus;
 
-  console.log('toggle view')
+  console.log("toggle view");
 
   for (let i = 0; i < menus.length; i++) {
     if (menus[i].menu.id === menu.id) {
