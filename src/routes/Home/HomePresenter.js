@@ -1,5 +1,6 @@
 import { HeartFilled, PlusOutlined, StopOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Col, Row } from "antd";
+import Modal from "antd/lib/modal/Modal";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +10,15 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
+const HomePresenter = ({
+  askJoin,
+  isJoining,
+  handleJoin,
+  showResult,
+  setShowResult,
+  menus,
+  result,
+}) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -155,6 +164,36 @@ const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
 
   return (
     <Body>
+      <Modal visible={askJoin} footer={null} closable={false} centered>
+        <ModalWrapper>
+          <ModalText>Are you joining</ModalText>
+          <ModalText
+            style={{ color: "#13C2C2", fontSize: 25, fontWeight: 600 }}
+          >
+            Lunch on {now.getMonth() + 1}/{now.getDate()}{" "}
+            {weekdays[now.getDay()]}
+          </ModalText>
+          <ModalText>with {state.group.group} group?</ModalText>
+
+          <ModalButtonContainer>
+            <Button
+              style={{ width: 150, marginRight: 10 }}
+              size="large"
+              onClick={() => handleJoin(false)}
+            >
+              NO
+            </Button>
+            <Button
+              style={{ width: 150 }}
+              size="large"
+              type="primary"
+              onClick={() => handleJoin(true)}
+            >
+              JOIN
+            </Button>
+          </ModalButtonContainer>
+        </ModalWrapper>
+      </Modal>
       <TitleContainer>
         <TitleWrapper>
           <Title>
@@ -163,7 +202,9 @@ const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
           </Title>
           <Description>6 people are joining</Description>
         </TitleWrapper>
-        <CheckboxButton>I'm not joining today</CheckboxButton>
+        <CheckboxButton checked={!isJoining}>
+          I'm not joining today
+        </CheckboxButton>
       </TitleContainer>
 
       {showResult ? renderResult() : renderVote()}
@@ -264,6 +305,28 @@ const NewMenuContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 30px;
+`;
+
+const ModalText = styled.div`
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+`;
+
+const ModalButtonContainer = styled.div`
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 

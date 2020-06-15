@@ -56,6 +56,14 @@ const StateProvider = ({ children }) => {
           ...state,
           rejectionCount: action.payload,
         };
+      case "SET_IS_JOINING":
+        const users = state.group.users;
+        const newUsers = users.map((user) =>
+          user.id === state.user.id
+            ? { ...user, isJoining: action.payload }
+            : user
+        );
+        return { ...state, group: { ...state.group, users: newUsers } };
       default:
         throw new Error("Unkown action has dispatched.");
     }

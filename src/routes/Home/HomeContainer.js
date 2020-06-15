@@ -6,9 +6,15 @@ import HomePresenter from "./HomePresenter";
 
 const HomeContainer = () => {
   const globalState = useContext(store);
-  const { state } = globalState;
-  const { group, menus } = state;
+  const { state, dispatch } = globalState;
+  const { user, group, menus } = state;
 
+  const [askJoin, setAskJoin] = useState(
+    (() => {
+      const currentUser = group.users.filter((u) => u.id === user.id)[0];
+      return !("isJoining" in currentUser);
+    })()
+  );
   const [result, setResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
@@ -24,11 +30,23 @@ const HomeContainer = () => {
     fetchResult();
   }, [showResult, group.id]);
 
+  const isJoining =
+    group.users.filter((u) => u.id === user.id)[0].isJoining === true;
+
+  const handleJoin = (join) => {
+    dispatch({ type: "SET_IS_JOINING", payload: join });
+    setAskJoin(false);
+  };
+  console.log(group);
+  console.log(isJoining);
+
   return (
     <HomePresenter
+      askJoin={askJoin}
+      isJoining={isJoining}
+      handleJoin={handleJoin}
       showResult={showResult}
       setShowResult={setShowResult}
-      group={group}
       menus={menus}
       result={result}
     />
