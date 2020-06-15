@@ -22,7 +22,7 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
           </Title>
           <Description>6 people are joining</Description>
         </TitleWrapper>
-        <CheckboxButton>I'm not joining today</CheckboxButton>
+
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
