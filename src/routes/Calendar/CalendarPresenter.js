@@ -1,7 +1,8 @@
 import { Col, Row } from "antd";
 import { Calendar } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { store } from "../../store";
 
 import MenuCard from "../../components/MenuCard";
 
@@ -42,34 +43,15 @@ const CalendarPresenter = ({ group }) => {
             },
           },
         ],
-        9: [
-          {
-            menu: {
-              menu: "곱창",
-              image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EA%B3%B1%EC%B0%BD.jpg?alt=media&token=c31a684c-fd4b-4723-9304-91ebb7bc92d1",
-            },
-          },
-        ],
-        3: [
-          {
-            menu: {
-              menu: "짜장면",
-              image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EC%A7%9C%EC%9E%A5%EB%A9%B4.jpg?alt=media&token=e9695271-e628-447a-8ce4-a67e0df31e1c",
-            },
-          },
-          {
-            menu: {
-              menu: "김밥",
-              image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EA%B9%80%EB%B0%A5.jpg?alt=media&token=90cced9e-bc3a-42ae-a20f-a131e36e4500",
-            },
-          },
-        ],
       },
     },
   };
+
+  const globalState = useContext(store);
+  const { state, dispatch } = globalState;
+  const { menus: menusOnVote } = state;
+  console.log("menus");
+  console.log(menusOnVote);
 
   function dateCellRender(value) {
     if (
@@ -90,7 +72,7 @@ const CalendarPresenter = ({ group }) => {
                 <MenuContainer>
                   <MenuCard
                     menu={menu.menu}
-                    add={true}
+                    add={!isMenuInVote(menu)}
                     style={{ fontSize: 20, right: 4, bottom: 6 }}
                   />
                 </MenuContainer>
@@ -118,6 +100,17 @@ const CalendarPresenter = ({ group }) => {
     ) : null;
   }
 
+  function isMenuInVote(value) {
+    console.log("ismenuinvote...", value.menu.menu, value.menu.id);
+    for (let i = 0; i < menusOnVote.length; i++) {
+      if (menusOnVote[i].menu.id === value.menu.id) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   return (
     <Body>
       <TitleContainer>
@@ -128,6 +121,7 @@ const CalendarPresenter = ({ group }) => {
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <CalendarContainer>
           <Calendar
+            style={{}}
             dateCellRender={dateCellRender}
             monthCellRender={monthCellRender}
           />
