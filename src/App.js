@@ -79,7 +79,14 @@ const LoggedInRoutes = () => {
   const location = useLocation();
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", minHeight: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        minHeight: "100vh",
+        overflowX: "hidden",
+      }}
+    >
       <div style={{ width: 320 }}>
         <Sidebar />
       </div>

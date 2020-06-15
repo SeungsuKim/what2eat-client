@@ -1,4 +1,10 @@
-import { HeartFilled, PlusOutlined, StopOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  CaretUpFilled,
+  HeartFilled,
+  PlusOutlined,
+  StopOutlined,
+} from "@ant-design/icons";
 import { Button, Checkbox, Col, Row } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useContext } from "react";
@@ -12,6 +18,7 @@ import { store } from "../../store";
 
 const HomePresenter = ({
   askJoin,
+  isJoining,
   numJoining,
   handleJoin,
   showResult,
@@ -164,50 +171,65 @@ const HomePresenter = ({
 
   return (
     <Body>
-      <Modal visible={askJoin} footer={null} closable={false} centered>
-        <ModalWrapper>
-          <ModalText>Are you joining</ModalText>
-          <ModalText
-            style={{ color: "#13C2C2", fontSize: 25, fontWeight: 600 }}
-          >
-            Lunch on {now.getMonth() + 1}/{now.getDate()}{" "}
-            {weekdays[now.getDay()]}
-          </ModalText>
-          <ModalText>with {state.group.group} group?</ModalText>
-
-          <ModalButtonContainer>
-            <Button
-              style={{ width: 150, marginRight: 10 }}
-              size="large"
-              onClick={() => handleJoin(false)}
+      {!askJoin && !isJoining && (
+        <Overlay>
+          <Indicator>
+            <ArrowUpOutlined style={{ color: "#13C2C2", fontSize: 40 }} />
+            <p style={{ color: "white", fontSize: 20, fontWeight: 600 }}>
+              Uncheck to join again!
+            </p>
+          </Indicator>
+        </Overlay>
+      )}
+      <div style={{ padding: 30 }}>
+        <Modal visible={askJoin} footer={null} closable={false} centered>
+          <ModalWrapper>
+            <ModalText>Are you joining</ModalText>
+            <ModalText
+              style={{ color: "#13C2C2", fontSize: 25, fontWeight: 600 }}
             >
-              NO
-            </Button>
-            <Button
-              style={{ width: 150 }}
-              size="large"
-              type="primary"
-              onClick={() => handleJoin(true)}
-            >
-              JOIN
-            </Button>
-          </ModalButtonContainer>
-        </ModalWrapper>
-      </Modal>
-      <TitleContainer>
-        <TitleWrapper>
-          <Title>
-            Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
-            {weekdays[now.getDay()]}
-          </Title>
-          <Description>
-            {numJoining} {numJoining === 1 ? "person is" : "people are"} joining
-          </Description>
-        </TitleWrapper>
-      </TitleContainer>
+              Lunch on {now.getMonth() + 1}/{now.getDate()}{" "}
+              {weekdays[now.getDay()]}
+            </ModalText>
+            <ModalText>with {state.group.group} group?</ModalText>
 
-      {showResult ? renderResult() : renderVote()}
-      <Button onClick={() => setShowResult(!showResult)}>Toggle Result</Button>
+            <ModalButtonContainer>
+              <Button
+                style={{ width: 150, marginRight: 10 }}
+                size="large"
+                onClick={() => handleJoin(false)}
+              >
+                NO
+              </Button>
+              <Button
+                style={{ width: 150 }}
+                size="large"
+                type="primary"
+                onClick={() => handleJoin(true)}
+              >
+                JOIN
+              </Button>
+            </ModalButtonContainer>
+          </ModalWrapper>
+        </Modal>
+        <TitleContainer>
+          <TitleWrapper>
+            <Title>
+              Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
+              {weekdays[now.getDay()]}
+            </Title>
+            <Description>
+              {numJoining} {numJoining === 1 ? "person is" : "people are"}{" "}
+              joining
+            </Description>
+          </TitleWrapper>
+        </TitleContainer>
+
+        {showResult ? renderResult() : renderVote()}
+        <Button onClick={() => setShowResult(!showResult)}>
+          Toggle Result
+        </Button>
+      </div>
     </Body>
   );
 };
@@ -240,10 +262,27 @@ const AddNewMenu = styled(Button)`
 `;
 
 const Body = styled.div`
+  position: relative;
   width: 100%;
   background-color: #f7f7f7;
   flex: 1;
-  padding: 30px;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+`;
+
+const Indicator = styled.div`
+  text-align: center;
 `;
 
 const TitleContainer = styled.div`

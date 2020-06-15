@@ -31,6 +31,9 @@ const HomeContainer = () => {
     fetchResult();
   }, [showResult, group.id]);
 
+  const isJoining =
+    group.users.filter((u) => u.id === user.id)[0].isJoining === true;
+
   const numJoining = group.users.filter((user) => user.isJoining === true)
     .length;
 
@@ -43,6 +46,7 @@ const HomeContainer = () => {
   return (
     <HomePresenter
       askJoin={askJoin}
+      isJoining={isJoining}
       numJoining={numJoining}
       handleJoin={handleJoin}
       showResult={showResult}
