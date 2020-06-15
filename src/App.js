@@ -20,7 +20,7 @@ const App = () => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
 
-  let isLoggedIn = true;
+  let isLoggedIn = localStorage.getItem("token");
 
   useEffect(
     () => {

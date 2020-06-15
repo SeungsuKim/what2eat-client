@@ -1,13 +1,21 @@
 import { db } from "../firebase";
 
-export const createUser = async (user) => {
-  try {
-    const userRef = await db.collection("users").add(user);
-
-    return (await userRef.get()).id();
-  } catch (error) {
-    console.log(error);
+export const signUp = async (user) => {
+  const usersDoc = await db
+    .collection("users")
+    .where("email", "==", user.email)
+    .get();
+  if (!usersDoc.empty) {
+    throw new Error("USER_ALREADY_EXISTS");
   }
+
+  const userRef = await db
+    .collection("users")
+    .add({
+      ...user,
+      groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false }],
+    });
+  return userRef.id;
 };
 
 export const getUserId = async (email) => {
