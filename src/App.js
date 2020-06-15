@@ -17,9 +17,6 @@ import Home from "./routes/Home";
 import { store } from "./store";
 
 const App = () => {
-<<<<<<< HEAD
-  let isLoggedIn = false;
-=======
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
 
@@ -62,7 +59,6 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLoggedIn]
   );
->>>>>>> develop
 
   return (
     !state.loading && (
