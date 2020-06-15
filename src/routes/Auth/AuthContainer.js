@@ -1,7 +1,7 @@
 import { Form, notification } from "antd";
 import React, { useState } from "react";
 
-import { signUp } from "../../db/User";
+import { signIn, signUp } from "../../db/User";
 import AuthPresenter from "./AuthPresenter";
 
 const AuthContainer = () => {
@@ -40,6 +40,20 @@ const AuthContainer = () => {
 
   const handleSignIn = async () => {
     const { email, password } = authForm.getFieldsValue();
+    console.log(email);
+    try {
+      const id = await signIn(email, password);
+      localStorage.setItem("token", id);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      if (error.message === "USER_NOT_FOUND") {
+        notification["error"]({
+          message: "User not found.",
+          description: "Please check your email or password",
+        });
+      }
+    }
   };
 
   return (

@@ -9,23 +9,31 @@ export const signUp = async (user) => {
     throw new Error("USER_ALREADY_EXISTS");
   }
 
-  const userRef = await db
-    .collection("users")
-    .add({
-      ...user,
-      groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false }],
-    });
+  const userRef = await db.collection("users").add({
+    ...user,
+    groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false }],
+  });
   return userRef.id;
 };
 
-export const getUserId = async (email) => {
-  try {
-    const query = await db
-      .collection("users")
-      .where("email", "==", email)
-      .get();
-    query.forEach((doc) => console.log(doc));
-  } catch (error) {
-    console.log(error);
+export const signIn = async (email, password) => {
+  console.log("shit");
+  const usersDoc = await db
+    .collection("users")
+    .where("email", "==", email)
+    .get();
+  if (usersDoc.empty) {
+    throw new Error("USER_NOT_FOUND");
   }
+
+  let user;
+  usersDoc.forEach((doc) => {
+    user = { id: doc.id, ...doc.data() };
+  });
+
+  if (user.password !== password) {
+    throw new Error("USER_NOT_FOUND");
+  }
+
+  return user.id;
 };
