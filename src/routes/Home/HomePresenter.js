@@ -12,7 +12,7 @@ import { store } from "../../store";
 
 const HomePresenter = ({
   askJoin,
-  isJoining,
+  numJoining,
   handleJoin,
   showResult,
   setShowResult,
@@ -200,14 +200,10 @@ const HomePresenter = ({
             Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
             {weekdays[now.getDay()]}
           </Title>
-          <Description>6 people are joining</Description>
+          <Description>
+            {numJoining} {numJoining === 1 ? "person is" : "people are"} joining
+          </Description>
         </TitleWrapper>
-        <CheckboxButton
-          checked={!isJoining}
-          onClick={() => handleJoin(!isJoining)}
-        >
-          I'm not joining today
-        </CheckboxButton>
       </TitleContainer>
 
       {showResult ? renderResult() : renderVote()}
@@ -273,14 +269,6 @@ const Description = styled.p`
   margin: 0 10px;
   font-size: 15px;
   color: rgba(0, 0, 0, 0.45);
-`;
-
-const CheckboxButton = styled(Checkbox)`
-  color: #13c2c2;
-  font-size: 15px;
-  padding: 5px 10px;
-  border: 1px solid #13c2c2;
-  border-radius: 5px;
 `;
 
 const ReactedCardContainer = styled.div`

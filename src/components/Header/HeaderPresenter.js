@@ -1,10 +1,10 @@
 import { StarFilled, UserOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Checkbox } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const HeaderPresenter = () => (
+const HeaderPresenter = ({ isJoining, handleJoin }) => (
   <Header>
     <GroupWrapper>
       <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
@@ -15,10 +15,12 @@ const HeaderPresenter = () => (
       <GroupSize>11</GroupSize>
     </GroupWrapper>
     <HeaderButtonWrapper>
-      <Button type="default">Edit Members</Button>
-      <Button type="primary" style={{ marginLeft: 10 }}>
-        + Have Another Meal
-      </Button>
+      <CheckboxButton
+        checked={!isJoining}
+        onClick={() => handleJoin(!isJoining)}
+      >
+        I'm not joining today
+      </CheckboxButton>
     </HeaderButtonWrapper>
   </Header>
 );
@@ -53,6 +55,14 @@ const GroupSize = styled.p`
 const HeaderButtonWrapper = styled.div`
   flex-direction: row;
   align-items: center;
+`;
+
+const CheckboxButton = styled(Checkbox)`
+  color: #13c2c2;
+  font-size: 15px;
+  padding: 5px 10px;
+  border: 1px solid #13c2c2;
+  border-radius: 5px;
 `;
 
 export default HeaderPresenter;
