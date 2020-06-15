@@ -118,10 +118,9 @@ const CalendarPresenter = ({ group }) => {
           <Title>Menu History Calendar</Title>
         </TitleWrapper>
       </TitleContainer>
-      <Row gutter={30} style={{ paddingTop: 20 }}>
+      <Row gutter={30} style={{ paddingTop: 20, height: "100%" }}>
         <CalendarContainer>
           <Calendar
-            style={{}}
             dateCellRender={dateCellRender}
             monthCellRender={monthCellRender}
           />
@@ -170,7 +169,7 @@ const Title = styled.h2`
 `;
 
 const CalendarContainer = styled.div`
-  width: 800px;
+  width: 70%;
   padding: 0px 20px;
 `;
 
@@ -196,7 +195,7 @@ const Description = styled.p`
 `;
 
 const MenuContainer = styled.div`
-  width: 60px;
+  width: 78px;
   align-items: center;
   padding-bottom: 7px;
 `;
