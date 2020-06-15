@@ -74,7 +74,7 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
             </Link>
             <Row gutter={[20, 20]}>
               {menusOnVote.map((menu) => (
-                <Col xs={24} sm={24} md={24} lg={12} xl={8} key={menu.menu.id}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={6} key={menu.menu.id}>
                   <MenuCard menu={menu.menu} remove />
                 </Col>
               ))}
