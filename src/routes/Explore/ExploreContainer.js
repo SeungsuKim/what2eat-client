@@ -16,6 +16,12 @@ const ExploreContainer = () => {
   useEffect(() => {
     const fetchMenus = async () => {
       const fetchedMenus = await fetchMenuByTags(tags, excludedTags);
+      // random initial
+      if (tags.length === 0 && excludedTags.length === 0) {
+        fetchedMenus.sort(() => {
+          return Math.random() - Math.random();
+        });
+      }
       setMenus(fetchedMenus);
     };
 

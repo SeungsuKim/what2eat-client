@@ -7,6 +7,7 @@ import {
   StarFilled,
   StarOutlined,
   UserOutlined,
+  ExportOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input, Modal, Typography } from "antd";
 import React, { useState } from "react";
@@ -290,6 +291,29 @@ const SidebarPresenter = ({ groups }) => {
             </Link>
           ))}
       </div>
+      <div
+        style={{
+          width: "100%",
+          height: 2,
+          marginTop: "auto",
+          marginBottom: 27,
+          backgroundColor: "rgba(0, 109, 117, 0.2)",
+        }}
+      />
+      <a
+        href="/"
+        style={{
+          display: "flex",
+          marginTop: -10,
+          color: "rgba(0, 0, 0, 0.65)",
+          fontSize: 20,
+          alignItems: "center",
+        }}
+        onClick={() => localStorage.removeItem('token')}
+      >
+        <ExportOutlined style={{ marginRight: 10 }} />
+        <span>Sign out</span>
+      </a>
     </div>
   );
 };
