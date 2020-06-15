@@ -21,3 +21,9 @@ export const setIsJoining = async (groupId, userId, isJoining) => {
 
   groupRef.update({ users: newUsers });
 };
+
+export const setOpenedAt = (groupId, openedAt) => {
+  const groupRef = db.collection("groups").doc(groupId);
+
+  groupRef.update({ openedAt });
+};

@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 
 import { setIsJoining } from "../../db/Group";
@@ -17,7 +18,14 @@ const HomeContainer = () => {
     })()
   );
   const [result, setResult] = useState([]);
-  const [showResult, setShowResult] = useState(false);
+  const [showResult, setShowResult] = useState(
+    (() => {
+      const openedAt = moment(group.openedAt, [moment.ISO_8601, "HH:mm"]);
+      const now = moment();
+
+      return now > openedAt;
+    })()
+  );
 
   useEffect(() => {
     const fetchResult = async () => {

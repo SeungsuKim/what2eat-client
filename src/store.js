@@ -64,6 +64,11 @@ const StateProvider = ({ children }) => {
             : user
         );
         return { ...state, group: { ...state.group, users: newUsers } };
+      case "SET_OPENEDAT":
+        return {
+          ...state,
+          group: { ...state.group, openedAt: action.payload },
+        };
       default:
         throw new Error("Unkown action has dispatched.");
     }
