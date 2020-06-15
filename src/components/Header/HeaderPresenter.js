@@ -54,8 +54,10 @@ const HeaderPresenter = ({
       <Link to="/">
         <GroupName>Human Resources</GroupName>
       </Link>
-      <UserOutlined style={{ fontSize: 23 }} />
-      <GroupSize>{numUser}</GroupSize>
+      <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
+      <HeaderText>{numUser}</HeaderText>
+      <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
+      <HeaderText>{openedAt.format("HH:mm")}</HeaderText>
     </GroupWrapper>
     <HeaderButtonWrapper>
       <Button
@@ -98,8 +100,9 @@ const GroupName = styled.h1`
   margin: 0px 20px;
 `;
 
-const GroupSize = styled.p`
+const HeaderText = styled.p`
   margin: 0;
+  margin-right: 15px;
   font-size: 20px;
 `;
 
