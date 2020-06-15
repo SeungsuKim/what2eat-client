@@ -117,8 +117,18 @@ const HomePresenter = ({
           Viewed Menu
           <RejectionLeft>
             Remaining Number of Rejections
-            <StopOutlined style={{ fontSize: 18, color: "#FF6663",  marginRight: "6px", marginLeft: "12px", marginTop: "7px" }} />
-            <p style={{ color: "#FF6663", fontSize: 19 }}>{state.rejectionCount} / 2 </p>
+            <StopOutlined
+              style={{
+                fontSize: 18,
+                color: "#FF6663",
+                marginRight: "6px",
+                marginLeft: "12px",
+                marginTop: "7px",
+              }}
+            />
+            <p style={{ color: "#FF6663", fontSize: 19 }}>
+              {state.rejectionCount} / 2{" "}
+            </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
 
@@ -139,35 +149,89 @@ const HomePresenter = ({
     </>
   );
 
-  const renderResult = () => (
-    <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
-      {result.map((menu, index) => (
-        <Col key={menu.menu.id} span={6}>
-          <MenuCard menu={menu.menu} rank={index + 1} />
-          <div
-            style={{
-              width: "100%",
-              color: "#FF6663",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 20,
-            }}
-          >
-            {menu.rejectedBy.length !== 0 && (
-              <>
-                <StopOutlined style={{ marginRight: 10 }} />{" "}
-                {menu.rejectedBy.length}
-              </>
-            )}
-            <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
-            {menu.likedBy.length}
-          </div>
-        </Col>
-      ))}
-    </Row>
-  );
+  const renderResult = () => {
+    const modifiedResult = result.sort((a, b) => {
+      return (
+        b.likedBy.length - a.likedBy.length ||
+        (-1 * b.rejectedBy.length) - (-1 * a.rejectedBy.length)
+      );
+    });
+
+    return (
+      <>
+        <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
+          {modifiedResult.slice(0, 3).map((menu, index) => (
+            <Col key={menu.menu.id}>
+              <div style={{ width: 150, height: 150 }}>
+                <MenuCard menu={menu.menu} rank={index + 1} />
+                <div
+                  style={{
+                    width: "100%",
+                    color: "#FF6663",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  {menu.rejectedBy.length !== 0 && (
+                    <>
+                      <StopOutlined style={{ marginRight: 10 }} />{" "}
+                      {menu.rejectedBy.length}
+                    </>
+                  )}
+                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                  {menu.likedBy.length}
+                </div>
+              </div>
+            </Col>
+          ))}
+        </Row>
+        <div
+          style={{
+            width: "100%",
+            height: 2,
+            marginTop: 35,
+            marginBottom: 20,
+            backgroundColor: "rgba(0, 109, 117, 0.2)",
+          }}
+        />
+        <Row
+          gutter={[20, 20]}
+          style={{ width: "100%", marginTop: 20, marginBottom: 50 }}
+        >
+          {modifiedResult.slice(3).map((menu, index) => (
+            <Col key={menu.menu.id}>
+              <div style={{ width: 150, height: 150 }}>
+                <MenuCard menu={menu.menu} rank={index + 4} />
+                <div
+                  style={{
+                    width: "100%",
+                    color: "#FF6663",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  {menu.rejectedBy.length !== 0 && (
+                    <>
+                      <StopOutlined style={{ marginRight: 10 }} />{" "}
+                      {menu.rejectedBy.length}
+                    </>
+                  )}
+                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                  {menu.likedBy.length}
+                </div>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  };
 
   return (
     <Body>

@@ -19,7 +19,9 @@ const HeaderPresenter = ({ numUser, isJoining, handleJoin }) => (
         checked={!isJoining}
         onClick={() => handleJoin(!isJoining)}
       >
-        I'm not joining today
+        <span style={{ marginLeft: 10, fontSize: 22, fontWeight: "bold", color: "white" }}>
+          I'm not joining today
+        </span>
       </CheckboxButton>
     </HeaderButtonWrapper>
   </Header>
@@ -55,13 +57,16 @@ const GroupSize = styled.p`
 const HeaderButtonWrapper = styled.div`
   flex-direction: row;
   align-items: center;
+  background-color: rgba(19, 194, 194, 0.6);
+  border-radius: 5px;
 `;
 
 const CheckboxButton = styled(Checkbox)`
   color: #13c2c2;
   font-size: 15px;
-  padding: 5px 10px;
-  border: 1px solid #13c2c2;
+  padding: 7px;
+  padding-left: 20px;
+  border: 2.5px solid #13C2C2;
   border-radius: 5px;
 `;
 

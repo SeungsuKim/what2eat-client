@@ -42,6 +42,8 @@ const MenuCard = ({ menu, add, rank, style }) => {
             style={{
               position: "absolute",
               color: "#13C2C2",
+              backgroundColor: 'white',
+              borderRadius: '60%',
               fontSize: 35,
               right: 10,
               bottom: 10,
@@ -65,10 +67,10 @@ const VoteCard = styled.div`
 
 const Ribbon = styled.div`
   position: absolute;
-  top: 0;
-  left: 10px;
-  width: 30px;
-  height: 50px;
+  top: 110px;
+  left: 0px;
+  right: 0px;
+  height: 40px;
   background-color: #13c2c2;
   color: white;
   font-size: 25px;
