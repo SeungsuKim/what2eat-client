@@ -101,8 +101,8 @@ const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
           Viewed Menu
           <RejectionLeft>
             Remaining Number of Rejections
-            <StopOutlined style={{ fontSize: 20, color: "#FF6663" }} />
-            <p style={{ color: "#FF6663" }}>{state.rejectionCount} / 2 </p>
+            <StopOutlined style={{ fontSize: 18, color: "#FF6663",  marginRight: "6px", marginLeft: "12px", marginTop: "7px" }} />
+            <p style={{ color: "#FF6663", fontSize: 19 }}>{state.rejectionCount} / 2 </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
 
