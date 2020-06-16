@@ -69,7 +69,7 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
         </Col>
         <Col span={9}>
           <VoteContainer>
-            <Link to="/">
+            <Link to="/#/">
               <VoteTitle>Menus currently on vote</VoteTitle>
             </Link>
             <Row gutter={[20, 20]}>

@@ -151,7 +151,10 @@ const HomePresenter = ({
 
   const renderResult = () => {
     const modifiedResult = result.sort((a, b) => {
+      console.log('rej length', b.rejectedBy.length === 0, true * -1);
+      
       return (
+        (b.rejectedBy.length === 0 ? 1 : -1) - (a.rejectedBy.length === 0 ? 1 : -1) || 
         b.likedBy.length - a.likedBy.length ||
         (-1 * b.rejectedBy.length) - (-1 * a.rejectedBy.length)
       );
@@ -290,9 +293,11 @@ const HomePresenter = ({
         </TitleContainer>
 
         {showResult ? renderResult() : renderVote()}
+
+        {/*
         <Button onClick={() => setShowResult(!showResult)}>
           Toggle Result
-        </Button>
+        </Button>*/}
       </div>
     </Body>
   );
