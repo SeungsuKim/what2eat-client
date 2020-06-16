@@ -59,20 +59,29 @@ const HeaderPresenter = ({
       <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
       <HeaderText>{openedAt.format("HH:mm")}</HeaderText>
     </GroupWrapper>
-    <HeaderButtonWrapper>
-      <Button
-        size="large"
-        style={{ marginRight: 20 }}
-        onClick={() => setShowSetTime(true)}
-      >
+    <Button
+      size="large"
+      style={{ marginLeft: "auto", marginRight: 10, padding: 7, height: 55, borderRadius: 5, borderWidth: 2 }}
+      onClick={() => setShowSetTime(true)}
+    >
+      <span style={{ fontSize: 22, fontWeight: "bold" }}>
         <FieldTimeOutlined /> Set Vote Opening Time
-      </Button>
+      </span>
+    </Button>
+    <HeaderButtonWrapper>
       <CheckboxButton
         size="large"
         checked={!isJoining}
         onClick={() => handleJoin(!isJoining)}
       >
-        <span style={{ marginLeft: 10, fontSize: 22, fontWeight: "bold", color: "white" }}>
+        <span
+          style={{
+            marginLeft: 10,
+            fontSize: 22,
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
           I'm not joining today
         </span>
       </CheckboxButton>
@@ -120,7 +129,7 @@ const CheckboxButton = styled(Checkbox)`
   font-size: 15px;
   padding: 7px;
   padding-left: 20px;
-  border: 2.5px solid #13C2C2;
+  border: 2.5px solid #13c2c2;
   border-radius: 5px;
 `;
 
