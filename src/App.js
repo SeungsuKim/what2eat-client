@@ -10,6 +10,7 @@ import {
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { getGroups } from "./db/Group";
+import { getUser } from "./db/User";
 import Auth from "./routes/Auth";
 import Calendar from "./routes/Calendar";
 import Explore from "./routes/Explore";
@@ -20,13 +21,17 @@ const App = () => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
 
-  let isLoggedIn = true;
+  let isLoggedIn = localStorage.getItem("token");
 
   useEffect(
     () => {
       const loadData = async () => {
         dispatch({ type: "START_LOADING" });
-        const groups = await getGroups(state.user.groups.map(({ id }) => id));
+
+        const user = await getUser(isLoggedIn);
+        dispatch({ type: "SET_USER", payload: user });
+
+        const groups = await getGroups(user.groups.map(({ id }) => id));
         dispatch({ type: "SET_GROUPS", payload: groups });
 
         let groupIndex = 0;
@@ -42,9 +47,7 @@ const App = () => {
             j < groups[groupIndex].menus[i].rejectedBy.length;
             j++
           ) {
-            if (
-              groups[groupIndex].menus[i].rejectedBy[j].id === state.user.id
-            ) {
+            if (groups[groupIndex].menus[i].rejectedBy[j].id === user.id) {
               rejectionCount = Math.max(0, rejectionCount - 1);
               console.log(groups[groupIndex].menus[i], rejectionCount);
             }
@@ -54,7 +57,12 @@ const App = () => {
 
         dispatch({ type: "END_LOADING" });
       };
-      loadData();
+
+      if (isLoggedIn) {
+        loadData();
+      } else {
+        dispatch({ type: "END_LOADING" });
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLoggedIn]
@@ -71,7 +79,14 @@ const LoggedInRoutes = () => {
   const location = useLocation();
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", minHeight: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        minHeight: "100vh",
+        overflowX: "hidden",
+      }}
+    >
       <div style={{ width: 320 }}>
         <Sidebar />
       </div>

@@ -1,5 +1,12 @@
-import { HeartFilled, PlusOutlined, StopOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  CaretUpFilled,
+  HeartFilled,
+  PlusOutlined,
+  StopOutlined,
+} from "@ant-design/icons";
 import { Button, Checkbox, Col, Row } from "antd";
+import Modal from "antd/lib/modal/Modal";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +16,16 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
+const HomePresenter = ({
+  askJoin,
+  isJoining,
+  numJoining,
+  handleJoin,
+  showResult,
+  setShowResult,
+  menus,
+  result,
+}) => {
   const globalState = useContext(store);
   const { state } = globalState;
 
@@ -101,8 +117,18 @@ const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
           Viewed Menu
           <RejectionLeft>
             Remaining Number of Rejections
-            <StopOutlined style={{ fontSize: 20, color: "#FF6663" }} />
-            <p style={{ color: "#FF6663" }}>{state.rejectionCount} / 2 </p>
+            <StopOutlined
+              style={{
+                fontSize: 18,
+                color: "#FF6663",
+                marginRight: "6px",
+                marginLeft: "12px",
+                marginTop: "7px",
+              }}
+            />
+            <p style={{ color: "#FF6663", fontSize: 19 }}>
+              {state.rejectionCount} / 2{" "}
+            </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
 
@@ -123,51 +149,151 @@ const HomePresenter = ({ showResult, setShowResult, group, menus, result }) => {
     </>
   );
 
-  const renderResult = () => (
-    <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
-      {result.map((menu, index) => (
-        <Col key={menu.menu.id} span={6}>
-          <MenuCard menu={menu.menu} rank={index + 1} />
-          <div
-            style={{
-              width: "100%",
-              color: "#FF6663",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 20,
-            }}
-          >
-            {menu.rejectedBy.length !== 0 && (
-              <>
-                <StopOutlined style={{ marginRight: 10 }} />{" "}
-                {menu.rejectedBy.length}
-              </>
-            )}
-            <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
-            {menu.likedBy.length}
-          </div>
-        </Col>
-      ))}
-    </Row>
-  );
+  const renderResult = () => {
+    const modifiedResult = result.sort((a, b) => {
+      return (
+        b.likedBy.length - a.likedBy.length ||
+        (-1 * b.rejectedBy.length) - (-1 * a.rejectedBy.length)
+      );
+    });
+
+    return (
+      <>
+        <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
+          {modifiedResult.slice(0, 3).map((menu, index) => (
+            <Col key={menu.menu.id}>
+              <div style={{ width: 150, height: 150 }}>
+                <MenuCard menu={menu.menu} rank={index + 1} />
+                <div
+                  style={{
+                    width: "100%",
+                    color: "#FF6663",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  {menu.rejectedBy.length !== 0 && (
+                    <>
+                      <StopOutlined style={{ marginRight: 10 }} />{" "}
+                      {menu.rejectedBy.length}
+                    </>
+                  )}
+                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                  {menu.likedBy.length}
+                </div>
+              </div>
+            </Col>
+          ))}
+        </Row>
+        <div
+          style={{
+            width: "100%",
+            height: 2,
+            marginTop: 35,
+            marginBottom: 20,
+            backgroundColor: "rgba(0, 109, 117, 0.2)",
+          }}
+        />
+        <Row
+          gutter={[20, 20]}
+          style={{ width: "100%", marginTop: 20, marginBottom: 50 }}
+        >
+          {modifiedResult.slice(3).map((menu, index) => (
+            <Col key={menu.menu.id}>
+              <div style={{ width: 150, height: 150 }}>
+                <MenuCard menu={menu.menu} rank={index + 4} />
+                <div
+                  style={{
+                    width: "100%",
+                    color: "#FF6663",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  {menu.rejectedBy.length !== 0 && (
+                    <>
+                      <StopOutlined style={{ marginRight: 10 }} />{" "}
+                      {menu.rejectedBy.length}
+                    </>
+                  )}
+                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                  {menu.likedBy.length}
+                </div>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  };
 
   return (
     <Body>
-      <TitleContainer>
-        <TitleWrapper>
-          <Title>
-            Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
-            {weekdays[now.getDay()]}
-          </Title>
-          <Description>6 people are joining</Description>
-        </TitleWrapper>
-        <CheckboxButton>I'm not joining today</CheckboxButton>
-      </TitleContainer>
+      {!askJoin && !isJoining && (
+        <Overlay>
+          <Indicator>
+            <ArrowUpOutlined style={{ color: "#13C2C2", fontSize: 40 }} />
+            <p style={{ color: "white", fontSize: 20, fontWeight: 600 }}>
+              Uncheck to join again!
+            </p>
+          </Indicator>
+        </Overlay>
+      )}
+      <div style={{ padding: 30 }}>
+        <Modal visible={askJoin} footer={null} closable={false} centered>
+          <ModalWrapper>
+            <ModalText>Are you joining</ModalText>
+            <ModalText
+              style={{ color: "#13C2C2", fontSize: 25, fontWeight: 600 }}
+            >
+              Lunch on {now.getMonth() + 1}/{now.getDate()}{" "}
+              {weekdays[now.getDay()]}
+            </ModalText>
+            <ModalText>with {state.group.group} group?</ModalText>
 
-      {showResult ? renderResult() : renderVote()}
-      <Button onClick={() => setShowResult(!showResult)}>Toggle Result</Button>
+            <ModalButtonContainer>
+              <Button
+                style={{ width: 150, marginRight: 10 }}
+                size="large"
+                onClick={() => handleJoin(false)}
+              >
+                NO
+              </Button>
+              <Button
+                style={{ width: 150 }}
+                size="large"
+                type="primary"
+                onClick={() => handleJoin(true)}
+              >
+                JOIN
+              </Button>
+            </ModalButtonContainer>
+          </ModalWrapper>
+        </Modal>
+        <TitleContainer>
+          <TitleWrapper>
+            <Title>
+              Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
+              {weekdays[now.getDay()]}
+            </Title>
+            <Description>
+              {numJoining} {numJoining === 1 ? "person is" : "people are"}{" "}
+              joining
+            </Description>
+          </TitleWrapper>
+        </TitleContainer>
+
+        {showResult ? renderResult() : renderVote()}
+        <Button onClick={() => setShowResult(!showResult)}>
+          Toggle Result
+        </Button>
+      </div>
     </Body>
   );
 };
@@ -200,10 +326,27 @@ const AddNewMenu = styled(Button)`
 `;
 
 const Body = styled.div`
+  position: relative;
   width: 100%;
   background-color: #f7f7f7;
   flex: 1;
-  padding: 30px;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+`;
+
+const Indicator = styled.div`
+  text-align: center;
 `;
 
 const TitleContainer = styled.div`
@@ -231,14 +374,6 @@ const Description = styled.p`
   color: rgba(0, 0, 0, 0.45);
 `;
 
-const CheckboxButton = styled(Checkbox)`
-  color: #13c2c2;
-  font-size: 15px;
-  padding: 5px 10px;
-  border: 1px solid #13c2c2;
-  border-radius: 5px;
-`;
-
 const ReactedCardContainer = styled.div`
   width: 100%;
   padding: 20px 0;
@@ -264,6 +399,28 @@ const NewMenuContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 30px;
+`;
+
+const ModalText = styled.div`
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+`;
+
+const ModalButtonContainer = styled.div`
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 

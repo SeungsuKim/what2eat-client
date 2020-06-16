@@ -1,12 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 const initialState = {
-  user: {
-    id: "cR7kujH7yuwYTlfxbD3B",
-    name: "김승수",
-    email: "seungsu0407@gmail.com",
-    groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: true }],
-  },
+  user: null,
   groups: [],
   group: null,
   menus: [],
@@ -30,6 +25,8 @@ const StateProvider = ({ children }) => {
           ...state,
           loading: false,
         };
+      case "SET_USER":
+        return { ...state, user: action.payload };
       case "SET_GROUPS":
         return {
           ...state,
@@ -58,6 +55,19 @@ const StateProvider = ({ children }) => {
         return {
           ...state,
           rejectionCount: action.payload,
+        };
+      case "SET_IS_JOINING":
+        const users = state.group.users;
+        const newUsers = users.map((user) =>
+          user.id === state.user.id
+            ? { ...user, isJoining: action.payload }
+            : user
+        );
+        return { ...state, group: { ...state.group, users: newUsers } };
+      case "SET_OPENEDAT":
+        return {
+          ...state,
+          group: { ...state.group, openedAt: action.payload },
         };
       default:
         throw new Error("Unkown action has dispatched.");

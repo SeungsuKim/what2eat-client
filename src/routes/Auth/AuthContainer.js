@@ -1,8 +1,7 @@
 import { Form, notification } from "antd";
 import React, { useState } from "react";
 
-import { createUser, getUserId } from "../../db/User";
-import { auth } from "../../firebase";
+import { signIn, signUp } from "../../db/User";
 import AuthPresenter from "./AuthPresenter";
 
 const AuthContainer = () => {
@@ -18,42 +17,42 @@ const AuthContainer = () => {
     } = authForm.getFieldsValue();
 
     if (password !== passwordConfirm) {
+      notification["error"]({
+        message: "Password and password confirm does not match.",
+        description: "Please check your password and password confirm.",
+      });
       return;
     }
 
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      const userId = await createUser({ email, name });
-      console.log(userId);
+      const id = await signUp({ name, email, password });
+      localStorage.setItem("token", id);
+      window.location.reload();
     } catch (error) {
-      console.log(error);
-      let message;
-      let description;
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          message = "Email Already In Use";
-          description = "Please try with another email or Sign In.";
-          break;
-        default:
-          message = "Unkown Error";
-          description = "Unkown error occured while sign up. Please try later.";
-          break;
+      if ((error.message = "USER_ALREADY_EXISTS")) {
+        notification["error"]({
+          message: "Email already in use.",
+          description: "Please try with another email.",
+        });
       }
-      notification["error"]({
-        message,
-        description,
-      });
     }
   };
 
   const handleSignIn = async () => {
     const { email, password } = authForm.getFieldsValue();
-
+    console.log(email);
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      await getUserId(email);
+      const id = await signIn(email, password);
+      localStorage.setItem("token", id);
+      window.location.reload();
     } catch (error) {
       console.log(error);
+      if (error.message === "USER_NOT_FOUND") {
+        notification["error"]({
+          message: "User not found.",
+          description: "Please check your email or password",
+        });
+      }
     }
   };
 

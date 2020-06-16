@@ -7,6 +7,7 @@ import {
   StarFilled,
   StarOutlined,
   UserOutlined,
+  ExportOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input, Modal, Typography } from "antd";
 import React, { useState } from "react";
@@ -197,7 +198,7 @@ const SidebarPresenter = ({ groups }) => {
           <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
         </div>
       </Link>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -207,7 +208,7 @@ const SidebarPresenter = ({ groups }) => {
       >
         <BellOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>Notifications</Text>
-        {/*
+
         <div
           style={{
             width: 28,
@@ -224,8 +225,7 @@ const SidebarPresenter = ({ groups }) => {
             1
           </span>
         </div>
-        */}
-      </div>
+      </div> */}
       {/* border */}
       <div
         style={{
@@ -247,7 +247,7 @@ const SidebarPresenter = ({ groups }) => {
       >
         <CaretDownOutlined style={{ fontSize: 20, marginRight: 10 }} />
         <Text style={{ fontSize: 20 }}>Groups</Text>
-        <Button
+        {/* <Button
           style={{
             backgroundColor: "rgba(0, 0, 0, 0)",
             border: 0,
@@ -259,7 +259,7 @@ const SidebarPresenter = ({ groups }) => {
           onClick={toggleModal}
         >
           <PlusOutlined style={{ fontSize: 20 }} />
-        </Button>
+        </Button> */}
       </div>
       <div
         style={{
@@ -291,6 +291,29 @@ const SidebarPresenter = ({ groups }) => {
             </Link>
           ))}
       </div>
+      <div
+        style={{
+          width: "100%",
+          height: 2,
+          marginTop: "auto",
+          marginBottom: 27,
+          backgroundColor: "rgba(0, 109, 117, 0.2)",
+        }}
+      />
+      <a
+        href="/"
+        style={{
+          display: "flex",
+          marginTop: -10,
+          color: "rgba(0, 0, 0, 0.65)",
+          fontSize: 20,
+          alignItems: "center",
+        }}
+        onClick={() => localStorage.removeItem('token')}
+      >
+        <ExportOutlined style={{ marginRight: 10 }} />
+        <span>Sign out</span>
+      </a>
     </div>
   );
 };
