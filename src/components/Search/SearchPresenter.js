@@ -56,50 +56,71 @@ const SearchPresenter = ({
             ))}
           </Tabs> */}
           <ResultContainer>
-            <Menus gutter={[16, 16]}>
-              {menus.map((menu) => (
-                <Col key={menu.id} span={6}>
-                  <MenuCard menu={menu} add />
-                </Col>
-              ))}
-            </Menus>
-            <Divider />
-            <Tags>
-              {tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  tag={tag}
-                  onClick={() => {
-                    addTag(tag);
-                    inputProps.resetTerm();
-                  }}
-                />
-              ))}
-            </Tags>
-            <Tags>
-              {tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  tag={tag}
-                  excluded
-                  onClick={() => {
-                    addExcludedTag(tag);
-                    inputProps.resetTerm();
-                  }}
-                />
-              ))}
-              {tags.length === 0 ? (
-                <span
-                  style={{
-                    fontSize: 20,
-                    color: "rgba(0, 0, 0, 0.45)",
-                  }}
-                >
-                  Add tags such as #국물있는 #뜨끈한 to filter the suggested
-                  menus below.
-                </span>
-              ) : null}
-            </Tags>
+            {inputProps.value === "" ? (
+              <>
+                <p>
+                  Tags that you add will{" "}
+                  <b>filter the suggested menus below.</b>
+                </p>
+                <p>
+                  If you add tag, like
+                  <Tag size="small" tag={{ tag: "매콤한" }} />
+                  <Tag size="small" tag={{ tag: "뜨거운" }} />
+                  <Tag size="small" tag={{ tag: "밥" }} />
+                  <br />
+                  then the menus that fit to the conditions will be{" "}
+                  <b style={{ color: "#13C2C2" }}>shown first.</b>
+                </p>
+                <p>
+                  If the ban tags with forbid sign are added, like
+                  <Tag size="small" tag={{ tag: "차가운" }} excluded />
+                  <Tag size="small" tag={{ tag: "빨간" }} excluded />
+                  <br />
+                  then the menus with such tags will be{" "}
+                  <b style={{ color: "#ff6663" }}>pushed far below.</b>
+                </p>
+                <p>
+                  You can add multiple tags, mixing with both normal tags and
+                  ban tags.
+                </p>
+              </>
+            ) : (
+              <>
+                <Menus gutter={[16, 16]}>
+                  {menus.map((menu) => (
+                    <Col key={menu.id} span={6}>
+                      <MenuCard menu={menu} add />
+                    </Col>
+                  ))}
+                </Menus>
+                <Divider />
+                <Tags>
+                  {tags.map((tag) => (
+                    <Tag
+                      key={tag.id}
+                      tag={tag}
+                      onClick={() => {
+                        addTag(tag);
+                        inputProps.resetTerm();
+                      }}
+                    />
+                  ))}
+                </Tags>
+                <Tags>
+                  {tags.map((tag) => (
+                    <Tag
+                      key={tag.id}
+                      tag={tag}
+                      excluded
+                      onClick={() => {
+                        addExcludedTag(tag);
+                        inputProps.resetTerm();
+                      }}
+                    />
+                  ))}
+                </Tags>
+              </>
+            )}
           </ResultContainer>
         </SearchResult>
       )}
@@ -147,6 +168,8 @@ const Tab = styled.div`
 
 const ResultContainer = styled.div`
   padding: 30px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 18px;
 `;
 
 const Divider = styled.div`
