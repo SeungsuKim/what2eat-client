@@ -276,17 +276,16 @@ const SidebarPresenter = ({ groups }) => {
           {groups &&
             groups.map((group) => (
               <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
+                style={{ display: "flex", alignItems: "center", width: "100%" }}
                 onClick={() => {
                   dispatch({ type: "SET_GROUP", payload: group });
                 }}
               >
-                <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+                {group.bookmarked ? (
+                  <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+                ) : (
+                  <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
+                )}
                 <Text style={{ fontSize: 20 }}>{group.group}</Text>
                 {/*
                 <div

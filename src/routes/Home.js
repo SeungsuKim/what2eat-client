@@ -43,7 +43,7 @@ const Home = () => {
                 }
                 onClick={() => {
                   dispatch({ type: "SET_GROUP", payload: group });
-                  history.push(`/${group.id}/vote`);
+                  history.push(`/vote`);
                 }}
                 style={{ height: 165 }}
               >

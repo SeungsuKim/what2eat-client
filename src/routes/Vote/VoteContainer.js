@@ -18,26 +18,23 @@ const VoteContainer = () => {
     })()
   );
   const [result, setResult] = useState([]);
-  const [showResult, setShowResult] = useState(
-    (() => {
-      const openedAt = moment(group.openedAt, [moment.ISO_8601, "HH:mm"]);
-      const now = moment();
-
-      return now > openedAt;
-    })()
-  );
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     const fetchResult = async () => {
+      const openedAt = moment(group.openedAt, [moment.ISO_8601, "HH:mm"]);
+      const now = moment();
+      const showResult = now > openedAt;
+      setShowResult(showResult);
+
       if (showResult) {
         const fetchedResult = await getResult(group.id);
         setResult(fetchedResult);
-        console.log(fetchedResult);
       }
     };
 
     fetchResult();
-  }, [showResult, group.id]);
+  }, [group]);
 
   const isJoining =
     group.users.filter((u) => u.id === user.id)[0].isJoining === true;

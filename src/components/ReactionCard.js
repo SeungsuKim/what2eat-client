@@ -21,8 +21,6 @@ const ReactionCard = ({ liked, rejected, menu }) => {
   const [isLike, setIsLike] = useState(liked);
   const [isReject, setIsReject] = useState(rejected);
 
-  console.log(isLike, isReject);
-
   const toggleLike = async () => {
     const tmpGroup = state.group;
     let menus;

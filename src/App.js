@@ -92,9 +92,9 @@ const LoggedInRoutes = () => {
         {!["/", "calendar"].includes(location.pathname) && <Header />}
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/:groupId/vote" component={Vote} />
-          <Route path="/:groupId/explore" component={Explore} />
-          <Route path="/:groupId/calendar" component={Calendar} />
+          <Route path="/vote" component={Vote} />
+          <Route path="/explore" component={Explore} />
+          <Route path="/calendar" component={Calendar} />
           <Redirect from="*" to="/" />
         </Switch>
       </div>
