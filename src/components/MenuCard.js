@@ -8,7 +8,15 @@ import styled from "styled-components";
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
 
-const MenuCard = ({ menu, add, rank, style, showTags }) => {
+const MenuCard = ({
+  menu,
+  add,
+  rank,
+  style,
+  showTags,
+  likedTags = [],
+  excludedTags = [],
+}) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
   const { user, group, menus } = state;
@@ -87,7 +95,9 @@ const MenuCard = ({ menu, add, rank, style, showTags }) => {
         {showTags && (
           <TagsContainer>
             {menu.tags.map((tag) => (
-              <Tag># {tag}</Tag>
+              <Tag liked={likedTags.map(({ tag }) => tag).includes(tag)}>
+                # {tag}
+              </Tag>
             ))}
           </TagsContainer>
         )}
@@ -169,7 +179,8 @@ const Tag = styled.div`
   font-size: 15px;
   color: white;
   margin: 3px;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: ${(props) =>
+    props.liked ? "rgba(19, 194, 194, 0.85)" : "rgba(0, 0, 0, 0.65)"};
   height: 25px;
   padding: 0px 10px;
   border-radius: 12.5px;

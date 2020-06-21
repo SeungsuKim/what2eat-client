@@ -60,7 +60,13 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
           <MenulistContainer>
             {menuProps.menus.map((menu) => (
               <MenuCardContainer>
-                <MenuCard menu={menu} add showTags />
+                <MenuCard
+                  menu={menu}
+                  add
+                  showTags
+                  likedTags={tagProps.tags}
+                  excludedTags={tagProps.excludedTags}
+                />
               </MenuCardContainer>
             ))}
           </MenulistContainer>
