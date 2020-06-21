@@ -11,11 +11,22 @@ export const signUp = async (user) => {
 
   const userRef = await db.collection("users").add({
     ...user,
-    groups: [{ id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false }],
+    groups: [
+      { id: "kKiGhamqyqlbeVR6LiOW", bookmarked: false },
+      { id: "RcQQ7EppATHEVLyMidm9", bookmarked: false },
+    ],
   });
 
-  const groupRef = db.collection("groups").doc("kKiGhamqyqlbeVR6LiOW");
-  groupRef.update({
+  const groupRef1 = db.collection("groups").doc("kKiGhamqyqlbeVR6LiOW");
+  groupRef1.update({
+    users: firebase.firestore.FieldValue.arrayUnion({
+      id: userRef.id,
+      ...user,
+    }),
+  });
+
+  const groupRef2 = db.collection("groups").doc("RcQQ7EppATHEVLyMidm9");
+  groupRef2.update({
     users: firebase.firestore.FieldValue.arrayUnion({
       id: userRef.id,
       ...user,
