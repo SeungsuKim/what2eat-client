@@ -27,7 +27,7 @@ const SearchContainer = ({ addTag, addExcludedTag }) => {
   const inputProps = {
     value: term,
     onChange: handleTermChange,
-    onReset: resetTerm,
+    resetTerm,
   };
 
   return (

@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Affix, Avatar, Button, Input, Modal, Typography } from "antd";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { store } from "../../store";
 
@@ -17,6 +17,7 @@ const { Text } = Typography;
 
 const SidebarPresenter = ({ groups }) => {
   const { dispatch } = useContext(store);
+  const history = useHistory();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -279,6 +280,7 @@ const SidebarPresenter = ({ groups }) => {
                 style={{ display: "flex", alignItems: "center", width: "100%" }}
                 onClick={() => {
                   dispatch({ type: "SET_GROUP", payload: group });
+                  history.push("/vote");
                 }}
               >
                 {group.bookmarked ? (
