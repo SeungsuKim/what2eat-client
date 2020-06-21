@@ -166,33 +166,33 @@ const VotePresenter = ({
       );
     });
 
-    return (
+    return modifiedResult.length === 0 ? (
+      <div style={{ width: "100%" }}>No results to show</div>
+    ) : (
       <>
         <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
           {modifiedResult.slice(0, 3).map((menu, index) => (
-            <Col key={menu.menu.id}>
-              <div style={{ width: 150, height: 150 }}>
-                <MenuCard menu={menu.menu} rank={index + 1} />
-                <div
-                  style={{
-                    width: "100%",
-                    color: "#FF6663",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 20,
-                  }}
-                >
-                  {menu.rejectedBy.length !== 0 && (
-                    <>
-                      <StopOutlined style={{ marginRight: 10 }} />{" "}
-                      {menu.rejectedBy.length}
-                    </>
-                  )}
-                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
-                  {menu.likedBy.length}
-                </div>
+            <Col key={menu.menu.id} span={4}>
+              <MenuCard menu={menu.menu} rank={index + 1} />
+              <div
+                style={{
+                  width: "100%",
+                  color: "#FF6663",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 20,
+                }}
+              >
+                {menu.rejectedBy.length !== 0 && (
+                  <>
+                    <StopOutlined style={{ marginRight: 10 }} />{" "}
+                    {menu.rejectedBy.length}
+                  </>
+                )}
+                <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                {menu.likedBy.length}
               </div>
             </Col>
           ))}

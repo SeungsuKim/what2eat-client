@@ -1,14 +1,14 @@
-import { PlusCircleFilled, CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, PlusCircleFilled } from "@ant-design/icons";
+import { SmileOutlined } from "@ant-design/icons";
+import { notification } from "antd";
 import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
-import { notification } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
 
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
 
-const MenuCard = ({ menu, add, rank, style }) => {
+const MenuCard = ({ menu, add, rank, style, showTags }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
   const { user, group, menus } = state;
@@ -34,6 +34,19 @@ const MenuCard = ({ menu, add, rank, style }) => {
     });
   };
 
+  const getRankText = (rank) => {
+    switch (rank) {
+      case 1:
+        return "1st Place";
+      case 2:
+        return "2nd Place";
+      case 3:
+        return "3rd Place";
+      default:
+        return rank;
+    }
+  };
+
   return (
     <>
       <VoteCard>
@@ -51,12 +64,19 @@ const MenuCard = ({ menu, add, rank, style }) => {
               color: "#13C2C2",
               backgroundColor: "white",
               borderRadius: "60%",
-              fontSize: 35,
+              fontSize: 40,
               right: 10,
               bottom: 10,
               ...style,
             }}
           />
+        )}
+        {showTags && (
+          <TagsContainer>
+            {menu.tags.map((tag) => (
+              <Tag># {tag}</Tag>
+            ))}
+          </TagsContainer>
         )}
         {add && isMenuInVote ? (
           <CheckCircleFilled
@@ -72,7 +92,7 @@ const MenuCard = ({ menu, add, rank, style }) => {
             }}
           />
         ) : null}
-        {rank && <Ribbon>{rank}</Ribbon>}
+        {rank && <Ribbon>{getRankText(rank)}</Ribbon>}
       </VoteCard>
     </>
   );
@@ -88,7 +108,7 @@ const VoteCard = styled.div`
 
 const Ribbon = styled.div`
   position: absolute;
-  top: 110px;
+  bottom: 0px;
   left: 0px;
   right: 0px;
   height: 40px;
@@ -114,6 +134,30 @@ const MenuTitle = styled.div`
   width: 100%;
   height: 20%;
   text-align: center;
+`;
+
+const TagsContainer = styled.div`
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 15px;
+  width: 85%;
+`;
+
+const Tag = styled.div`
+  font-size: 15px;
+  color: white;
+  margin: 3px;
+  background-color: rgba(0, 0, 0, 0.65);
+  height: 25px;
+  padding: 0px 10px;
+  border-radius: 12.5px;
+  text-align: center;
+  vertical-align: center;
 `;
 
 export default MenuCard;

@@ -71,7 +71,6 @@ const SearchPresenter = ({
                   tag={tag}
                   onClick={() => {
                     addTag(tag);
-                    inputProps.resetTag();
                   }}
                 />
               ))}
@@ -84,7 +83,6 @@ const SearchPresenter = ({
                   excluded
                   onClick={() => {
                     addExcludedTag(tag);
-                    inputProps.resetTag();
                   }}
                 />
               ))}
