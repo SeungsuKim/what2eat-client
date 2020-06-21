@@ -1,7 +1,9 @@
-import { PlusCircleFilled } from "@ant-design/icons";
+import { PlusCircleFilled, CheckCircleFilled } from "@ant-design/icons";
 import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
+import { notification } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
 
 import { addMenuToVote } from "../db/Menu";
 import { store } from "../store";
@@ -25,6 +27,11 @@ const MenuCard = ({ menu, add, rank, style }) => {
       },
     });
     addMenuToVote(menu, user, group.id);
+    notification.open({
+      message: "Success",
+      description: `${menu.menu} is successfully added to ${group.group}.`,
+      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
   };
 
   return (
@@ -42,8 +49,8 @@ const MenuCard = ({ menu, add, rank, style }) => {
             style={{
               position: "absolute",
               color: "#13C2C2",
-              backgroundColor: 'white',
-              borderRadius: '60%',
+              backgroundColor: "white",
+              borderRadius: "60%",
               fontSize: 35,
               right: 10,
               bottom: 10,
@@ -51,6 +58,20 @@ const MenuCard = ({ menu, add, rank, style }) => {
             }}
           />
         )}
+        {add && isMenuInVote ? (
+          <CheckCircleFilled
+            style={{
+              position: "absolute",
+              color: "#13C2C2",
+              backgroundColor: "white",
+              borderRadius: "60%",
+              fontSize: 35,
+              right: 10,
+              bottom: 10,
+              ...style,
+            }}
+          />
+        ) : null}
         {rank && <Ribbon>{rank}</Ribbon>}
       </VoteCard>
     </>

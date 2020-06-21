@@ -286,10 +286,6 @@ const VotePresenter = ({
               Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
               {weekdays[now.getDay()]}
             </Title>
-            <Description>
-              {numJoining} {numJoining === 1 ? "person is" : "people are"}{" "}
-              joining
-            </Description>
           </TitleWrapper>
         </TitleContainer>
 

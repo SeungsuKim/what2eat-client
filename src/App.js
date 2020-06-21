@@ -89,7 +89,7 @@ const LoggedInRoutes = () => {
       }}
     >
       {!["/"].includes(location.pathname) && (
-        <div style={{ width: 320 }}>
+        <div style={{ width: 320, backgroundColor: "rgba(19, 194, 194, 0.2)" }}>
           <Sidebar />
         </div>
       )}

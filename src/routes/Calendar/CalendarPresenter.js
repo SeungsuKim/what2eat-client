@@ -578,8 +578,7 @@ const CalendarPresenter = ({ group }) => {
         </CalendarContainer>
         <Col span={7}>
           <RecomContainer>
-            <RecomTitle>Recommended Menus</RecomTitle>
-            <Description>What you haven’t eaten for 3 weeks</Description>
+            <RecomTitle>What you haven’t eaten for 3 weeks</RecomTitle>
             <Row gutter={[20, 20]}>
               {recommendData.map((menu) => {
                 return (

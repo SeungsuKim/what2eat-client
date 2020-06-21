@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 
-import store from "../store";
+import { store } from "../store";
 
 const Home = () => {
   const { state } = useContext(store);

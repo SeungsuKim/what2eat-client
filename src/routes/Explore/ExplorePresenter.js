@@ -1,5 +1,5 @@
 import { PlusCircleFilled } from "@ant-design/icons";
-import { Checkbox, Col, Row } from "antd";
+import { Affix, Checkbox, Col, Row } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -20,9 +20,7 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
             Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
             {weekdays[now.getDay()]}
           </Title>
-          <Description>6 people are joining</Description>
         </TitleWrapper>
-
       </TitleContainer>
       <Row gutter={30} style={{ paddingTop: 20 }}>
         <Col span={15}>
@@ -68,18 +66,27 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
           </MenulistContainer>
         </Col>
         <Col span={9}>
-          <VoteContainer>
-            <Link to="/#/">
-              <VoteTitle>Menus currently on vote</VoteTitle>
-            </Link>
-            <Row gutter={[20, 20]}>
-              {menusOnVote.map((menu) => (
-                <Col xs={24} sm={24} md={24} lg={12} xl={6} key={menu.menu.id}>
-                  <MenuCard menu={menu.menu} remove />
-                </Col>
-              ))}
-            </Row>
-          </VoteContainer>
+          <Affix offsetTop={100}>
+            <VoteContainer>
+              <Link to="/#/">
+                <VoteTitle>Menus currently on vote</VoteTitle>
+              </Link>
+              <Row gutter={[20, 20]}>
+                {menusOnVote.map((menu) => (
+                  <Col
+                    xs={24}
+                    sm={24}
+                    md={24}
+                    lg={12}
+                    xl={6}
+                    key={menu.menu.id}
+                  >
+                    <MenuCard menu={menu.menu} remove />
+                  </Col>
+                ))}
+              </Row>
+            </VoteContainer>
+          </Affix>
         </Col>
       </Row>
     </Body>
