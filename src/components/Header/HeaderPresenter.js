@@ -1,5 +1,5 @@
 import { FieldTimeOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, TimePicker } from "antd";
+import { Button, Checkbox, TimePicker, Affix } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -15,81 +15,73 @@ const HeaderPresenter = ({
   showSetTime,
   setShowSetTime,
 }) => (
-  <Header>
-    <Modal
-      visible={showSetTime}
-      centered
-      footer={null}
-      width={600}
-      onCancel={() => setShowSetTime(false)}
-    >
-      <ModalWrapper>
-        <ModalTitle>Vote Opening Time</ModalTitle>
-        <ModalDescription>
-          The vote is only avaliable until this time.
-          <br />
-          After this time, the vote result will be shown.
-        </ModalDescription>
-        <TimePicker
-          use12Hours
-          minuteStep={5}
-          format="h:mm A"
-          size="large"
-          style={{ width: 200 }}
-          value={openedAt}
-          onChange={(time) => setOpenedAt(time)}
-        />
-        <Button
-          type="primary"
-          size="large"
-          style={{ marginTop: 40, paddingLeft: 40, paddingRight: 40 }}
-          onClick={handleOpenedAt}
-        >
-          Set
-        </Button>
-      </ModalWrapper>
-    </Modal>
-    <GroupWrapper>
-      <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
-      <Link to="/">
-        <GroupName>Human Resources</GroupName>
-      </Link>
-      <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
-      <HeaderText>{numUser}</HeaderText>
-      <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
-      <HeaderText>{openedAt.format("HH:mm")}</HeaderText>
-    </GroupWrapper>
-    <Button
-      size="large"
-      style={{ marginLeft: "auto", marginRight: 10, padding: 7, height: 55, borderRadius: 5, borderWidth: 2 }}
-      onClick={() => setShowSetTime(true)}
-    >
-      <span style={{ fontSize: 22, fontWeight: "bold" }}>
-        <FieldTimeOutlined /> Set Vote Opening Time
-      </span>
-    </Button>
-    <HeaderButtonWrapper>
-      <CheckboxButton
-        size="large"
-        checked={!isJoining}
-        onClick={() => handleJoin(!isJoining)}
+  <Affix offsetTop={0}>
+    <Header>
+      <Modal
+        visible={showSetTime}
+        centered
+        footer={null}
+        width={600}
+        onCancel={() => setShowSetTime(false)}
       >
-        <span
-          style={{
-            marginLeft: 10,
-            fontSize: 22,
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
-          I'm not joining today
+        <ModalWrapper>
+          <ModalTitle>Vote Opening Time</ModalTitle>
+          <ModalDescription>
+            The vote is only avaliable until this time.
+            <br />
+            After this time, the vote result will be shown.
+          </ModalDescription>
+          <TimePicker
+            use12Hours
+            minuteStep={5}
+            format="h:mm A"
+            size="large"
+            style={{ width: 200 }}
+            value={openedAt}
+            onChange={(time) => setOpenedAt(time)}
+          />
+          <Button
+            type="primary"
+            size="large"
+            style={{ marginTop: 40, paddingLeft: 40, paddingRight: 40 }}
+            onClick={handleOpenedAt}
+          >
+            Set
+          </Button>
+        </ModalWrapper>
+      </Modal>
+      <GroupWrapper>
+        <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
+        <Link to="/">
+          <GroupName>Human Resources</GroupName>
+        </Link>
+        <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
+        <HeaderText>{numUser}</HeaderText>
+        <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
+        <HeaderText>{openedAt.format("HH:mm")}</HeaderText>
+      </GroupWrapper>
+      <Button
+        size="large"
+        style={{
+          marginLeft: "auto",
+          marginRight: 10,
+          padding: 7,
+          height: 55,
+          borderRadius: 5,
+          borderWidth: 2,
+        }}
+        onClick={() => setShowSetTime(true)}
+      >
+        <span style={{ fontSize: 22, fontWeight: "bold" }}>
+          <FieldTimeOutlined /> Set Vote Opening Time
         </span>
-      </CheckboxButton>
-    </HeaderButtonWrapper>
-  </Header>
+      </Button>
+    </Header>
+  </Affix>
 );
 
 const Header = styled.div`
+  background-color: white;
   width: 100%;
   height: 80px;
   padding: 20px;

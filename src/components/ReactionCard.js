@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
-import { Button } from "antd";
+import { Button, Modal, Tooltip } from "antd";
 import { StopOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 
 import { toggleMenuLike, toggleMenuReject } from "../db/Menu";
@@ -55,7 +55,11 @@ const ReactionCard = ({ liked, rejected, menu }) => {
         setIsReject(true);
         setIsLike(false);
       } else {
-        alert("Only 2 rejections are available on a meal.\nPlease cancel other rejections to reject this menu.");
+        Modal.info({
+          content:
+            "Only 2 rejections are available on a meal. Please cancel other rejections to reject this menu.",
+          centered: true,
+        });
         return;
       }
     }
@@ -91,9 +95,20 @@ const ReactionCard = ({ liked, rejected, menu }) => {
       </MenuCard>
       <br />
       <ReactionButton type="defalt">
-        <RejectButton onClick={toggleReject}>
-          <StopOutlined style={{ color: "#FF6663" }} /> Reject
-        </RejectButton>
+        <Tooltip
+          placement="bottomLeft"
+          color="cyan"
+          title={() => (
+            <span>
+              Reject the menu to show your strong opinion against the menu. It
+              will be pushed back on the priority list in the vote.
+            </span>
+          )}
+        >
+          <RejectButton onClick={toggleReject}>
+            <StopOutlined style={{ color: "#FF6663" }} /> Reject
+          </RejectButton>
+        </Tooltip>
 
         <LikeButton onClick={toggleLike} type="primary">
           <HeartOutlined style={{ color: "white" }} /> Like

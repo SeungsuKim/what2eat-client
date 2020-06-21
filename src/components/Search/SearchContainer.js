@@ -20,9 +20,14 @@ const SearchContainer = ({ addTag, addExcludedTag }) => {
     searchTag(e.target.value).then((tags) => setTags(tags));
   };
 
+  const resetTerm = (e) => {
+    setTerm("");
+  };
+
   const inputProps = {
     value: term,
     onChange: handleTermChange,
+    onReset: resetTerm,
   };
 
   return (
