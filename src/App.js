@@ -15,6 +15,7 @@ import Auth from "./routes/Auth";
 import Calendar from "./routes/Calendar";
 import Explore from "./routes/Explore";
 import Home from "./routes/Home";
+import Vote from "./routes/Vote";
 import { store } from "./store";
 
 const App = () => {
@@ -87,13 +88,16 @@ const LoggedInRoutes = () => {
         overflowX: "hidden",
       }}
     >
-      <div style={{ width: 320 }}>
-        <Sidebar />
-      </div>
+      {!["/"].includes(location.pathname) && (
+        <div style={{ width: 320 }}>
+          <Sidebar />
+        </div>
+      )}
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        {location.pathname !== "/calendar" && <Header />}
+        {!["/", "/calendar"].includes(location.pathname) && <Header />}
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/vote" component={Vote} />
           <Route path="/explore" component={Explore} />
           <Route path="/calendar" component={Calendar} />
           <Redirect from="*" to="/" />

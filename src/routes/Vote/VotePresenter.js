@@ -16,7 +16,7 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({
+const VotePresenter = ({
   askJoin,
   isJoining,
   numJoining,
@@ -151,12 +151,13 @@ const HomePresenter = ({
 
   const renderResult = () => {
     const modifiedResult = result.sort((a, b) => {
-      console.log('rej length', b.rejectedBy.length === 0, true * -1);
-      
+      console.log("rej length", b.rejectedBy.length === 0, true * -1);
+
       return (
-        (b.rejectedBy.length === 0 ? 1 : -1) - (a.rejectedBy.length === 0 ? 1 : -1) || 
+        (b.rejectedBy.length === 0 ? 1 : -1) -
+          (a.rejectedBy.length === 0 ? 1 : -1) ||
         b.likedBy.length - a.likedBy.length ||
-        (-1 * b.rejectedBy.length) - (-1 * a.rejectedBy.length)
+        -1 * b.rejectedBy.length - -1 * a.rejectedBy.length
       );
     });
 
@@ -429,4 +430,4 @@ const ModalButtonContainer = styled.div`
   align-items: center;
 `;
 
-export default HomePresenter;
+export default VotePresenter;
