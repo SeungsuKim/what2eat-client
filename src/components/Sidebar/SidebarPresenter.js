@@ -3,11 +3,11 @@ import {
   CalendarOutlined,
   CaretDownOutlined,
   CloseOutlined,
+  ExportOutlined,
   PlusOutlined,
   StarFilled,
   StarOutlined,
   UserOutlined,
-  ExportOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input, Modal, Typography } from "antd";
 import React, { useState } from "react";
@@ -309,7 +309,7 @@ const SidebarPresenter = ({ groups }) => {
           fontSize: 20,
           alignItems: "center",
         }}
-        onClick={() => localStorage.removeItem('token')}
+        onClick={() => localStorage.removeItem("token")}
       >
         <ExportOutlined style={{ marginRight: 10 }} />
         <span>Sign out</span>
