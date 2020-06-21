@@ -1,17 +1,22 @@
+import { HeartFilled, HeartOutlined, StopOutlined } from "@ant-design/icons";
+import { Button, Modal, Tooltip } from "antd";
 import React, { useContext, useState } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
-import { Button, Modal, Tooltip } from "antd";
-import { StopOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 
 import { toggleMenuLike, toggleMenuReject } from "../db/Menu";
-
 import { store } from "../store";
 
 const ReactionCard = ({ liked, rejected, menu }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
-  const { rejectionCount } = state;
+  const { group, user } = state;
+
+  const rejectionCount =
+    2 -
+    group.menus.filter((menu) =>
+      menu.rejectedBy.map(({ id }) => id).includes(user.id)
+    ).length;
 
   const [isLike, setIsLike] = useState(liked);
   const [isReject, setIsReject] = useState(rejected);

@@ -35,26 +35,7 @@ const App = () => {
         const groups = await getGroups(user.groups.map(({ id }) => id));
         dispatch({ type: "SET_GROUPS", payload: groups });
 
-        let groupIndex = 0;
-
-        dispatch({ type: "SET_GROUP", payload: groups[groupIndex] });
-        dispatch({ type: "SET_MENUS", payload: groups[groupIndex].menus });
-
-        // Get rejection count
-        let rejectionCount = 2;
-        for (let i = 0; i < groups[groupIndex].menus.length; i++) {
-          for (
-            let j = 0;
-            j < groups[groupIndex].menus[i].rejectedBy.length;
-            j++
-          ) {
-            if (groups[groupIndex].menus[i].rejectedBy[j].id === user.id) {
-              rejectionCount = Math.max(0, rejectionCount - 1);
-              console.log(groups[groupIndex].menus[i], rejectionCount);
-            }
-          }
-        }
-        dispatch({ type: "SET_REJECTION_COUNT", payload: rejectionCount });
+        dispatch({ type: "SET_GROUP", payload: groups[0] });
 
         dispatch({ type: "END_LOADING" });
       };
@@ -77,7 +58,21 @@ const App = () => {
 };
 
 const LoggedInRoutes = () => {
+  const { state, dispatch } = useContext(store);
+  const { groups } = state;
+
   const location = useLocation();
+  // const paths = location.pathname.split("/");
+
+  // if (paths.length > 2) {
+  //   const groupId = paths[1];
+
+  //   console.log(groupId);
+  //   dispatch({
+  //     type: "SET_GROUP",
+  //     payload: groups.filter((group) => group.id === groupId)[0],
+  //   });
+  // }
 
   return (
     <div
@@ -97,9 +92,9 @@ const LoggedInRoutes = () => {
         {!["/", "calendar"].includes(location.pathname) && <Header />}
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/vote" component={Vote} />
-          <Route path="/explore" component={Explore} />
-          <Route path="/calendar" component={Calendar} />
+          <Route path="/:groupId/vote" component={Vote} />
+          <Route path="/:groupId/explore" component={Explore} />
+          <Route path="/:groupId/calendar" component={Calendar} />
           <Redirect from="*" to="/" />
         </Switch>
       </div>

@@ -36,6 +36,7 @@ const StateProvider = ({ children }) => {
         return {
           ...state,
           group: action.payload,
+          menus: action.payload.menus,
         };
       case "SET_MENUS":
         return {
