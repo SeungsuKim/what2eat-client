@@ -277,7 +277,13 @@ const SidebarPresenter = ({ groups }) => {
           {groups &&
             groups.map((group) => (
               <div
-                style={{ display: "flex", alignItems: "center", width: "100%" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  marginLeft: 20,
+                  cursor: "pointer",
+                }}
                 onClick={() => {
                   dispatch({ type: "SET_GROUP", payload: group });
                   history.push("/vote");

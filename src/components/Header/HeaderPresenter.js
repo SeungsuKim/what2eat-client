@@ -1,4 +1,9 @@
-import { FieldTimeOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
+import {
+  FieldTimeOutlined,
+  StarFilled,
+  StarOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Affix, Button, Checkbox, TimePicker } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React from "react";
@@ -15,7 +20,7 @@ const HeaderPresenter = ({
   setShowSetTime,
   closeTime,
 }) => {
-  let groupUserText = group.users.length + ' | ';
+  let groupUserText = group.users.length + " | ";
   for (let i = 0; i < group.users.length; i++) {
     groupUserText += group.users[i].name;
     if (i < group.users.length - 1) groupUserText += ", ";
@@ -65,13 +70,20 @@ const HeaderPresenter = ({
           </ModalWrapper>
         </Modal>
         <GroupWrapper>
-          <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
+          {group.bookmarked ? (
+            <StarFilled
+              style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+            />
+          ) : (
+            <StarOutlined
+              style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+            />
+          )}
           <GroupName>{group.group}</GroupName>
           <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
           <HeaderText>{group.users.length}</HeaderText>
           <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
           <HeaderText>{group.openedAt}</HeaderText>
-          <span style={{ color: "#FF6663" }}>{closeTime}</span>
         </GroupWrapper>
         <Button
           size="large"
@@ -132,7 +144,10 @@ const GroupWrapper = styled.div`
 const GroupName = styled.h1`
   font-size: 30px;
   font-weight: 300;
-  margin: 0px 20px;
+  margin: 0px;
+  margin-left: 10px;
+  margin-right: 20px;
+  cursor: pointer;
 `;
 
 const HeaderText = styled.p`

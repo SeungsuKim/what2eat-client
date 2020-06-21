@@ -100,11 +100,23 @@ const ReactionCard = ({ liked, rejected, menu }) => {
       <ReactionButton type="defalt">
         <Tooltip
           placement="bottomLeft"
-          color="cyan"
+          color="#E6FFFB"
           title={() => (
-            <span>
-              Reject the menu to show your strong opinion against the menu. It
-              will be pushed back on the priority list in the vote.
+            <span
+              style={{
+                color: "black",
+                fontWeight: 100,
+              }}
+            >
+              Reject the menu to show your{" "}
+              <span style={{ fontWeight: 600 }}>
+                strong opinion against the menu.
+              </span>{" "}
+              It will be{" "}
+              <span style={{ color: "#FF6663", fontWeight: 600 }}>
+                pushed back on the priority list
+              </span>{" "}
+              in the vote.
             </span>
           )}
         >
