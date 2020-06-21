@@ -1,13 +1,12 @@
 import {
   ArrowUpOutlined,
-  CaretUpFilled,
   HeartFilled,
+  InfoOutlined,
   PlusOutlined,
   StopOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Col, Row } from "antd";
-import Modal from "antd/lib/modal/Modal";
-import React, { useContext } from "react";
+import { Button, Checkbox, Col, Modal, Row } from "antd";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -29,6 +28,8 @@ const VotePresenter = ({
   const globalState = useContext(store);
   const { state } = globalState;
   const { group, user } = state;
+
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
 
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -85,6 +86,36 @@ const VotePresenter = ({
 
   const renderVote = () => (
     <>
+      <Modal
+        visible={showRejectionModal}
+        footer={null}
+        closable={false}
+        centered
+        width={800}
+      >
+        <ModalWrapper>
+          <ModalText>
+            Reject a menu to show your <b>strong opinion against the menu.</b>
+            <br />
+            Such menus will be{" "}
+            <b style={{ color: "#FF6663" }}>
+              pushed back on the priority list in the vote.
+            </b>
+            <br />
+            One person can only reject two menus a day.
+          </ModalText>
+
+          <Button
+            style={{ width: 150, marginTop: 20 }}
+            size="large"
+            type="primary"
+            onClick={() => setShowRejectionModal(false)}
+          >
+            GOT IT
+          </Button>
+        </ModalWrapper>
+      </Modal>
+
       <NewMenuContainer>
         <Row gutter={[20, 20]}>
           <Col>
@@ -124,16 +155,22 @@ const VotePresenter = ({
                 color: "#FF6663",
                 marginRight: "6px",
                 marginLeft: "12px",
-                marginTop: "7px",
               }}
             />
-            <p style={{ color: "#FF6663", fontSize: 19 }}>
+            <p style={{ color: "#FF6663", fontSize: 19, margin: 0 }}>
               {2 -
                 group.menus.filter((menu) =>
                   menu.rejectedBy.map(({ id }) => id).includes(user.id)
                 ).length}{" "}
               / 2
             </p>
+            <Button
+              size="small"
+              shape="circle"
+              icon={<InfoOutlined />}
+              style={{ marginLeft: 10 }}
+              onClick={() => setShowRejectionModal(true)}
+            />
           </RejectionLeft>
         </ViewedMenuWrapper>
 
@@ -314,14 +351,14 @@ const ViewedMenuWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-content: flex-end;
+  align-items: flex-end;
 `;
 
 const RejectionLeft = styled.div`
   font-size: 17px;
   display: flex;
   flex-direction: row;
-  align-content: flex-end;
+  align-items: center;
 `;
 
 const AddNewMenu = styled(Button)`
@@ -413,6 +450,7 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 40px 30px;
 `;
 
