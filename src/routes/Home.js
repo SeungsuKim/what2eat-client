@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext } from "react";
 import styled from "styled-components";
 
@@ -16,4 +17,12 @@ const Background = styled.div`
   height: 100%;
 `;
 
+=======
+import React from "react";
+
+const Home = () => {
+  return <div>Home</div>;
+};
+
+>>>>>>> Vote
 export default Home;
