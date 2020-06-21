@@ -62,3 +62,8 @@ export const getUser = async (userId) => {
 
   return { id: userRef.id, ...userRef.data() };
 };
+
+export const setJoiningGroupId = async (userId, groupId) => {
+  const userRef = db.collection("users").doc(userId);
+  await userRef.update({ joiningGroupId: groupId });
+};

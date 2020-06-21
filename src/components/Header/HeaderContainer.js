@@ -1,7 +1,8 @@
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 
-import { setIsJoining, setOpenedAt as setOpenedAtServer } from "../../db/Group";
+import { setOpenedAt as setOpenedAtServer } from "../../db/Group";
+import { setJoiningGroupId } from "../../db/User";
 import { store } from "../../store";
 import HeaderPresenter from "./HeaderPresenter";
 
@@ -16,12 +17,28 @@ const HeaderContainer = () => {
   const [showSetTime, setShowSetTime] = useState(false);
   const [closeTime, setCloseTime] = useState("");
 
-  const isJoining =
-    group.users.filter((u) => u.id === user.id)[0].isJoining === true;
+  const isJoining = user.joiningGroupId && user.joiningGroupId === group.id;
 
+  console.log(user);
+  console.log(isJoining);
   const handleJoin = (join) => {
-    setIsJoining(group.id, user.id, join);
-    dispatch({ type: "SET_IS_JOINING", payload: join });
+    // setIsJoining(group.id, user.id, join);
+    // dispatch({ type: "SET_IS_JOINING", payload: join });
+    if (!join) {
+      setJoiningGroupId(user.id, null);
+      dispatch({
+        type: "SET_USER",
+        payload: { ...user, joiningGroupId: null },
+      });
+    } else {
+      if (!user.joiningGroupId) {
+        setJoiningGroupId(user.id, group.id);
+        dispatch({
+          type: "SET_USER",
+          payload: { ...user, joiningGroupId: group.id },
+        });
+      }
+    }
   };
 
   const handleOpenedAt = () => {

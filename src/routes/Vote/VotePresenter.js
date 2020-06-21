@@ -18,8 +18,8 @@ import { store } from "../../store";
 const VotePresenter = ({
   askJoin,
   isJoining,
-  numJoining,
   handleJoin,
+  joiningUsers,
   showResult,
   setShowResult,
   menus,
@@ -27,7 +27,7 @@ const VotePresenter = ({
 }) => {
   const globalState = useContext(store);
   const { state } = globalState;
-  const { group, user } = state;
+  const { group, user, groups } = state;
 
   const [showRejectionModal, setShowRejectionModal] = useState(false);
 
@@ -281,7 +281,7 @@ const VotePresenter = ({
 
   return (
     <Body>
-      {!askJoin && !isJoining && (
+      {!isJoining && (
         <Overlay>
           <Indicator>
             <ArrowUpOutlined style={{ color: "#13C2C2", fontSize: 40 }} />
@@ -292,42 +292,15 @@ const VotePresenter = ({
         </Overlay>
       )}
       <div style={{ padding: 30 }}>
-        <Modal visible={askJoin} footer={null} closable={false} centered>
-          <ModalWrapper>
-            <ModalText>Are you joining</ModalText>
-            <ModalText
-              style={{ color: "#13C2C2", fontSize: 25, fontWeight: 600 }}
-            >
-              Lunch on {now.getMonth() + 1}/{now.getDate()}{" "}
-              {weekdays[now.getDay()]}
-            </ModalText>
-            <ModalText>with {state.group.group} group?</ModalText>
-
-            <ModalButtonContainer>
-              <Button
-                style={{ width: 150, marginRight: 10 }}
-                size="large"
-                onClick={() => handleJoin(false)}
-              >
-                NO
-              </Button>
-              <Button
-                style={{ width: 150 }}
-                size="large"
-                type="primary"
-                onClick={() => handleJoin(true)}
-              >
-                JOIN
-              </Button>
-            </ModalButtonContainer>
-          </ModalWrapper>
-        </Modal>
         <TitleContainer>
           <TitleWrapper>
             <Title>
               Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
               {weekdays[now.getDay()]}
             </Title>
+            <Description>
+              {joiningUsers.map((user) => `${user.name}`)} are joining
+            </Description>
           </TitleWrapper>
         </TitleContainer>
 

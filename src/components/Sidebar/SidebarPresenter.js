@@ -15,7 +15,7 @@ import { store } from "../../store";
 
 const { Text } = Typography;
 
-const SidebarPresenter = ({ groups }) => {
+const SidebarPresenter = ({ groups, handleChangeGroup }) => {
   const { dispatch } = useContext(store);
   const history = useHistory();
 
@@ -284,10 +284,7 @@ const SidebarPresenter = ({ groups }) => {
                   marginLeft: 20,
                   cursor: "pointer",
                 }}
-                onClick={() => {
-                  dispatch({ type: "SET_GROUP", payload: group });
-                  history.push("/vote");
-                }}
+                onClick={() => handleChangeGroup(group)}
               >
                 {group.bookmarked ? (
                   <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
