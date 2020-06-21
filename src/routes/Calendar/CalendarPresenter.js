@@ -575,7 +575,7 @@ const CalendarPresenter = ({ group }) => {
                 <MenuContainer>
                   <MenuCard
                     menu={menu.menu}
-                    add={!isMenuInVote(menu)}
+                    add={!isMenuInVote(menu.menu)}
                     size="small"
                     style={{ fontSize: 20, right: 4, bottom: 6 }}
                   />
