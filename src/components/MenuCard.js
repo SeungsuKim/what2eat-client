@@ -1,5 +1,5 @@
 import { CheckCircleFilled, PlusCircleFilled } from "@ant-design/icons";
-import { SmileOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined } from "@ant-design/icons";
 import { notification } from "antd";
 import React, { useContext } from "react";
 import ScaleText from "react-scale-text";
@@ -39,7 +39,7 @@ const MenuCard = ({
     notification.open({
       message: "Success",
       description: `${menu.menu} is successfully added to ${group.group}.`,
-      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+      icon: <CheckCircleOutlined style={{ color: "#52C41A" }} />,
     });
   };
 

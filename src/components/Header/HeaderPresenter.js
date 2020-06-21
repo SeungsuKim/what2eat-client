@@ -18,77 +18,112 @@ const HeaderPresenter = ({
   handleOpenedAt,
   showSetTime,
   setShowSetTime,
-}) => (
-  <Affix offsetTop={0}>
-    <Header>
-      <Modal
-        visible={showSetTime}
-        centered
-        footer={null}
-        width={600}
-        onCancel={() => setShowSetTime(false)}
-      >
-        <ModalWrapper>
-          <ModalTitle>Vote Opening Time</ModalTitle>
-          <ModalDescription>
-            The vote is only avaliable until this time.
-            <br />
-            After this time, the vote result will be shown.
-          </ModalDescription>
-          <TimePicker
-            use12Hours
-            minuteStep={5}
-            format="h:mm A"
+  closeTime,
+}) => {
+  let groupUserText = group.users.length + " | ";
+  for (let i = 0; i < group.users.length; i++) {
+    groupUserText += group.users[i].name;
+    if (i < group.users.length - 1) groupUserText += ", ";
+  }
+
+  groupUserText = groupUserText.slice(0, 30);
+  groupUserText += "...";
+
+  if (group.users.length > 1) groupUserText += " are ";
+  else groupUserText += " is ";
+  groupUserText += "joining.";
+
+  return (
+    <Affix offsetTop={0}>
+      <Header>
+        <Modal
+          visible={showSetTime}
+          centered
+          footer={null}
+          width={600}
+          onCancel={() => setShowSetTime(false)}
+        >
+          <ModalWrapper>
+            <ModalTitle>Vote Opening Time</ModalTitle>
+            <ModalDescription>
+              The vote is only avaliable until this time.
+              <br />
+              After this time, the vote result will be shown.
+            </ModalDescription>
+            <TimePicker
+              use12Hours
+              minuteStep={5}
+              format="h:mm A"
+              size="large"
+              style={{ width: 200 }}
+              value={openedAt}
+              onChange={(time) => setOpenedAt(time)}
+            />
+            <Button
+              type="primary"
+              size="large"
+              style={{ marginTop: 40, paddingLeft: 40, paddingRight: 40 }}
+              onClick={handleOpenedAt}
+            >
+              Set
+            </Button>
+          </ModalWrapper>
+        </Modal>
+        <GroupWrapper>
+          {group.bookmarked ? (
+            <StarFilled
+              style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+            />
+          ) : (
+            <StarOutlined
+              style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+            />
+          )}
+          <GroupName>{group.group}</GroupName>
+          <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
+          <HeaderText>{group.users.length}</HeaderText>
+          <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
+          <HeaderText>{group.openedAt}</HeaderText>
+          <span style={{ color: "#FF6663" }}>{closeTime}</span>
+        </GroupWrapper>
+        <Button
+          size="large"
+          style={{
+            marginLeft: "auto",
+            marginRight: 10,
+            padding: 7,
+            height: 55,
+            borderRadius: 5,
+            borderWidth: 2,
+          }}
+          onClick={() => setShowSetTime(true)}
+        >
+          <span style={{ fontSize: 22, fontWeight: "bold" }}>
+            <FieldTimeOutlined /> Set Vote Opening Time
+          </span>
+        </Button>
+        <HeaderButtonWrapper>
+          <CheckboxButton
             size="large"
-            style={{ width: 200 }}
-            value={openedAt}
-            onChange={(time) => setOpenedAt(time)}
-          />
-          <Button
-            type="primary"
-            size="large"
-            style={{ marginTop: 40, paddingLeft: 40, paddingRight: 40 }}
-            onClick={handleOpenedAt}
+            checked={!isJoining}
+            onClick={() => handleJoin(!isJoining)}
           >
-            Set
-          </Button>
-        </ModalWrapper>
-      </Modal>
-      <GroupWrapper>
-        {group.bookmarked ? (
-          <StarFilled
-            style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
-          />
-        ) : (
-          <StarOutlined
-            style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
-          />
-        )}
-        <GroupName>{group.group}</GroupName>
-        <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
-        <HeaderText>{group.users.length}</HeaderText>
-        <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
-        <HeaderText>{group.openedAt}</HeaderText>
-      </GroupWrapper>
-      <Button
-        size="large"
-        style={{
-          marginLeft: "auto",
-          marginRight: 10,
-          padding: 7,
-          height: 55,
-          borderRadius: 5,
-          borderWidth: 2,
-        }}
-        onClick={() => setShowSetTime(true)}
-      >
-        <span style={{ fontSize: 22, fontWeight: "bold" }}>
-          <FieldTimeOutlined /> Set Vote Opening Time
-        </span>
-      </Button>
-    </Header>
-  </Affix>
-);
+            <span
+              style={{
+                marginLeft: 10,
+                fontSize: 22,
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              I'm not joining today
+            </span>
+          </CheckboxButton>
+        </HeaderButtonWrapper>
+      </Header>
+    </Affix>
+  );
+};
 
 const Header = styled.div`
   background-color: white;

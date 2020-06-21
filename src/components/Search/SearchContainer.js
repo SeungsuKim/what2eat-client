@@ -16,8 +16,14 @@ const SearchContainer = ({ addTag, addExcludedTag }) => {
   const handleTermChange = async (e) => {
     setTerm(e.target.value);
 
-    searchMenu(e.target.value).then((menus) => setMenus(menus));
-    searchTag(e.target.value).then((tags) => setTags(tags));
+    if (e.target.value.charAt(0) !== "#")
+      searchMenu(e.target.value).then((menus) => setMenus(menus));
+
+    let tt = e.target.value;
+    if (tt.charAt(0) === "#") {
+      tt = tt.slice(1);
+    }
+    searchTag(tt).then((tags) => setTags(tags));
   };
 
   const resetTerm = (e) => {

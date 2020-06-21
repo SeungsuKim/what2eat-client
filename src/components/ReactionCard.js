@@ -58,7 +58,7 @@ const ReactionCard = ({ liked, rejected, menu }) => {
         setIsReject(true);
         setIsLike(false);
       } else {
-        Modal.info({
+        Modal.error({
           content:
             "Only 2 rejections are available on a meal. Please cancel other rejections to reject this menu.",
           centered: true,

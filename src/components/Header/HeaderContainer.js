@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { setIsJoining, setOpenedAt as setOpenedAtServer } from "../../db/Group";
 import { store } from "../../store";
@@ -14,6 +14,7 @@ const HeaderContainer = () => {
     moment(group.openedAt, [moment.ISO_8601, "HH:mm"])
   );
   const [showSetTime, setShowSetTime] = useState(false);
+  const [closeTime, setCloseTime] = useState("");
 
   const isJoining =
     group.users.filter((u) => u.id === user.id)[0].isJoining === true;
@@ -30,6 +31,54 @@ const HeaderContainer = () => {
     setShowSetTime(false);
   };
 
+  useEffect(() => {
+    const nowTime = moment(
+      moment(Date.now()).add(9, "hours").format("HH:mm:ss"),
+      [moment.ISO_8601, "HH:mm:ss"]
+    );
+    const endTime = moment(group.openedAt + ":00", [
+      moment.ISO_8601,
+      "HH:mm:ss",
+    ]);
+
+    const diff = moment(endTime.diff(nowTime));
+    const str = diff.format("HH:mm:ss");
+
+    const hr = str.split(":")[0];
+    const mm = str.split(":")[1];
+
+    setCloseTime(
+      `${hr} ${hr === "01" ? "hour" : "hours"} ${mm} ${
+        mm === "01" ? "minute" : "minutes"
+      } left`
+    );
+
+    const timer = setInterval(() => {
+      const nowTime = moment(
+        moment(Date.now()).add(9, "hours").format("HH:mm:ss"),
+        [moment.ISO_8601, "HH:mm:ss"]
+      );
+      const endTime = moment(group.openedAt + ":00", [
+        moment.ISO_8601,
+        "HH:mm:ss",
+      ]);
+
+      const diff = moment(endTime.diff(nowTime));
+      const str = diff.format("HH:mm:ss");
+
+      const hr = str.split(":")[0];
+      const mm = str.split(":")[1];
+
+      setCloseTime(
+        `${hr} ${hr === "01" ? "hour" : "hours"} ${mm} ${
+          mm === "01" ? "minute" : "minutes"
+        } left`
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <HeaderPresenter
       group={group}
@@ -40,6 +89,7 @@ const HeaderContainer = () => {
       handleOpenedAt={handleOpenedAt}
       showSetTime={showSetTime}
       setShowSetTime={setShowSetTime}
+      closeTime={closeTime}
     />
   );
 };
