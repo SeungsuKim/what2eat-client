@@ -163,7 +163,7 @@ const SidebarPresenter = ({ groups }) => {
         </Modal>
 
         {/* Logo */}
-        <Link to="/">
+        <Link to="/vote">
           <span
             style={{
               color: "#13C2C2",

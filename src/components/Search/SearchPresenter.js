@@ -95,8 +95,7 @@ const SearchPresenter = ({
                     color: "rgba(0, 0, 0, 0.45)",
                   }}
                 >
-                  Add tags such as #국물있는 #뜨끈한 to filter the suggested
-                  menus below.
+                  Search menus or tags such as 부대찌개, #매운, #칼칼한, #국물, etc.
                 </span>
               ) : null}
             </Tags>

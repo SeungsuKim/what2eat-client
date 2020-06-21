@@ -147,7 +147,7 @@ const MenulistContainer = styled.div`
 `;
 
 const MenuCardContainer = styled.div`
-  width: 400px;
+  width: 350px;
   padding: 20px;
 `;
 
