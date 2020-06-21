@@ -94,11 +94,7 @@ const LoggedInRoutes = () => {
         </div>
       )}
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-<<<<<<< HEAD
-        {!["/", "/calendar"].includes(location.pathname) && <Header />}
-=======
         {!["/", "calendar"].includes(location.pathname) && <Header />}
->>>>>>> Vote
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/vote" component={Vote} />
