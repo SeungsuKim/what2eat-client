@@ -16,7 +16,7 @@ import ReactionCard from "../../components/ReactionCard";
 import { toggleMenuView } from "../../db/Menu";
 import { store } from "../../store";
 
-const HomePresenter = ({
+const VotePresenter = ({
   askJoin,
   isJoining,
   numJoining,
@@ -28,6 +28,7 @@ const HomePresenter = ({
 }) => {
   const globalState = useContext(store);
   const { state } = globalState;
+  const { group, user } = state;
 
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -127,7 +128,11 @@ const HomePresenter = ({
               }}
             />
             <p style={{ color: "#FF6663", fontSize: 19 }}>
-              {state.rejectionCount} / 2{" "}
+              {2 -
+                group.menus.filter((menu) =>
+                  menu.rejectedBy.map(({ id }) => id).includes(user.id)
+                ).length}{" "}
+              / 2
             </p>
           </RejectionLeft>
         </ViewedMenuWrapper>
@@ -151,42 +156,43 @@ const HomePresenter = ({
 
   const renderResult = () => {
     const modifiedResult = result.sort((a, b) => {
-      console.log('rej length', b.rejectedBy.length === 0, true * -1);
-      
+      console.log("rej length", b.rejectedBy.length === 0, true * -1);
+
       return (
-        (b.rejectedBy.length === 0 ? 1 : -1) - (a.rejectedBy.length === 0 ? 1 : -1) || 
+        (b.rejectedBy.length === 0 ? 1 : -1) -
+          (a.rejectedBy.length === 0 ? 1 : -1) ||
         b.likedBy.length - a.likedBy.length ||
-        (-1 * b.rejectedBy.length) - (-1 * a.rejectedBy.length)
+        -1 * b.rejectedBy.length - -1 * a.rejectedBy.length
       );
     });
 
-    return (
+    return modifiedResult.length === 0 ? (
+      <div style={{ width: "100%" }}>No results to show</div>
+    ) : (
       <>
         <Row gutter={[20, 20]} style={{ width: "100%", marginTop: 20 }}>
           {modifiedResult.slice(0, 3).map((menu, index) => (
-            <Col key={menu.menu.id}>
-              <div style={{ width: 150, height: 150 }}>
-                <MenuCard menu={menu.menu} rank={index + 1} />
-                <div
-                  style={{
-                    width: "100%",
-                    color: "#FF6663",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 20,
-                  }}
-                >
-                  {menu.rejectedBy.length !== 0 && (
-                    <>
-                      <StopOutlined style={{ marginRight: 10 }} />{" "}
-                      {menu.rejectedBy.length}
-                    </>
-                  )}
-                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
-                  {menu.likedBy.length}
-                </div>
+            <Col key={menu.menu.id} span={4}>
+              <MenuCard menu={menu.menu} rank={index + 1} />
+              <div
+                style={{
+                  width: "100%",
+                  color: "#FF6663",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 20,
+                }}
+              >
+                {menu.rejectedBy.length !== 0 && (
+                  <>
+                    <StopOutlined style={{ marginRight: 10 }} />{" "}
+                    {menu.rejectedBy.length}
+                  </>
+                )}
+                <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
+                {menu.likedBy.length}
               </div>
             </Col>
           ))}
@@ -285,10 +291,6 @@ const HomePresenter = ({
               Lunch Menu on {now.getMonth() + 1}/{now.getDate()}{" "}
               {weekdays[now.getDay()]}
             </Title>
-            <Description>
-              {numJoining} {numJoining === 1 ? "person is" : "people are"}{" "}
-              joining
-            </Description>
           </TitleWrapper>
         </TitleContainer>
 
@@ -429,4 +431,4 @@ const ModalButtonContainer = styled.div`
   align-items: center;
 `;
 
-export default HomePresenter;
+export default VotePresenter;

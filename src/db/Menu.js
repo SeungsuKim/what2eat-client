@@ -45,7 +45,6 @@ export const fetchMenuByTags = async (tags, excludedTags) => {
   query.forEach((doc) => menus.push({ id: doc.id, ...doc.data() }));
 
   menus = menus.map((menu) => {
-    console.log(JSON.stringify(menu));
     const negativeTags = menu.tags.filter((tag) =>
       excludedTags.map(({ tag }) => tag).includes(tag)
     );
@@ -120,15 +119,12 @@ export const toggleMenuReject = async (menu, user, groupId, reject) => {
   const groupData = (await groupRef.get()).data();
   const menus = groupData.menus;
 
-  console.log("toggle reject");
-
   for (let i = 0; i < menus.length; i++) {
     if (menus[i].menu.id === menu.id) {
       if (!reject) {
         for (let j = 0; j < menus[i].rejectedBy.length; j++) {
           if (menus[i].rejectedBy[j].id === user.id) {
             menus[i].rejectedBy.splice(j, 1);
-            console.log(menus[i]);
           }
         }
       } else {
@@ -159,8 +155,6 @@ export const toggleMenuView = async (menu, user, groupId, view) => {
   const groupRef = db.collection("groups").doc(groupId);
   const groupData = (await groupRef.get()).data();
   const menus = groupData.menus;
-
-  console.log("toggle view");
 
   for (let i = 0; i < menus.length; i++) {
     if (menus[i].menu.id === menu.id) {

@@ -66,7 +66,14 @@ const SearchPresenter = ({
             <Divider />
             <Tags>
               {tags.map((tag) => (
-                <Tag key={tag.id} tag={tag} onClick={() => addTag(tag)} />
+                <Tag
+                  key={tag.id}
+                  tag={tag}
+                  onClick={() => {
+                    addTag(tag);
+                    inputProps.resetTerm();
+                  }}
+                />
               ))}
             </Tags>
             <Tags>
@@ -75,9 +82,23 @@ const SearchPresenter = ({
                   key={tag.id}
                   tag={tag}
                   excluded
-                  onClick={() => addExcludedTag(tag)}
+                  onClick={() => {
+                    addExcludedTag(tag);
+                    inputProps.resetTerm();
+                  }}
                 />
               ))}
+              {tags.length === 0 ? (
+                <span
+                  style={{
+                    fontSize: 20,
+                    color: "rgba(0, 0, 0, 0.45)",
+                  }}
+                >
+                  Add tags such as #국물있는 #뜨끈한 to filter the suggested
+                  menus below.
+                </span>
+              ) : null}
             </Tags>
           </ResultContainer>
         </SearchResult>

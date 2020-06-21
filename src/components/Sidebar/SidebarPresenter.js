@@ -1,21 +1,24 @@
 import {
-  BellOutlined,
   CalendarOutlined,
   CaretDownOutlined,
   CloseOutlined,
-  PlusOutlined,
+  ExportOutlined,
   StarFilled,
   StarOutlined,
   UserOutlined,
-  ExportOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Modal, Typography } from "antd";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Affix, Avatar, Button, Input, Modal, Typography } from "antd";
+import React, { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+
+import { store } from "../../store";
 
 const { Text } = Typography;
 
 const SidebarPresenter = ({ groups }) => {
+  const { dispatch } = useContext(store);
+  const history = useHistory();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -76,116 +79,106 @@ const SidebarPresenter = ({ groups }) => {
   ));
 
   return (
-    <div
-      style={{
-        backgroundColor: "rgba(19, 194, 194, 0.2)",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        padding: 30,
-      }}
-    >
-      {/* Add new group Modal */}
-      <Modal
-        title=""
-        centered
-        visible={isModalVisible}
-        footer={null}
-        bodyStyle={{ padding: 30, display: "flex", flexDirection: "column" }}
-        onCancel={toggleModal}
-      >
-        <h1 style={{ fontSize: 30, fontWeight: "700" }}>Create a new group</h1>
-
-        <div style={{ marginBottom: 30 }}>
-          <span style={{ fontSize: 18 }}>Group name</span>
-          <Input style={{ marginTop: 8, fontSize: 24, borderRadius: 8 }} />
-        </div>
-
-        <div style={{ marginBottom: 10 }}>
-          <span style={{ fontSize: 18 }}>Add members</span>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: 8,
-            }}
-          >
-            <Input
-              style={{
-                width: "80%",
-                fontSize: 24,
-                borderRadius: 8,
-              }}
-            />
-            <Button
-              style={{
-                width: "18%",
-                height: 49,
-                fontSize: 18,
-                fontWeight: "600",
-                borderRadius: 8,
-                border: 0,
-                color: "white",
-                backgroundColor: "rgba(19, 194, 194, 0.4)",
-              }}
-            >
-              ADD
-            </Button>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 10 }}>{userInformation}</div>
-
-        <Button
-          style={{
-            marginTop: 20,
-            alignSelf: "center",
-            fontSize: 22,
-            fontWeight: "800",
-            backgroundColor: "rgba(19, 194, 194, 0.6)",
-            borderRadius: 8,
-            color: "white",
-            height: 51,
-            width: 145,
-            border: 0,
-          }}
-          onClick={toggleModal}
-        >
-          Create
-        </Button>
-      </Modal>
-
-      {/* Logo */}
-      <Link to="/">
-        <span
-          style={{
-            color: "#13C2C2",
-            fontSize: 44,
-            fontWeight: "800",
-            fontStyle: "italic",
-            marginBottom: 20,
-            fontFamily: "sans-serif",
-          }}
-        >
-          what2eat
-        </span>
-      </Link>
-
-      {/* Icons */}
+    <Affix offsetTop={0}>
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 7,
+          flexDirection: "column",
+          height: "100%",
+          padding: 30,
         }}
       >
-        <UserOutlined style={{ fontSize: 20, marginRight: 10 }} />
-        <Text style={{ fontSize: 20 }}>My Profile</Text>
-      </div>
-      <Link to="/calendar">
+        {/* Add new group Modal */}
+        <Modal
+          title=""
+          centered
+          visible={isModalVisible}
+          footer={null}
+          bodyStyle={{ padding: 30, display: "flex", flexDirection: "column" }}
+          onCancel={toggleModal}
+        >
+          <h1 style={{ fontSize: 30, fontWeight: "700" }}>
+            Create a new group
+          </h1>
+
+          <div style={{ marginBottom: 30 }}>
+            <span style={{ fontSize: 18 }}>Group name</span>
+            <Input style={{ marginTop: 8, fontSize: 24, borderRadius: 8 }} />
+          </div>
+
+          <div style={{ marginBottom: 10 }}>
+            <span style={{ fontSize: 18 }}>Add members</span>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: 8,
+              }}
+            >
+              <Input
+                style={{
+                  width: "80%",
+                  fontSize: 24,
+                  borderRadius: 8,
+                }}
+              />
+              <Button
+                style={{
+                  width: "18%",
+                  height: 49,
+                  fontSize: 18,
+                  fontWeight: "600",
+                  borderRadius: 8,
+                  border: 0,
+                  color: "white",
+                  backgroundColor: "rgba(19, 194, 194, 0.4)",
+                }}
+              >
+                ADD
+              </Button>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 10 }}>{userInformation}</div>
+
+          <Button
+            style={{
+              marginTop: 20,
+              alignSelf: "center",
+              fontSize: 22,
+              fontWeight: "800",
+              backgroundColor: "rgba(19, 194, 194, 0.6)",
+              borderRadius: 8,
+              color: "white",
+              height: 51,
+              width: 145,
+              border: 0,
+            }}
+            onClick={toggleModal}
+          >
+            Create
+          </Button>
+        </Modal>
+
+        {/* Logo */}
+        <Link to="/">
+          <span
+            style={{
+              color: "#13C2C2",
+              fontSize: 44,
+              fontWeight: "800",
+              fontStyle: "italic",
+              marginBottom: 20,
+              fontFamily: "sans-serif",
+            }}
+          >
+            what2eat
+          </span>
+        </Link>
+
+        {/* Icons */}
         <div
           style={{
             display: "flex",
@@ -194,11 +187,23 @@ const SidebarPresenter = ({ groups }) => {
             marginBottom: 7,
           }}
         >
-          <CalendarOutlined style={{ fontSize: 20, marginRight: 10 }} />
-          <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
+          <UserOutlined style={{ fontSize: 20, marginRight: 10 }} />
+          <Text style={{ fontSize: 20 }}>My Profile</Text>
         </div>
-      </Link>
-      {/* <div
+        <Link to="/calendar">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 7,
+            }}
+          >
+            <CalendarOutlined style={{ fontSize: 20, marginRight: 10 }} />
+            <Text style={{ fontSize: 20 }}>Menu Calendar</Text>
+          </div>
+        </Link>
+        {/* <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -226,28 +231,28 @@ const SidebarPresenter = ({ groups }) => {
           </span>
         </div>
       </div> */}
-      {/* border */}
-      <div
-        style={{
-          width: "100%",
-          height: 2,
-          marginTop: 20,
-          marginBottom: 27,
-          backgroundColor: "rgba(0, 109, 117, 0.2)",
-        }}
-      />
-      {/* Groups */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 7,
-        }}
-      >
-        <CaretDownOutlined style={{ fontSize: 20, marginRight: 10 }} />
-        <Text style={{ fontSize: 20 }}>Groups</Text>
-        {/* <Button
+        {/* border */}
+        <div
+          style={{
+            width: "100%",
+            height: 2,
+            marginTop: 20,
+            marginBottom: 27,
+            backgroundColor: "rgba(0, 109, 117, 0.2)",
+          }}
+        />
+        {/* Groups */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 7,
+          }}
+        >
+          <CaretDownOutlined style={{ fontSize: 20, marginRight: 10 }} />
+          <Text style={{ fontSize: 20 }}>Groups</Text>
+          {/* <Button
           style={{
             backgroundColor: "rgba(0, 0, 0, 0)",
             border: 0,
@@ -260,20 +265,29 @@ const SidebarPresenter = ({ groups }) => {
         >
           <PlusOutlined style={{ fontSize: 20 }} />
         </Button> */}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 7,
-        }}
-      >
-        {groups &&
-          groups.map((group) => (
-            <Link to="/" style={{ width: "100%" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: 7,
+          }}
+        >
+          {groups &&
+            groups.map((group) => (
+              <div
+                style={{ display: "flex", alignItems: "center", width: "100%" }}
+                onClick={() => {
+                  dispatch({ type: "SET_GROUP", payload: group });
+                  history.push("/vote");
+                }}
+              >
+                {group.bookmarked ? (
+                  <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
+                ) : (
+                  <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
+                )}
                 <Text style={{ fontSize: 20 }}>{group.group}</Text>
                 {/*
                 <div
@@ -288,33 +302,33 @@ const SidebarPresenter = ({ groups }) => {
                 />
                 */}
               </div>
-            </Link>
-          ))}
+            ))}
+        </div>
+        <div
+          style={{
+            width: "100%",
+            height: 2,
+            marginTop: "auto",
+            marginBottom: 27,
+            backgroundColor: "rgba(0, 109, 117, 0.2)",
+          }}
+        />
+        <a
+          href="/"
+          style={{
+            display: "flex",
+            marginTop: -10,
+            color: "rgba(0, 0, 0, 0.65)",
+            fontSize: 20,
+            alignItems: "center",
+          }}
+          onClick={() => localStorage.removeItem("token")}
+        >
+          <ExportOutlined style={{ marginRight: 10 }} />
+          <span>Sign out</span>
+        </a>
       </div>
-      <div
-        style={{
-          width: "100%",
-          height: 2,
-          marginTop: "auto",
-          marginBottom: 27,
-          backgroundColor: "rgba(0, 109, 117, 0.2)",
-        }}
-      />
-      <a
-        href="/"
-        style={{
-          display: "flex",
-          marginTop: -10,
-          color: "rgba(0, 0, 0, 0.65)",
-          fontSize: 20,
-          alignItems: "center",
-        }}
-        onClick={() => localStorage.removeItem('token')}
-      >
-        <ExportOutlined style={{ marginRight: 10 }} />
-        <span>Sign out</span>
-      </a>
-    </div>
+    </Affix>
   );
 };
 
