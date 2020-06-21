@@ -36,6 +36,7 @@ const NormalTag = styled.div`
   border-radius: 25px;
   padding: 20px;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 const ExcludedTag = styled.div`
@@ -48,6 +49,7 @@ const ExcludedTag = styled.div`
   border-radius: 25px;
   padding: 20px 15px;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export default Tag;
