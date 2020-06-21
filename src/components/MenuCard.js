@@ -63,7 +63,20 @@ const MenuCard = ({ menu, add, rank, style, showTags }) => {
               position: "absolute",
               color: "#13C2C2",
               backgroundColor: "white",
-              borderRadius: "60%",
+              borderRadius: "50%",
+              fontSize: 40,
+              right: 10,
+              bottom: 10,
+              ...style,
+            }}
+          />
+        )}
+        {add && isMenuInVote && (
+          <CheckCircleFilled
+            style={{
+              position: "absolute",
+              color: "white",
+              borderRadius: "50%",
               fontSize: 40,
               right: 10,
               bottom: 10,
@@ -78,21 +91,10 @@ const MenuCard = ({ menu, add, rank, style, showTags }) => {
             ))}
           </TagsContainer>
         )}
-        {add && isMenuInVote ? (
-          <CheckCircleFilled
-            style={{
-              position: "absolute",
-              color: "#13C2C2",
-              backgroundColor: "white",
-              borderRadius: "60%",
-              fontSize: 35,
-              right: 10,
-              bottom: 10,
-              ...style,
-            }}
-          />
-        ) : null}
         {rank && <Ribbon>{getRankText(rank)}</Ribbon>}
+        {add && isMenuInVote && (
+          <Overlay>Successfully added to the vote!</Overlay>
+        )}
       </VoteCard>
     </>
   );
@@ -134,6 +136,21 @@ const MenuTitle = styled.div`
   width: 100%;
   height: 20%;
   text-align: center;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const TagsContainer = styled.div`
