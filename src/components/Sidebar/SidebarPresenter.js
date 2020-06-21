@@ -1,21 +1,23 @@
 import {
-  BellOutlined,
   CalendarOutlined,
   CaretDownOutlined,
   CloseOutlined,
-  PlusOutlined,
+  ExportOutlined,
   StarFilled,
   StarOutlined,
   UserOutlined,
-  ExportOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input, Modal, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { store } from "../../store";
 
 const { Text } = Typography;
 
 const SidebarPresenter = ({ groups }) => {
+  const { dispatch } = useContext(store);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -264,18 +266,26 @@ const SidebarPresenter = ({ groups }) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           alignItems: "center",
           marginBottom: 7,
         }}
       >
         {groups &&
           groups.map((group) => (
-            <Link to="/" style={{ width: "100%" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{ display: "flex", alignItems: "center", width: "100%" }}
+              onClick={() => {
+                dispatch({ type: "SET_GROUP", payload: group });
+              }}
+            >
+              {group.bookmarked ? (
                 <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
-                <Text style={{ fontSize: 20 }}>{group.group}</Text>
-                {/*
+              ) : (
+                <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
+              )}
+              <Text style={{ fontSize: 20 }}>{group.group}</Text>
+              {/*
                 <div
                   style={{
                     width: 12,
@@ -287,8 +297,7 @@ const SidebarPresenter = ({ groups }) => {
                   }}
                 />
                 */}
-              </div>
-            </Link>
+            </div>
           ))}
       </div>
       <div
@@ -309,7 +318,7 @@ const SidebarPresenter = ({ groups }) => {
           fontSize: 20,
           alignItems: "center",
         }}
-        onClick={() => localStorage.removeItem('token')}
+        onClick={() => localStorage.removeItem("token")}
       >
         <ExportOutlined style={{ marginRight: 10 }} />
         <span>Sign out</span>

@@ -15,8 +15,6 @@ const HeaderContainer = () => {
   );
   const [showSetTime, setShowSetTime] = useState(false);
 
-  const numUser = group.users.length;
-
   const isJoining =
     group.users.filter((u) => u.id === user.id)[0].isJoining === true;
 
@@ -34,7 +32,7 @@ const HeaderContainer = () => {
 
   return (
     <HeaderPresenter
-      numUser={numUser}
+      group={group}
       isJoining={isJoining}
       handleJoin={handleJoin}
       openedAt={openedAt}

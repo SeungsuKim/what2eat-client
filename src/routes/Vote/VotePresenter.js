@@ -28,6 +28,7 @@ const VotePresenter = ({
 }) => {
   const globalState = useContext(store);
   const { state } = globalState;
+  const { group, user } = state;
 
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -127,7 +128,11 @@ const VotePresenter = ({
               }}
             />
             <p style={{ color: "#FF6663", fontSize: 19 }}>
-              {state.rejectionCount} / 2{" "}
+              {2 -
+                group.menus.filter((menu) =>
+                  menu.rejectedBy.map(({ id }) => id).includes(user.id)
+                ).length}{" "}
+              / 2
             </p>
           </RejectionLeft>
         </ViewedMenuWrapper>

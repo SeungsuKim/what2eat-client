@@ -1,17 +1,22 @@
+import { HeartFilled, HeartOutlined, StopOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import React, { useContext, useState } from "react";
 import ScaleText from "react-scale-text";
 import styled from "styled-components";
-import { Button } from "antd";
-import { StopOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 
 import { toggleMenuLike, toggleMenuReject } from "../db/Menu";
-
 import { store } from "../store";
 
 const ReactionCard = ({ liked, rejected, menu }) => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
-  const { rejectionCount } = state;
+  const { group, user } = state;
+
+  const rejectionCount =
+    2 -
+    group.menus.filter((menu) =>
+      menu.rejectedBy.map(({ id }) => id).includes(user.id)
+    ).length;
 
   const [isLike, setIsLike] = useState(liked);
   const [isReject, setIsReject] = useState(rejected);
@@ -55,7 +60,9 @@ const ReactionCard = ({ liked, rejected, menu }) => {
         setIsReject(true);
         setIsLike(false);
       } else {
-        alert("Only 2 rejections are available on a meal.\nPlease cancel other rejections to reject this menu.");
+        alert(
+          "Only 2 rejections are available on a meal.\nPlease cancel other rejections to reject this menu."
+        );
         return;
       }
     }

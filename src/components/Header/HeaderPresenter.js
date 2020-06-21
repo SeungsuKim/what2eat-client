@@ -2,11 +2,10 @@ import { FieldTimeOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, TimePicker } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderPresenter = ({
-  numUser,
+  group,
   isJoining,
   handleJoin,
   openedAt,
@@ -51,17 +50,22 @@ const HeaderPresenter = ({
     </Modal>
     <GroupWrapper>
       <StarFilled style={{ fontSize: 35, color: "#13C2C2" }} />
-      <Link to="/">
-        <GroupName>Human Resources</GroupName>
-      </Link>
+      <GroupName>{group.group}</GroupName>
       <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
-      <HeaderText>{numUser}</HeaderText>
+      <HeaderText>{group.users.length}</HeaderText>
       <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
-      <HeaderText>{openedAt.format("HH:mm")}</HeaderText>
+      <HeaderText>{group.openedAt}</HeaderText>
     </GroupWrapper>
     <Button
       size="large"
-      style={{ marginLeft: "auto", marginRight: 10, padding: 7, height: 55, borderRadius: 5, borderWidth: 2 }}
+      style={{
+        marginLeft: "auto",
+        marginRight: 10,
+        padding: 7,
+        height: 55,
+        borderRadius: 5,
+        borderWidth: 2,
+      }}
       onClick={() => setShowSetTime(true)}
     >
       <span style={{ fontSize: 22, fontWeight: "bold" }}>
