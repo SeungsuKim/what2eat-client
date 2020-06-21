@@ -56,51 +56,6 @@ const SearchPresenter = ({
             ))}
           </Tabs> */}
           <ResultContainer>
-<<<<<<< HEAD
-            <Menus gutter={[16, 16]}>
-              {menus.map((menu) => (
-                <Col key={menu.id} span={6}>
-                  <MenuCard menu={menu} add />
-                </Col>
-              ))}
-            </Menus>
-            <Divider />
-            <Tags>
-              {tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  tag={tag}
-                  onClick={() => {
-                    addTag(tag);
-                    inputProps.resetTerm();
-                  }}
-                />
-              ))}
-            </Tags>
-            <Tags>
-              {tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  tag={tag}
-                  excluded
-                  onClick={() => {
-                    addExcludedTag(tag);
-                    inputProps.resetTerm();
-                  }}
-                />
-              ))}
-              {tags.length === 0 ? (
-                <span
-                  style={{
-                    fontSize: 20,
-                    color: "rgba(0, 0, 0, 0.45)",
-                  }}
-                >
-                  Search menus or tags such as 부대찌개, #매운, #칼칼한, #국물, etc.
-                </span>
-              ) : null}
-            </Tags>
-=======
             {inputProps.value === "" ? (
               <>
                 <p>
@@ -166,7 +121,6 @@ const SearchPresenter = ({
                 </Tags>
               </>
             )}
->>>>>>> 36b03e9acf6c8e7d1024a6f527bc9eb79c9aaa9d
           </ResultContainer>
         </SearchResult>
       )}

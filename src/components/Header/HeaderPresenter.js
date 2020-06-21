@@ -84,6 +84,7 @@ const HeaderPresenter = ({
           <HeaderText>{group.users.length}</HeaderText>
           <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
           <HeaderText>{group.openedAt}</HeaderText>
+          <span style={{ color: "#FF6663" }}>{closeTime}</span>
         </GroupWrapper>
         <Button
           size="large"

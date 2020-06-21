@@ -1,11 +1,11 @@
 import { Col, Row } from "antd";
 import { Calendar } from "antd";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { store } from "../../store";
 
 import MenuCard from "../../components/MenuCard";
 import { searchMenu } from "../../db/Menu";
+import { store } from "../../store";
 
 const CalendarPresenter = ({ group }) => {
   const historyData = {
@@ -576,6 +576,7 @@ const CalendarPresenter = ({ group }) => {
                   <MenuCard
                     menu={menu.menu}
                     add={!isMenuInVote(menu)}
+                    size="small"
                     style={{ fontSize: 20, right: 4, bottom: 6 }}
                   />
                 </MenuContainer>
@@ -635,7 +636,11 @@ const CalendarPresenter = ({ group }) => {
                       alignItems: "center",
                     }}
                   >
-                    <MenuCard menu={menu.menu} add={!isMenuInVote(menu.menu)} />
+                    <MenuCard
+                      menu={menu.menu}
+                      add={!isMenuInVote(menu.menu)}
+                      size="small"
+                    />
                     <span style={{ fontSize: 16, marginTop: 10 }}>
                       Total {menu.menu.count} times
                     </span>

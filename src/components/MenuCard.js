@@ -11,6 +11,7 @@ import { store } from "../store";
 const MenuCard = ({
   menu,
   add,
+  size = "default",
   rank,
   style,
   showTags,
@@ -103,7 +104,9 @@ const MenuCard = ({
         )}
         {rank && <Ribbon>{getRankText(rank)}</Ribbon>}
         {add && isMenuInVote && (
-          <Overlay>Successfully added to the vote!</Overlay>
+          <Overlay>
+            {size === "small" ? "Added" : "Successfully added to the vote!"}
+          </Overlay>
         )}
       </VoteCard>
     </>
