@@ -139,7 +139,7 @@ const VotePresenter = ({
 
         <ReactedCardContainer>
           <Row gutter={[20, 20]}>
-            {viewedMenus.map((menu) => (
+            {viewedMenus.reverse().map((menu) => (
               <Col key={menu.menu.id}>
                 <ReactionCard
                   liked={isLikedMenu(menu)}
