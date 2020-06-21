@@ -4,9 +4,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { setIsJoining } from "../../db/Group";
 import { getResult } from "../../db/Menu";
 import { store } from "../../store";
-import HomePresenter from "./HomePresenter";
+import VotePresenter from "./VotePresenter";
 
-const HomeContainer = () => {
+const VoteContainer = () => {
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
   const { user, group, menus } = state;
@@ -52,7 +52,7 @@ const HomeContainer = () => {
   };
 
   return (
-    <HomePresenter
+    <VotePresenter
       askJoin={askJoin}
       isJoining={isJoining}
       numJoining={numJoining}
@@ -65,4 +65,4 @@ const HomeContainer = () => {
   );
 };
 
-export default HomeContainer;
+export default VoteContainer;
