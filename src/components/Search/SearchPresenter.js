@@ -64,7 +64,7 @@ const SearchPresenter = ({
                 </p>
                 <p>
                   If you add tag, like
-                  <Tag size="small" tag={{ tag: "매콤한" }} />
+                  <Tag size="small" tag={{ tag: "매운" }} />
                   <Tag size="small" tag={{ tag: "뜨거운" }} />
                   <Tag size="small" tag={{ tag: "밥" }} />
                   <br />

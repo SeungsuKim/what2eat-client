@@ -349,6 +349,7 @@ const NewMenuWrapper = styled.div`
   text-color: rgba(0, 0, 0, 0.65);
   text-align: left;
   width: 100%;
+  padding-bottom: 15px;
   border-bottom: 2px solid rgba(0, 109, 117, 0.2);
   display: flex;
   flex-direction: row;
@@ -475,7 +476,7 @@ const ModalButtonContainer = styled.div`
 const Restaurant = styled.div`
   color: rgba(0, 0, 0, 0.65);
   font-size: 23px;
-  padding-left: 30%;
+  padding-left: 20%;
 `;
 
 const DetailedResult = styled.div`
