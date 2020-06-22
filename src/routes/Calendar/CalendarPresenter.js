@@ -639,7 +639,6 @@ const CalendarPresenter = ({ group }) => {
                   >
                     <MenuCard
                       menu={menu.menu}
-                      add={!isMenuInVote(menu.menu)}
                       size="small"
                       isCalendarCard
                     />

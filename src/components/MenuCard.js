@@ -25,32 +25,76 @@ const MenuCard = ({
 
   const isMenuInVote = menus.map(({ menu }) => menu.id).includes(menu.id);
 
+  const [calendarChecked, setCalendarChekced] = useState([]);
+
+  const isMenuInGroupVote = (targetId) => {
+    let val = false;
+
+    for (let i = 0; i < groups.length; i++) {
+      if (targetId === groups[i].id) {
+        val = groups[i].menus.map(({ menu }) => menu.id).includes(menu.id);
+        console.log("groupres", val, targetId, groups[i].id, menu);
+        break;
+      }
+    }
+
+    return val;
+  };
+
   const [isCalendarModalOpened, setIsCalendarModalOpened] = useState(false);
 
   const addMenu = (id, groupName) => {
-    if (!isMenuInVote) {
-      dispatch({
-        type: "ADD_MENU_TO_VOTE",
-        payload: {
-          menu,
-          owner: user,
-          viewedBy: [user],
-          likedBy: [user],
-          rejectedBy: [],
-        },
-      });
-      addMenuToVote(menu, user, id);
-      notification.open({
-        message: "Successfully Added!",
-        description: `${menu.menu} is successfully added to ${groupName}.`,
-        icon: <CheckCircleOutlined style={{ color: "#52C41A" }} />,
-      });
+    if (!isCalendarCard) {
+      if (!isMenuInVote) {
+        dispatch({
+          type: "ADD_MENU_TO_VOTE",
+          payload: {
+            menu,
+            owner: user,
+            viewedBy: [user],
+            likedBy: [user],
+            rejectedBy: [],
+          },
+        });
+        addMenuToVote(menu, user, id);
+        notification.open({
+          message: "Successfully Added!",
+          description: `${menu.menu} is successfully added to ${groupName}.`,
+          icon: <CheckCircleOutlined style={{ color: "#52C41A" }} />,
+        });
+      } else {
+        notification.open({
+          message: "Error",
+          description: `${menu.menu} is already added to ${groupName}.`,
+          icon: <CloseCircleOutlined style={{ color: "rgb(255, 102, 99)" }} />,
+        });
+      }
     } else {
-      notification.open({
-        message: "Error",
-        description: `${menu.menu} is already added to ${groupName}.`,
-        icon: <CloseCircleOutlined style={{ color: "rgb(255, 102, 99)" }} />,
-      });
+      if (!isMenuInGroupVote(id)) {
+        dispatch({
+          type: "ADD_MENU_TO_VOTE",
+          payload: {
+            menu,
+            owner: user,
+            viewedBy: [user],
+            likedBy: [user],
+            rejectedBy: [],
+          },
+        });
+        addMenuToVote(menu, user, id);
+        setCalendarChekced(calendarChecked.concat([id]));
+        notification.open({
+          message: "Successfully Added!",
+          description: `${menu.menu} is successfully added to ${groupName}.`,
+          icon: <CheckCircleOutlined style={{ color: "#52C41A" }} />,
+        });
+      } else {
+        notification.open({
+          message: "Error",
+          description: `${menu.menu} is already added to ${groupName}.`,
+          icon: <CloseCircleOutlined style={{ color: "rgb(255, 102, 99)" }} />,
+        });
+      }
     }
   };
 
@@ -85,6 +129,9 @@ const MenuCard = ({
         centered
       >
         {groups.map((g) => {
+          const isInGroup = isMenuInGroupVote(g.id);
+          console.log("isingroup", isInGroup, menu);
+
           return (
             <div
               style={{
@@ -101,7 +148,7 @@ const MenuCard = ({
                 <span style={{ fontSize: 24 }}>{g.group}</span>
               </div>
               <div>
-                {isMenuInVote && g.group === group.group ? (
+                {isInGroup || calendarChecked.includes(g.id) ? (
                   <CheckCircleFilled
                     style={{
                       color: "grey",
@@ -132,26 +179,44 @@ const MenuCard = ({
             <p style={{ margin: 0 }}>{menu.menu}</p>
           </ScaleText>
         </MenuTitle>
-        {add && !isMenuInVote && (
+        {!isCalendarCard ? (
+          <>
+            {add && !isMenuInVote && (
+              <PlusCircleFilled
+                onClick={handleAddMenu}
+                style={{
+                  position: "absolute",
+                  color: "#13C2C2",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  fontSize: 40,
+                  right: 10,
+                  bottom: 10,
+                  ...style,
+                }}
+              />
+            )}
+            {add && isMenuInVote && (
+              <CheckCircleFilled
+                style={{
+                  position: "absolute",
+                  color: "white",
+                  borderRadius: "50%",
+                  fontSize: 40,
+                  right: 10,
+                  bottom: 10,
+                  ...style,
+                }}
+              />
+            )}{" "}
+          </>
+        ) : (
           <PlusCircleFilled
             onClick={handleAddMenu}
             style={{
               position: "absolute",
               color: "#13C2C2",
               backgroundColor: "white",
-              borderRadius: "50%",
-              fontSize: 40,
-              right: 10,
-              bottom: 10,
-              ...style,
-            }}
-          />
-        )}
-        {add && isMenuInVote && (
-          <CheckCircleFilled
-            style={{
-              position: "absolute",
-              color: "white",
               borderRadius: "50%",
               fontSize: 40,
               right: 10,
@@ -170,7 +235,7 @@ const MenuCard = ({
           </TagsContainer>
         )}
         {rank && <Ribbon>{getRankText(rank)}</Ribbon>}
-        {add && isMenuInVote && (
+        {add && isMenuInVote && !isCalendarCard && (
           <Overlay>
             {size === "small" ? "Added" : "Successfully added to the vote!"}
           </Overlay>
