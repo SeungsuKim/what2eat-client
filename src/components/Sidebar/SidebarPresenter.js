@@ -15,9 +15,9 @@ import { store } from "../../store";
 
 const { Text } = Typography;
 
-const SidebarPresenter = ({ groups }) => {
-  const { dispatch } = useContext(store);
-  const history = useHistory();
+const SidebarPresenter = ({ groups, handleChangeGroup }) => {
+  const { state } = useContext(store);
+  const { group: selectedGroup } = state;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -163,7 +163,7 @@ const SidebarPresenter = ({ groups }) => {
         </Modal>
 
         {/* Logo */}
-        <Link to="/">
+        <Link to="/vote">
           <span
             style={{
               color: "#13C2C2",
@@ -277,30 +277,43 @@ const SidebarPresenter = ({ groups }) => {
           {groups &&
             groups.map((group) => (
               <div
-                style={{ display: "flex", alignItems: "center", width: "100%" }}
-                onClick={() => {
-                  dispatch({ type: "SET_GROUP", payload: group });
-                  history.push("/vote");
-                }}
+                style={
+                  group.id === selectedGroup.id
+                    ? {
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        marginLeft: 20,
+                        cursor: "pointer",
+                        padding: "5px 0px",
+                        fontWeight: 600,
+                        color: "#13C2C2",
+                      }
+                    : {
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        marginLeft: 20,
+                        cursor: "pointer",
+                        padding: "5px 0px",
+                      }
+                }
+                onClick={() => handleChangeGroup(group)}
               >
                 {group.bookmarked ? (
                   <StarFilled style={{ fontSize: 20, marginRight: 10 }} />
                 ) : (
                   <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
                 )}
-                <Text style={{ fontSize: 20 }}>{group.group}</Text>
-                {/*
-                <div
-                  style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: "50%",
-                    backgroundColor: "#FF6663",
-                    marginLeft: "auto",
-                    marginRight: 8,
-                  }}
-                />
-                */}
+                <Text
+                  style={
+                    group.id === selectedGroup.id
+                      ? { fontSize: 20, color: "#13C2C2" }
+                      : { fontSize: 20 }
+                  }
+                >
+                  {group.group}
+                </Text>
               </div>
             ))}
         </div>

@@ -2,10 +2,14 @@ import firebase, { db } from "../firebase";
 
 export const getResult = async (groupId) => {
   const group = await db.collection("groups").doc(groupId).get();
-  const { users, menus } = group.data();
+  const { menus } = group.data();
+
+  const users = [];
+  const usersRef = await db.collection("users").get();
+  usersRef.forEach((doc) => users.push({ id: doc.id, ...doc.data() }));
 
   const joiningUserIds = users
-    .filter((user) => user.isJoining === true)
+    .filter((user) => user.joiningGroupId && user.joiningGroupId === groupId)
     .map((user) => user.id);
   const result = menus.map((menu) => {
     const validLikedBy = menu.likedBy.filter((user) =>

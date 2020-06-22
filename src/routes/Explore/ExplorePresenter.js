@@ -10,7 +10,7 @@ import Tag from "../../components/Tag";
 
 const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
   const now = new Date();
-  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <Body>
@@ -60,7 +60,13 @@ const ExplorePresenter = ({ menuProps, tagProps, menusOnVote }) => {
           <MenulistContainer>
             {menuProps.menus.map((menu) => (
               <MenuCardContainer>
-                <MenuCard menu={menu} add showTags />
+                <MenuCard
+                  menu={menu}
+                  add
+                  showTags
+                  likedTags={tagProps.tags}
+                  excludedTags={tagProps.excludedTags}
+                />
               </MenuCardContainer>
             ))}
           </MenulistContainer>
@@ -147,7 +153,7 @@ const MenulistContainer = styled.div`
 `;
 
 const MenuCardContainer = styled.div`
-  width: 400px;
+  width: 350px;
   padding: 20px;
 `;
 

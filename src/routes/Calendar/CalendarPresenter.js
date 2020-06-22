@@ -1,11 +1,11 @@
 import { Col, Row } from "antd";
 import { Calendar } from "antd";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { store } from "../../store";
 
 import MenuCard from "../../components/MenuCard";
 import { searchMenu } from "../../db/Menu";
+import { store } from "../../store";
 
 const CalendarPresenter = ({ group }) => {
   const historyData = {
@@ -131,12 +131,23 @@ const CalendarPresenter = ({ group }) => {
         26: [
           {
             menu: {
-              id: "avoMsHlLUGdSzKewDh9e",
-              menu: "육회",
-              keywords: ["ㅇ", "유", "육", "육ㅎ", "육회", "ㅇㅎ"],
-              tags: ["한식", "소고기", "1~2만원"],
+              id: "dIgbELFPtLEBFtf1DlZV",
               image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EC%9C%A1%ED%9A%8C.jpg?alt=media&token=68db4715-cc17-4861-8ef0-319a5c793a88",
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%B9%84%EB%B9%94%EB%B0%A5.jpg?alt=media&token=ba38582a-9f6f-4b9e-ad7b-05a9cc1612bc",
+              tags: ["한식", "빨간", "밥", "~1만원"],
+              keywords: [
+                "ㅂ",
+                "비",
+                "빕",
+                "비ㅂ",
+                "비비",
+                "비빔",
+                "비빔ㅂ",
+                "비빔바",
+                "비빔밥",
+                "ㅂㅂㅂ",
+              ],
+              menu: "비빔밥",
             },
           },
         ],
@@ -336,25 +347,23 @@ const CalendarPresenter = ({ group }) => {
         8: [
           {
             menu: {
-              id: "xZ1NbhkMypQ2iUPetFDf",
-              tags: ["양식", "면", "차가운", "1~2만원"],
+              id: "dIgbELFPtLEBFtf1DlZV",
               image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%83%89%ED%8C%8C%EC%8A%A4%ED%83%80.jpg?alt=media&token=779c9f01-c4af-4290-8b79-ea88ad1b8a0a",
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%B9%84%EB%B9%94%EB%B0%A5.jpg?alt=media&token=ba38582a-9f6f-4b9e-ad7b-05a9cc1612bc",
+              tags: ["한식", "빨간", "밥", "~1만원"],
               keywords: [
-                "ㄴ",
-                "내",
-                "냉",
-                "냉ㅍ",
-                "냉파",
-                "냉팟",
-                "냉파ㅅ",
-                "냉파스",
-                "냉파슽",
-                "냉파스ㅌ",
-                "냉파스타",
-                "ㄴㅍㅅㅌ",
+                "ㅂ",
+                "비",
+                "빕",
+                "비ㅂ",
+                "비비",
+                "비빔",
+                "비빔ㅂ",
+                "비빔바",
+                "비빔밥",
+                "ㅂㅂㅂ",
               ],
-              menu: "냉파스타",
+              menu: "비빔밥",
             },
           },
         ],
@@ -384,57 +393,46 @@ const CalendarPresenter = ({ group }) => {
         10: [
           {
             menu: {
-              id: "zhAgjvY9ohIKWnximpiN",
+              id: "bmQfqyIeHHmvHVjrw8wW",
+              menu: "물냉면",
               image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EA%B9%80%EC%B9%98%EC%B0%8C%EA%B0%9C.jpg?alt=media&token=e822745c-2473-4f61-a4c6-aab80cca0495",
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%AC%BC%EB%83%89%EB%A9%B4.jpg?alt=media&token=ff1d5d63-56eb-4e1f-a00b-be59443278e3",
               keywords: [
-                "ㄱ",
-                "기",
-                "김",
-                "김ㅊ",
-                "김치",
-                "김치ㅉ",
-                "김치찌",
-                "김치찍",
-                "김치찌ㄱ",
-                "김치찌개",
-                "ㄱㅊㅉㄱ",
+                "ㅁ",
+                "무",
+                "물",
+                "물ㄴ",
+                "물내",
+                "물냉",
+                "물냉ㅁ",
+                "물냉며",
+                "물냉면",
+                "ㅁㄴㅁ",
               ],
-              tags: [
-                "한식",
-                "빨간",
-                "국물",
-                "밥",
-                "뜨거운",
-                "얼큰한",
-                "매운",
-                "돼지고기",
-                "~1만원",
-              ],
-              menu: "김치찌개",
+              tags: ["한식", "하얀", "국물", "면", "차가운", "~1만원"],
             },
           },
         ],
         11: [
           {
             menu: {
-              id: "yeb8mkAZVa17pDBYwztd",
+              id: "dIgbELFPtLEBFtf1DlZV",
               image:
-                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%98%A0%EC%96%91%EA%BF%8D.jpg?alt=media&token=17172b3a-f533-41a3-ae36-c6348f3b042a",
-              menu: "똠양꿍",
-              tags: ["태국식", "국물", "뜨거운", "1~2만원"],
+                "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%B9%84%EB%B9%94%EB%B0%A5.jpg?alt=media&token=ba38582a-9f6f-4b9e-ad7b-05a9cc1612bc",
+              tags: ["한식", "빨간", "밥", "~1만원"],
               keywords: [
-                "ㄸ",
-                "또",
-                "똠",
-                "똠ㅇ",
-                "똠야",
-                "똠양",
-                "똠양ㄲ",
-                "똠양꾸",
-                "똠양꿍",
-                "ㄸㅇㄲ",
+                "ㅂ",
+                "비",
+                "빕",
+                "비ㅂ",
+                "비비",
+                "비빔",
+                "비빔ㅂ",
+                "비빔바",
+                "비빔밥",
+                "ㅂㅂㅂ",
               ],
+              menu: "비빔밥",
             },
           },
         ],
@@ -483,21 +481,74 @@ const CalendarPresenter = ({ group }) => {
   };
 
   // get recommended menus
-  const recommendData = [];
-  const years = Object.keys(historyData);
-  years.forEach((year) => {
-    const months = Object.keys(historyData[year]);
-    months.forEach((month) => {
-      const days = Object.keys(historyData[year][month]);
-      days.forEach((day) => {
-        const target = new Date(year, month, day);
-        const threshold = new Date();
-        threshold.setDate(threshold.getDate() - 21);
-        if (target < threshold)
-          recommendData.push(historyData[year][month][day]);
-      });
-    });
-  });
+  const recommendData = [
+    {
+      menu: {
+        id: "dIgbELFPtLEBFtf1DlZV",
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%B9%84%EB%B9%94%EB%B0%A5.jpg?alt=media&token=ba38582a-9f6f-4b9e-ad7b-05a9cc1612bc",
+        tags: ["한식", "빨간", "밥", "~1만원"],
+        keywords: [
+          "ㅂ",
+          "비",
+          "빕",
+          "비ㅂ",
+          "비비",
+          "비빔",
+          "비빔ㅂ",
+          "비빔바",
+          "비빔밥",
+          "ㅂㅂㅂ",
+        ],
+        menu: "비빔밥",
+        count: 4,
+      },
+    },
+    {
+      menu: {
+        id: "r77zOGA2ZlMA0lfci0oN",
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%ED%95%9C%EC%A0%95%EC%8B%9D.jpg?alt=media&token=4deb1b83-003d-4c1a-8b42-7f293fa49c4d",
+        tags: ["한식", "밥", "2만원~"],
+        menu: "한정식",
+        keywords: [
+          "ㅎ",
+          "하",
+          "한",
+          "한ㅈ",
+          "한저",
+          "한정",
+          "한정ㅅ",
+          "한정시",
+          "한정식",
+          "ㅎㅈㅅ",
+        ],
+        count: 3,
+      },
+    },
+    {
+      menu: {
+        id: "bmQfqyIeHHmvHVjrw8wW",
+        menu: "물냉면",
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/what2eat-c9f61.appspot.com/o/%EB%AC%BC%EB%83%89%EB%A9%B4.jpg?alt=media&token=ff1d5d63-56eb-4e1f-a00b-be59443278e3",
+        keywords: [
+          "ㅁ",
+          "무",
+          "물",
+          "물ㄴ",
+          "물내",
+          "물냉",
+          "물냉ㅁ",
+          "물냉며",
+          "물냉면",
+          "ㅁㄴㅁ",
+        ],
+        tags: ["한식", "하얀", "국물", "면", "차가운", "~1만원"],
+        count: 2,
+      },
+    },
+  ];
 
   const globalState = useContext(store);
   const { state, dispatch } = globalState;
@@ -524,8 +575,10 @@ const CalendarPresenter = ({ group }) => {
                 <MenuContainer>
                   <MenuCard
                     menu={menu.menu}
-                    add={!isMenuInVote(menu)}
+                    add={!isMenuInVote(menu.menu)}
+                    size="small"
                     style={{ fontSize: 20, right: 4, bottom: 6 }}
+                    isCalendarCard
                   />
                 </MenuContainer>
               </Col>
@@ -536,20 +589,8 @@ const CalendarPresenter = ({ group }) => {
     }
   }
 
-  function getMonthData(value) {
-    if (value.month() === 8) {
-      return 1394;
-    }
-  }
-
   function monthCellRender(value) {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
+    return null;
   }
 
   function isMenuInVote(value) {
@@ -578,7 +619,8 @@ const CalendarPresenter = ({ group }) => {
         </CalendarContainer>
         <Col span={7}>
           <RecomContainer>
-            <RecomTitle>What you haven’t eaten for 3 weeks</RecomTitle>
+            <RecomTitle>Your Favorite Top 3 Menus</RecomTitle>
+            <Description>Most frequently eaten menus this month</Description>
             <Row gutter={[20, 20]}>
               {recommendData.map((menu) => {
                 return (
@@ -588,9 +630,21 @@ const CalendarPresenter = ({ group }) => {
                     md={24}
                     lg={12}
                     xl={8}
-                    key={menu[0].menu.id}
+                    key={menu.menu.id}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
                   >
-                    <MenuCard menu={menu[0].menu} add={!isMenuInVote(menu[0].menu)} />
+                    <MenuCard
+                      menu={menu.menu}
+                      size="small"
+                      isCalendarCard
+                    />
+                    <span style={{ fontSize: 16, marginTop: 10 }}>
+                      Total {menu.menu.count} times
+                    </span>
                   </Col>
                 );
               })}
@@ -642,7 +696,7 @@ const RecomContainer = styled.div`
 const RecomTitle = styled.h3`
   font-size: 22px;
   font-weight: 300;
-  color: rgba(0, 0, 0, 0.65);
+  color: #13c2c2;
   padding-bottom: 7px;
   border-bottom: 2px solid rgba(0, 109, 117, 0.2);
 `;

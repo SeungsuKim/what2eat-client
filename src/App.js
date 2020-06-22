@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import { Button, Modal } from "antd";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Redirect,
   Route,
@@ -6,11 +7,12 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
+import styled from "styled-components";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { getGroups } from "./db/Group";
-import { getUser } from "./db/User";
+import { getUser, setJoiningGroupId } from "./db/User";
 import Auth from "./routes/Auth";
 import Calendar from "./routes/Calendar";
 import Explore from "./routes/Explore";
@@ -35,7 +37,12 @@ const App = () => {
         const groups = await getGroups(user.groups.map(({ id }) => id));
         dispatch({ type: "SET_GROUPS", payload: groups });
 
-        dispatch({ type: "SET_GROUP", payload: groups[0] });
+        if (user.joiningGroupId) {
+          dispatch({
+            type: "SET_GROUP",
+            payload: groups.filter(({ id }) => id === user.joiningGroupId)[0],
+          });
+        }
 
         dispatch({ type: "END_LOADING" });
       };
@@ -59,20 +66,28 @@ const App = () => {
 
 const LoggedInRoutes = () => {
   const { state, dispatch } = useContext(store);
-  const { groups } = state;
-
+  const { group, user } = state;
   const location = useLocation();
-  // const paths = location.pathname.split("/");
 
-  // if (paths.length > 2) {
-  //   const groupId = paths[1];
-
-  //   console.log(groupId);
-  //   dispatch({
-  //     type: "SET_GROUP",
-  //     payload: groups.filter((group) => group.id === groupId)[0],
-  //   });
-  // }
+  const [askJoin, setAskJoin] = useState(false);
+  const [tempGroup, setTempGroup] = useState(null);
+  const handleChangeGroup = (newGroup) => {
+    if (!user.joiningGroupId) {
+      setJoiningGroupId(user.id, newGroup.id);
+      dispatch({
+        type: "SET_USER",
+        payload: { ...user, joiningGroupId: newGroup.id },
+      });
+      dispatch({ type: "SET_GROUP", payload: newGroup });
+    } else {
+      if (group.id !== newGroup.id) {
+        setTempGroup(newGroup);
+        setAskJoin(true);
+      } else {
+        window.location.href = "#/vote";
+      }
+    }
+  };
 
   return (
     <div
@@ -83,9 +98,61 @@ const LoggedInRoutes = () => {
         overflowX: "hidden",
       }}
     >
+      <Modal
+        visible={askJoin}
+        footer={null}
+        closable={false}
+        centered
+        width={800}
+      >
+        <ModalWrapper>
+          <ModalText>
+            Currently you are joining <b>{group && group.group}</b> group for
+            today’s lunch.
+            <br />
+            If you switch group then you are not joining this group.
+          </ModalText>
+          <ModalText style={{ fontSize: 25, marginTop: 20 }}>
+            Are you switching group and{" "}
+            <b style={{ color: "#13C2C2" }}>
+              joining {tempGroup && tempGroup.group}
+            </b>{" "}
+            group?{" "}
+          </ModalText>
+
+          <ModalButtonContainer>
+            <Button
+              style={{ width: 150, marginRight: 10 }}
+              size="large"
+              onClick={() => {
+                setAskJoin(false);
+              }}
+            >
+              NO
+            </Button>
+            <Button
+              style={{ width: 150 }}
+              size="large"
+              type="primary"
+              onClick={() => {
+                setJoiningGroupId(user.id, tempGroup.id);
+                dispatch({
+                  type: "SET_USER",
+                  payload: { ...user, joiningGroupId: tempGroup.id },
+                });
+                dispatch({ type: "SET_GROUP", payload: tempGroup });
+                setAskJoin(false);
+                setTempGroup(null);
+              }}
+            >
+              JOIN
+            </Button>
+          </ModalButtonContainer>
+        </ModalWrapper>
+      </Modal>
       {!["/"].includes(location.pathname) && (
         <div style={{ width: 320, backgroundColor: "rgba(19, 194, 194, 0.2)" }}>
-          <Sidebar />
+          <Sidebar handleChangeGroup={handleChangeGroup} />
         </div>
       )}
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -108,5 +175,28 @@ const LoggedOutRoutes = () => (
     <Redirect from="*" to="/" />
   </Switch>
 );
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 30px;
+`;
+
+const ModalText = styled.div`
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+`;
+
+const ModalButtonContainer = styled.div`
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default App;
