@@ -578,6 +578,7 @@ const CalendarPresenter = ({ group }) => {
                     add={!isMenuInVote(menu.menu)}
                     size="small"
                     style={{ fontSize: 20, right: 4, bottom: 6 }}
+                    isCalendarCard
                   />
                 </MenuContainer>
               </Col>
@@ -640,6 +641,7 @@ const CalendarPresenter = ({ group }) => {
                       menu={menu.menu}
                       add={!isMenuInVote(menu.menu)}
                       size="small"
+                      isCalendarCard
                     />
                     <span style={{ fontSize: 16, marginTop: 10 }}>
                       Total {menu.menu.count} times
