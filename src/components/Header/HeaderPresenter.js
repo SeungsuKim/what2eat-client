@@ -9,6 +9,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { setBookmarked } from "../../db/Group";
+
 const HeaderPresenter = ({
   group,
   isJoining,
@@ -20,18 +22,7 @@ const HeaderPresenter = ({
   setShowSetTime,
   closeTime,
 }) => {
-  let groupUserText = group.users.length + " | ";
-  for (let i = 0; i < group.users.length; i++) {
-    groupUserText += group.users[i].name;
-    if (i < group.users.length - 1) groupUserText += ", ";
-  }
-
-  groupUserText = groupUserText.slice(0, 30);
-  groupUserText += "...";
-
-  if (group.users.length > 1) groupUserText += " are ";
-  else groupUserText += " is ";
-  groupUserText += "joining.";
+  //const {} = useContext(store);
 
   return (
     <Affix offsetTop={0}>
@@ -73,10 +64,14 @@ const HeaderPresenter = ({
           {group.bookmarked ? (
             <StarFilled
               style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+              onClick={() => {
+                setBookmarked(group.id, false);
+              }}
             />
           ) : (
             <StarOutlined
               style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
+              onClick={() => setBookmarked(group.id, true)}
             />
           )}
           <Link to="/vote">

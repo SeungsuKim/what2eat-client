@@ -37,3 +37,9 @@ export const getJoiningUsers = async (groupId) => {
     (user) => user.joiningGroupId && user.joiningGroupId === groupId
   );
 };
+
+export const setBookmarked = async (groupId, bookmarked) => {
+  const groupRef = db.collection("groups").doc(groupId);
+
+  groupRef.update({ bookmarked });
+};

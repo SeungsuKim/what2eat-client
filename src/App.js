@@ -83,6 +83,8 @@ const LoggedInRoutes = () => {
       if (group.id !== newGroup.id) {
         setTempGroup(newGroup);
         setAskJoin(true);
+      } else {
+        window.location.href = "#/vote";
       }
     }
   };
