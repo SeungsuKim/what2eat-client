@@ -277,14 +277,27 @@ const SidebarPresenter = ({ groups, handleChangeGroup }) => {
           {groups &&
             groups.map((group) => (
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  marginLeft: 20,
-                  cursor: "pointer",
-                  padding: "5px 0px",
-                }}
+                style={
+                  group.id === selectedGroup.id
+                    ? {
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        marginLeft: 20,
+                        cursor: "pointer",
+                        padding: "5px 0px",
+                        fontWeight: 600,
+                        color: "#13C2C2",
+                      }
+                    : {
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        marginLeft: 20,
+                        cursor: "pointer",
+                        padding: "5px 0px",
+                      }
+                }
                 onClick={() => handleChangeGroup(group)}
               >
                 {group.bookmarked ? (
@@ -292,7 +305,15 @@ const SidebarPresenter = ({ groups, handleChangeGroup }) => {
                 ) : (
                   <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
                 )}
-                <Text style={{ fontSize: 20 }}>{group.group}</Text>
+                <Text
+                  style={
+                    group.id === selectedGroup.id
+                      ? { fontSize: 20, color: "#13C2C2" }
+                      : { fontSize: 20 }
+                  }
+                >
+                  {group.group}
+                </Text>
               </div>
             ))}
         </div>

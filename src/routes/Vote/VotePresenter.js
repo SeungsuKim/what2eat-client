@@ -36,7 +36,7 @@ const VotePresenter = ({
   const [showDetailedResult, setShowDetailedResult] = useState(false);
 
   const now = new Date();
-  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const newMenus = [];
   const viewedMenus = [];
