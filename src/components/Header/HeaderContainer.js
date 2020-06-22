@@ -22,8 +22,6 @@ const HeaderContainer = () => {
   console.log(user);
   console.log(isJoining);
   const handleJoin = (join) => {
-    // setIsJoining(group.id, user.id, join);
-    // dispatch({ type: "SET_IS_JOINING", payload: join });
     if (!join) {
       setJoiningGroupId(user.id, null);
       dispatch({

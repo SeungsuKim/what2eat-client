@@ -33,8 +33,8 @@ const VoteContainer = () => {
       setJoiningUsers(loadedUsers);
     };
 
-    loadUsers();
-  }, [group.id]);
+    setTimeout(() => loadUsers(), 100);
+  }, [group.id, user.joiningGroupId]);
 
   useEffect(() => {
     const fetchResult = async () => {

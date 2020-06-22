@@ -41,7 +41,7 @@ const MenuCard = ({
       });
       addMenuToVote(menu, user, id);
       notification.open({
-        message: "Success",
+        message: "Successfully Added!",
         description: `${menu.menu} is successfully added to ${groupName}.`,
         icon: <CheckCircleOutlined style={{ color: "#52C41A" }} />,
       });

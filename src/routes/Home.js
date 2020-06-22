@@ -43,6 +43,10 @@ const Home = () => {
                 }
                 onClick={() => {
                   dispatch({ type: "SET_GROUP", payload: group });
+                  dispatch({
+                    type: "SET_USER",
+                    payload: { ...user, joiningGroupId: group.id },
+                  });
                   history.push(`/vote`);
                 }}
                 style={{ height: 165 }}

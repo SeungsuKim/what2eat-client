@@ -123,7 +123,7 @@ const VotePresenter = ({
       <NewMenuContainer>
         <NewMenuWrapper>
           <div>
-            Newely Suggested Menus{" "}
+            Newly Suggested Menus{" "}
             <span style={{ fontSize: 18, color: "rgba(0, 0, 0, 0.4)" }}>
               Your groupmates suggested following menus for today's lunch
             </span>
@@ -355,6 +355,7 @@ const NewMenuWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+  padding-bottom: 10px;
 `;
 
 const RejectionLeft = styled.div`
