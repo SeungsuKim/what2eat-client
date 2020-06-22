@@ -324,7 +324,11 @@ const VotePresenter = ({
               {weekdays[now.getDay()]}
             </Title>
             <Description>
-              {joiningUsers.map((user) => `${user.name}`)} are joining
+              {joiningUsers.map(
+                (user, index) =>
+                  `${user.name}${index !== joiningUsers.length - 1 ? "," : ""} `
+              )}{" "}
+              are joining
             </Description>
           </TitleWrapper>
         </TitleContainer>
@@ -397,6 +401,7 @@ const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid rgba(0, 109, 117, 0.2);
+  margin-bottom: 20px;
 `;
 
 const TitleWrapper = styled.div``;
