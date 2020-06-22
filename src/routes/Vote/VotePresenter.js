@@ -121,36 +121,13 @@ const VotePresenter = ({
       </Modal>
 
       <NewMenuContainer>
-        <Row gutter={[20, 20]}>
-          <Col>
-            <Link to="/explore">
-              <AddNewMenu type="primary">
-                <PlusOutlined
-                  style={{ marginTop: "30%", fontSize: 70, color: "white" }}
-                />
-                <p style={{ fontSize: 20, color: "white" }}>
-                  Explore & Add
-                  <br />
-                  New Menu
-                </p>
-              </AddNewMenu>
-            </Link>
-          </Col>
-          {newMenus.map((menu) => (
-            <Col key={menu.menu.id}>
-              <ReactionCard
-                liked={isLikedMenu(menu)}
-                rejected={isRejectedMenu(menu)}
-                menu={menu.menu}
-              />
-            </Col>
-          ))}
-        </Row>
-      </NewMenuContainer>
-
-      <ViewedCardContainer>
-        <ViewedMenuWrapper>
-          Viewed Menu
+        <NewMenuWrapper>
+          <div>
+            Newely Suggested Menus{" "}
+            <span style={{ fontSize: 18, color: "rgba(0, 0, 0, 0.4)" }}>
+              Your groupmates suggested following menus for today's lunch
+            </span>
+          </div>
           <RejectionLeft>
             Remaining Number of Rejections
             <StopOutlined
@@ -176,11 +153,24 @@ const VotePresenter = ({
               onClick={() => setShowRejectionModal(true)}
             />
           </RejectionLeft>
-        </ViewedMenuWrapper>
-
+        </NewMenuWrapper>
         <ReactedCardContainer>
           <Row gutter={[20, 20]}>
-            {viewedMenus.reverse().map((menu) => (
+            <Col>
+              <Link to="/explore">
+                <AddNewMenu type="primary">
+                  <PlusOutlined
+                    style={{ marginTop: "30%", fontSize: 70, color: "white" }}
+                  />
+                  <p style={{ fontSize: 20, color: "white" }}>
+                    Explore & Add
+                    <br />
+                    New Menu
+                  </p>
+                </AddNewMenu>
+              </Link>
+            </Col>
+            {newMenus.map((menu) => (
               <Col key={menu.menu.id}>
                 <ReactionCard
                   liked={isLikedMenu(menu)}
@@ -191,7 +181,21 @@ const VotePresenter = ({
             ))}
           </Row>
         </ReactedCardContainer>
-      </ViewedCardContainer>
+      </NewMenuContainer>
+
+      <ViewedMenuContainer>
+        <Row gutter={[20, 20]}>
+          {viewedMenus.reverse().map((menu) => (
+            <Col key={menu.menu.id}>
+              <ReactionCard
+                liked={isLikedMenu(menu)}
+                rejected={isRejectedMenu(menu)}
+                menu={menu.menu}
+              />
+            </Col>
+          ))}
+        </Row>
+      </ViewedMenuContainer>
     </>
   );
 
@@ -336,8 +340,8 @@ const VotePresenter = ({
   );
 };
 
-const ViewedMenuWrapper = styled.div`
-  font-size: 22px;
+const NewMenuWrapper = styled.div`
+  font-size: 28px;
   text-color: rgba(0, 0, 0, 0.65);
   text-align: left;
   width: 100%;
@@ -420,7 +424,7 @@ const ReactedCardContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const ViewedCardContainer = styled.div`
+const NewMenuContainer = styled.div`
   width: 100%;
   background-color: white;
   border-radius: 10px;
@@ -431,7 +435,7 @@ const ViewedCardContainer = styled.div`
   align-items: center;
 `;
 
-const NewMenuContainer = styled.div`
+const ViewedMenuContainer = styled.div`
   width: 100%;
   padding: 20px 25px;
   display: flex;
