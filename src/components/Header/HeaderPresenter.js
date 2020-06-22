@@ -4,9 +4,9 @@ import {
   StarOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Affix, Button, Checkbox, TimePicker } from "antd";
-import Modal from "antd/lib/modal/Modal";
+import { Affix, Button, Checkbox, Modal, TimePicker } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderPresenter = ({
@@ -79,7 +79,9 @@ const HeaderPresenter = ({
               style={{ fontSize: 35, color: "#13C2C2", cursor: "pointer" }}
             />
           )}
-          <GroupName>{group.group}</GroupName>
+          <Link to="/vote">
+            <GroupName>{group.group}</GroupName>
+          </Link>
           <UserOutlined style={{ fontSize: 20, marginRight: 5 }} />
           <HeaderText>{group.users.length}</HeaderText>
           <FieldTimeOutlined style={{ fontSize: 20, marginRight: 5 }} />
