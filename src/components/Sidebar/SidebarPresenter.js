@@ -16,8 +16,8 @@ import { store } from "../../store";
 const { Text } = Typography;
 
 const SidebarPresenter = ({ groups, handleChangeGroup }) => {
-  const { dispatch } = useContext(store);
-  const history = useHistory();
+  const { state } = useContext(store);
+  const { group: selectedGroup } = state;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -283,6 +283,7 @@ const SidebarPresenter = ({ groups, handleChangeGroup }) => {
                   width: "100%",
                   marginLeft: 20,
                   cursor: "pointer",
+                  padding: "5px 0px",
                 }}
                 onClick={() => handleChangeGroup(group)}
               >
@@ -292,18 +293,6 @@ const SidebarPresenter = ({ groups, handleChangeGroup }) => {
                   <StarOutlined style={{ fontSize: 20, marginRight: 10 }} />
                 )}
                 <Text style={{ fontSize: 20 }}>{group.group}</Text>
-                {/*
-                <div
-                  style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: "50%",
-                    backgroundColor: "#FF6663",
-                    marginLeft: "auto",
-                    marginRight: 8,
-                  }}
-                />
-                */}
               </div>
             ))}
         </div>

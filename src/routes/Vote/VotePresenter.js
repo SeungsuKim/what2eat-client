@@ -1,11 +1,14 @@
 import {
+  AimOutlined,
   ArrowUpOutlined,
+  ClockCircleFilled,
   HeartFilled,
   InfoOutlined,
   PlusOutlined,
+  ShopFilled,
   StopOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Col, Modal, Row } from "antd";
+import { Button, Col, Modal, Row } from "antd";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -30,6 +33,7 @@ const VotePresenter = ({
   const { group, user, groups } = state;
 
   const [showRejectionModal, setShowRejectionModal] = useState(false);
+  const [showDetailedResult, setShowDetailedResult] = useState(false);
 
   const now = new Date();
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -231,50 +235,67 @@ const VotePresenter = ({
                 <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
                 {menu.likedBy.length}
               </div>
-            </Col>
-          ))}
-        </Row>
-        <div
-          style={{
-            width: "100%",
-            height: 2,
-            marginTop: 35,
-            marginBottom: 20,
-            backgroundColor: "rgba(0, 109, 117, 0.2)",
-          }}
-        />
-        <Row
-          gutter={[20, 20]}
-          style={{ width: "100%", marginTop: 20, marginBottom: 50 }}
-        >
-          {modifiedResult.slice(3).map((menu, index) => (
-            <Col key={menu.menu.id}>
-              <div style={{ width: 150, height: 150 }}>
-                <MenuCard menu={menu.menu} rank={index + 4} />
-                <div
-                  style={{
-                    width: "100%",
-                    color: "#FF6663",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 20,
-                  }}
-                >
-                  {menu.rejectedBy.length !== 0 && (
-                    <>
-                      <StopOutlined style={{ marginRight: 10 }} />{" "}
-                      {menu.rejectedBy.length}
-                    </>
-                  )}
-                  <HeartFilled style={{ marginLeft: 10, marginRight: 10 }} />{" "}
-                  {menu.likedBy.length}
+              <Restaurant>
+                <div>
+                  <ShopFilled style={{ color: "#13C2C2", fontSize: 23 }} />{" "}
+                  {menu.menu.restaurant}
                 </div>
-              </div>
+                <div>
+                  <AimOutlined style={{ color: "#13C2C2", fontSize: 23 }} />{" "}
+                  {menu.menu.distance}m
+                </div>
+                <div>
+                  <span style={{ color: "#13C2C2", fontSize: 23 }}>₩</span>{" "}
+                  {menu.menu.price}
+                </div>
+              </Restaurant>
             </Col>
           ))}
         </Row>
+        <DetailedResult>
+          <DetailedResultHeader>
+            Detailed Results
+            <Button
+              type="primary"
+              onClick={() => setShowDetailedResult(!showDetailedResult)}
+            >
+              {showDetailedResult ? "Hide" : "Show"}
+            </Button>
+          </DetailedResultHeader>
+          {showDetailedResult && (
+            <Row gutter={[20, 20]} style={{ width: "100%" }}>
+              {modifiedResult.slice(3).map((menu, index) => (
+                <Col key={menu.menu.id}>
+                  <div style={{ width: 150, height: 150 }}>
+                    <MenuCard menu={menu.menu} rank={index + 4} />
+                    <div
+                      style={{
+                        width: "100%",
+                        color: "#FF6663",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: 20,
+                      }}
+                    >
+                      {menu.rejectedBy.length !== 0 && (
+                        <>
+                          <StopOutlined style={{ marginRight: 10 }} />{" "}
+                          {menu.rejectedBy.length}
+                        </>
+                      )}
+                      <HeartFilled
+                        style={{ marginLeft: 10, marginRight: 10 }}
+                      />{" "}
+                      {menu.likedBy.length}
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          )}
+        </DetailedResult>
       </>
     );
   };
@@ -440,6 +461,28 @@ const ModalButtonContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const Restaurant = styled.div`
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 23px;
+  padding-left: 30%;
+`;
+
+const DetailedResult = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+`;
+
+const DetailedResultHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 25px;
+  margin-bottom: 20px;
 `;
 
 export default VotePresenter;
